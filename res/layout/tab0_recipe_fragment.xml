@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="#d1cac6">
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="135dp"
+        android:layout_weight="1"
+        android:background="#ffffff"
+        android:orientation="horizontal"
+         
+          >
+
+         
+
+ <com.yuf.app.mywidget.FoodViewPage
+              android:id="@+id/recipe_fragment_viewpage"
+              android:layout_width="fill_parent"
+              android:layout_height="220dp"
+              android:layout_centerHorizontal="true"
+              android:layout_alignParentTop="true"
+                >
+                
+     <com.yuf.app.ui.indicator.CirclePageIndicator
+        android:id="@+id/circle_page_indicator"
+        android:padding="10dip"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="#FFCCCCCC"
+        app:radius="10dp"
+        app:fillColor="#FF888888"
+        app:pageColor="#88FF0000"
+        app:strokeColor="#FF000000"
+        app:strokeWidth="2dp"
+         >
+         
+     </com.yuf.app.ui.indicator.CirclePageIndicator>
+
+     </com.yuf.app.mywidget.FoodViewPage>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:background="#f5f5f5"
+        android:orientation="vertical" >
+     <ImageView
+        style="@style/h_line"
+        android:layout_width="match_parent" />
+
+        <TextView
+            android:id="@+id/detail_dose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+             
+            android:text="菜谱名称"
+            android:textColor="#000000" />
+    </LinearLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:background="#f5f5f5" >
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/detail_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="    难        度："
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="五星" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="份       量："
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/dose_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="两人份     " />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="    工        艺："
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/skill_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="炖" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="烹饪时间："
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/time_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="&lt;1小时    " />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+ <Button
+                android:id="@+id/comment_button"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginLeft="13.0dip"
+                android:layout_marginRight="5.0dip"
+                android:layout_weight="1"
+                android:background="@drawable/shape2"
+                android:text="评论（79）"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/collection_button"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_marginRight="5.0dip"
+                android:background="@drawable/shape"
+                android:text="收藏（259）"
+                android:textColor="#ffffff"
+                 />
+
+            <Button
+                android:id="@+id/detail_button"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginRight="13.0dip"
+                android:layout_weight="1"
+                android:background="@drawable/shape3"
+                android:text="查看全文"
+                android:textColor="#ffffff" />
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>
