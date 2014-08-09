@@ -1,0 +1,20 @@
+<!-- 	<string name="tab2_0">fun0</string> -->
+<!-- 	<string name="tab2_1">fun1</string> -->
+<!-- 	<string name="tab2_2">fun2</string> -->
+<!-- 	<string name="tab2_3">fun3</string> -->
+<!-- 	<string name="tab2_4">fun4</string> -->
+<resources>
+    <string name="app_name">煮咩乜</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">煮咩乜</string>
+    <string name="tab0_title">食    谱</string>
+    <string name="tab1_title">Tab1</string>
+    <string name="tab2_title">Tab2</string>
+    <string name="tab3_title">Tab3</string>
+	<string name="menu">Exit</string>
+	<string name="description">仅用于去除无文本的imageview或imagebutton的警告</string>
+	
+	
+	<string name="httpError">连接失败</string>
+    <string name="httpisNull">没有网络</string>
+</resources>
