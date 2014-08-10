@@ -25,23 +25,24 @@
               android:layout_centerHorizontal="true"
               android:layout_alignParentTop="true"
                 >
-                
-     <com.yuf.app.ui.indicator.CirclePageIndicator
-        android:id="@+id/circle_page_indicator"
-        android:padding="10dip"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:background="#FFCCCCCC"
-        app:radius="10dp"
-        app:fillColor="#FF888888"
-        app:pageColor="#88FF0000"
-        app:strokeColor="#FF000000"
-        app:strokeWidth="2dp"
-         >
-         
-     </com.yuf.app.ui.indicator.CirclePageIndicator>
+   
 
      </com.yuf.app.mywidget.FoodViewPage>
+
+     <com.yuf.app.ui.indicator.CirclePageIndicator
+         android:id="@+id/circle_page_indicator"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+         android:layout_alignParentLeft="true"
+         android:background="#FFCCCCCC"
+         android:padding="10dip"
+         app:fillColor="#FF888888"
+         app:pageColor="#88FF0000"
+         app:radius="10dp"
+         app:strokeColor="#FF000000"
+         app:strokeWidth="2dp" />
+
     </RelativeLayout>
 
     <LinearLayout

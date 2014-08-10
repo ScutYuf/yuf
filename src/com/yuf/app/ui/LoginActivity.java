@@ -15,12 +15,16 @@ import com.yuf.app.MyApplication;
 
 import android.R.string;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.view.View.OnClickListener;
 import com.android.volley.Response;
@@ -33,16 +37,22 @@ public class LoginActivity extends Activity {
 	private EditText accountET;
 	private EditText passwordET;
 	private Button testBtn;
+	private CheckBox rememberCheckBox;
+	private SharedPreferences sharepPreferences;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_activity);
+		sharepPreferences=getSharedPreferences("login", Context.MODE_PRIVATE);
 		loginBtn=(Button)findViewById(R.id.login_button);
 		logonBtn=(Button)findViewById(R.id.logon_button);
 		accountET=(EditText)findViewById(R.id.account_editText);
-		accountET=(EditText)findViewById(R.id.password_editText);
+		passwordET=(EditText)findViewById(R.id.password_editText);
+		accountET.setText(sharepPreferences.getString("account", ""));
+		passwordET.setText(sharepPreferences.getString("password", ""));
+		rememberCheckBox=(CheckBox)findViewById(R.id.remember_checkbox);
 		testBtn=(Button)findViewById(R.id.test_button_login);
 		testBtn.setOnClickListener(new OnClickListener() {
 			
@@ -59,6 +69,14 @@ public class LoginActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+		if(rememberCheckBox.isChecked())
+		{
+			saveAccountPassword();
+		}
+				
+				
+				
+				
 				// TODO Auto-generated method stub
 				Log.d("liow","loginBtn onclick");
 			JSONObject logJsonObject=new JSONObject();
@@ -144,5 +162,12 @@ private void getUserInfo(String user_id)
 	Log.d("liow","request start");
 	MyApplication.requestQueue.start();
 }
-
+private void saveAccountPassword()
+{
+	
+	Editor editor = sharepPreferences.edit();//获取编辑器
+	editor.putString("account", accountET.getText().toString());
+	editor.putString("password", passwordET.getText().toString());
+	editor.commit();//提交修改
+}
 }

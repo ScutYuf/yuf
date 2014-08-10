@@ -1,11 +1,17 @@
 package com.yuf.app.Entity;
 
+import java.io.Serializable;
 import java.lang.String;
 
 
 
-public class UserInfo {
+public class UserInfo implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static UserInfo userInfo;
 	
 	private float discount;

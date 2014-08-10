@@ -3,6 +3,7 @@
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fadingEdge="none"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -53,7 +54,9 @@
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/title" >
+        android:layout_above="@+id/title"
+        android:fadingEdge="vertical|none"
+        android:fadingEdgeLength="0dp" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,7 +81,9 @@
                 android:id="@+id/food_material_gridview1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fadingEdge="vertical|none"
                 android:numColumns="2" >
+
             </com.yuf.app.mywidget.MyGridView>
 
             <LinearLayout
@@ -99,7 +104,9 @@
                 android:id="@+id/food_material_gridview2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fadingEdge="vertical|none"
                 android:numColumns="2" >
+
             </com.yuf.app.mywidget.MyGridView>
 
             <LinearLayout
@@ -120,7 +127,9 @@
                 android:id="@+id/food_material_gridview3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fadingEdge="vertical|none"
                 android:numColumns="2" >
+
 </com.yuf.app.mywidget.MyGridView>
 
         </LinearLayout>
