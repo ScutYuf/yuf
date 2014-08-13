@@ -116,7 +116,8 @@ public class LoginActivity extends Activity {
                     Log.e("TAG", error.getMessage(), error);  
                 }  
             });
-//将JsonObjectRequest 加入RequestQuene
+
+			//将JsonObjectRequest 加入RequestQuene
 MyApplication.requestQueue.add(request);
 Log.d("liow","request start");
 MyApplication.requestQueue.start();

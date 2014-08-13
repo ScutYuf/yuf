@@ -421,12 +421,12 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int icon=0x7f02000e;
         public static final int medal=0x7f02000f;
         public static final int menu_bg=0x7f020010;
-        public static final int menu_bg_pressed=0x7f020029;
+        public static final int menu_bg_pressed=0x7f02002a;
         public static final int menu_btn_bg=0x7f020011;
-        public static final int normal=0x7f020027;
+        public static final int normal=0x7f020028;
         public static final int notify=0x7f020012;
         public static final int peiliao=0x7f020013;
-        public static final int pressed=0x7f020028;
+        public static final int pressed=0x7f020029;
         public static final int rightrow=0x7f020014;
         public static final int shape=0x7f020015;
         public static final int shape2=0x7f020016;
@@ -445,7 +445,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int tab_left_normal=0x7f020023;
         public static final int tab_right_normal=0x7f020024;
         public static final int title_bar=0x7f020025;
-        public static final int zhuliao=0x7f020026;
+        public static final int xlistview_arrow=0x7f020026;
+        public static final int zhuliao=0x7f020027;
     }
     public static final class id {
         public static final int ImageView01=0x7f050032;
@@ -525,7 +526,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int main_bottom=0x7f05001d;
         public static final int margin=0x7f050002;
         public static final int menu_close=0x7f050023;
-        public static final int menu_settings=0x7f0500a5;
+        public static final int menu_settings=0x7f0500ae;
         public static final int more_imageView=0x7f050062;
         public static final int myfocus_account_text=0x7f050073;
         public static final int myfocus_head_img=0x7f050071;
@@ -614,6 +615,15 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int top=0x7f050008;
         public static final int triangle=0x7f050005;
         public static final int underline=0x7f050006;
+        public static final int xlistview_footer_content=0x7f0500a5;
+        public static final int xlistview_footer_hint_textview=0x7f0500a7;
+        public static final int xlistview_footer_progressbar=0x7f0500a6;
+        public static final int xlistview_header_arrow=0x7f0500ac;
+        public static final int xlistview_header_content=0x7f0500a8;
+        public static final int xlistview_header_hint_textview=0x7f0500aa;
+        public static final int xlistview_header_progressbar=0x7f0500ad;
+        public static final int xlistview_header_text=0x7f0500a9;
+        public static final int xlistview_header_time=0x7f0500ab;
     }
     public static final class integer {
         public static final int default_circle_indicator_orientation=0x7f080000;
@@ -657,6 +667,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int tab3_mycollection=0x7f03001f;
         public static final int tab3_mywork=0x7f030020;
         public static final int tab3_mywork_mycollection_item=0x7f030021;
+        public static final int xlistview_footer=0x7f030022;
+        public static final int xlistview_header=0x7f030023;
     }
     public static final class menu {
         public static final int main=0x7f0c0000;
@@ -668,11 +680,20 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int httpisNull=0x7f0a000a;
         public static final int menu=0x7f0a0007;
         public static final int menu_settings=0x7f0a0001;
+        public static final int press_again_exit=0x7f0a0011;
         public static final int tab0_title=0x7f0a0003;
         public static final int tab1_title=0x7f0a0004;
         public static final int tab2_title=0x7f0a0005;
         public static final int tab3_title=0x7f0a0006;
         public static final int title_activity_main=0x7f0a0002;
+        public static final int xlistview_footer_hint_normal=0x7f0a000f;
+        public static final int xlistview_footer_hint_ready=0x7f0a0010;
+        public static final int xlistview_header_hint_loading=0x7f0a000d;
+        /**  上拉下拉 
+         */
+        public static final int xlistview_header_hint_normal=0x7f0a000b;
+        public static final int xlistview_header_hint_ready=0x7f0a000c;
+        public static final int xlistview_header_last_time=0x7f0a000e;
     }
     public static final class style {
         public static final int AnimFade=0x7f0b0000;
