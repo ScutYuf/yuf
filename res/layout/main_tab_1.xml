@@ -35,7 +35,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textColor="#f5f5f5"
+        android:textColor="#666"
         app:selectedColor="#f59c00" />
     
     <android.support.v4.view.ViewPager

@@ -12,7 +12,7 @@ public  class MyApplication extends Application {
 	
 	public static RequestQueue requestQueue;
 	public static MyApplication myapplication;
-	
+	public static String sessionid;
 	
 	@Override
 	public void onCreate() {

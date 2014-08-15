@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="5px"
+        android:layout_margin="10dp"
         android:layout_weight="1"
         android:src="@drawable/ic_launcher" />
 
@@ -24,6 +24,7 @@
         android:layout_toRightOf="@+id/head_img"
         android:layout_weight="1"
         android:text="名字"
+        android:textColor="#000000"
         android:textSize="20sp" />
 
     <TextView
@@ -34,39 +35,55 @@
         android:layout_centerHorizontal="true"
         android:text="分享了一道菜" />
 
-    <TextView
-        android:id="@+id/share_text"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/LinearLayout555"
+        android:layout_below="@+id/head_img"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/time_text"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_alignTop="@+id/food_image"
-        android:text="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" />
-
-    <ImageView
+        android:layout_weight="0.1"
+        android:background="#eeebe7"
+        android:orientation="horizontal" >
+        <ImageView
         android:id="@+id/food_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/head_img"
-        android:layout_toRightOf="@id/head_img"
+        android:layout_marginLeft="3dp"
         android:src="@drawable/food1" />
+        
+        <TextView
+        android:id="@+id/share_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:text="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" 
+        android:textSize="10dip"
+        android:layout_marginRight="5dp"
+        android:textColor="#707070"
+        />
+    
+    </LinearLayout>
 
     <TextView
         android:id="@+id/time_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/food_image"
-        android:layout_alignRight="@+id/food_image"
-        android:layout_below="@+id/food_image"
-        android:text="时间" />
+        android:layout_alignLeft="@+id/LinearLayout555"
+        android:layout_below="@+id/LinearLayout555"
+        android:text="2014年05月20日" />
 
-    <ImageView
+    <TextView
         android:id="@+id/comment_imageView"
-        android:layout_width="30dp"
+        android:layout_width="50dp"
         android:layout_height="30dp"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/time_text"
-        android:layout_marginRight="24dp"
-        android:src="@drawable/medal" />
+        android:layout_below="@+id/LinearLayout555"
+        android:layout_marginRight="10dp"
+        android:text="点击收藏" 
+        android:textColor="#8f6f49"
+        android:textSize="12dip"/>
 
 </RelativeLayout>

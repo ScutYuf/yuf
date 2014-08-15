@@ -1,46 +1,30 @@
 package com.yuf.app.Entity;
 
-import java.io.Serializable;
-import java.lang.String;
+public class UserInfo {
 
-
-
-public class UserInfo implements Serializable{
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	private static UserInfo userInfo;
-	
-	private float discount;
-	private String nickname;
+	private static UserInfo instance=new UserInfo();
+	public static UserInfo getInstance() {
+		return instance;
+		
+	}
+	private double leveldiscout;
+	private String username;
 	private int userfollows;
 	private int userfans;
-	private int points;
-	private int next_level_points;
-	private String account;
+	private int userpoints;
+	private String useraccount;
 	private String levelname;
-	private String sessionid;
-	
-	public static UserInfo getUserInfo() {
-		return userInfo;
+	public double getLeveldiscout() {
+		return leveldiscout;
 	}
-	public static void setUserInfo(UserInfo userInfo) {
-		UserInfo.userInfo = userInfo;
+	public void setLeveldiscout(double leveldiscout) {
+		this.leveldiscout = leveldiscout;
 	}
-	public float getDiscount() {
-		return discount;
+	public String getUsername() {
+		return username;
 	}
-	public void setDiscount(float discount) {
-		this.discount = discount;
-	}
-	public String getNickname() {
-		return nickname;
-	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public int getUserfollows() {
 		return userfollows;
@@ -54,23 +38,17 @@ public class UserInfo implements Serializable{
 	public void setUserfans(int userfans) {
 		this.userfans = userfans;
 	}
-	public int getPoints() {
-		return points;
+	public int getUserpoints() {
+		return userpoints;
 	}
-	public void setPoints(int points) {
-		this.points = points;
+	public void setUserpoints(int userpoints) {
+		this.userpoints = userpoints;
 	}
-	public int getNext_level_points() {
-		return next_level_points;
+	public String getUseraccount() {
+		return useraccount;
 	}
-	public void setNext_level_points(int next_level_points) {
-		this.next_level_points = next_level_points;
-	}
-	public String getAccount() {
-		return account;
-	}
-	public void setAccount(String account) {
-		this.account = account;
+	public void setUseraccount(String useraccount) {
+		this.useraccount = useraccount;
 	}
 	public String getLevelname() {
 		return levelname;
@@ -78,13 +56,7 @@ public class UserInfo implements Serializable{
 	public void setLevelname(String levelname) {
 		this.levelname = levelname;
 	}
-	public String getSessionid() {
-		return sessionid;
-	}
-	public void setSessionid(String sessionid) {
-		this.sessionid = sessionid;
-	}
-
 	
-
+	
+	
 }

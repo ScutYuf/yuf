@@ -3,6 +3,9 @@ package com.yuf.app.ui;
 import java.util.ArrayList;
 import java.util.Timer;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.R.bool;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,10 +25,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.Request.Method;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.yuf.app.MyApplication;
 import com.yuf.app.Entity.CategorysEntity;
+import com.yuf.app.Entity.UserInfo;
 import com.yuf.app.adapter.MiddlePageAdapter;
 import com.yuf.app.adapter.OutsidePagerAdapter;
 import com.yuf.app.ui.indicator.TitlePageIndicator;
@@ -67,8 +78,9 @@ public class Main extends FragmentActivity {
 
 
 	//tab3
-
-	
+	private TextView tab3nicknameTextView;
+	private TextView tab3accountTextView;
+	private TextView tab3levelnametTextView;
 	
 	
 	
@@ -131,13 +143,18 @@ public class Main extends FragmentActivity {
 		addTab1ViewpageFragment();
 		initTab2();
 		initTab3();
-		
+		getUserInfo();
 		
 	}// end the onCreate method
 
 		 
 	
 	private void initTab3() {
+		
+		tab3accountTextView=(TextView)view3.findViewById(R.id.tab3_account);
+		tab3levelnametTextView=(TextView)view3.findViewById(R.id.tab3_levelname);
+		tab3nicknameTextView=(TextView)view3.findViewById(R.id.tab3_nickname);
+		
 		
 		// TODO Auto-generated method stub
 		
@@ -189,7 +206,59 @@ public void onClickMyfocus(View view){
 	tab1Viewpage.setCurrentItem(1);
 }	
 	
+public void onClickLogout(View view) {
+	JSONObject logJsonObject=new JSONObject();
+	try{
+	logJsonObject.put("userId",UserInfo.getInstance().getUseraccount());
+	logJsonObject.put("sessionId",MyApplication.sessionid);
+	}catch (JSONException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}	
+	JsonObjectRequest request=new JsonObjectRequest(Method.POST, "http://110.84.129.130:8080/Yuf/user/logout", logJsonObject,  new Response.Listener<JSONObject>()  
+    {  
+
+        @Override  
+        public void onResponse(JSONObject response)  
+        {  
+        	try {
+				if(response.get("logout").equals("success"))
+				{
+					finish();
+					Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
+					startActivity(intent);
+					
+					
+				}
+				else {
+					Toast toast = Toast.makeText(getApplicationContext(),
+						    "登出失败", Toast.LENGTH_SHORT);
+						   toast.setGravity(Gravity.CENTER, 0, 0);
+						   toast.show();
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	
+             
+        }  
+    }, new Response.ErrorListener()  
+    {  
+
+        @Override  
+        public void onErrorResponse(VolleyError error)  
+        {  
+            Log.e("TAG", error.getMessage(), error);  
+        }  
+    });
+
+	//将JsonObjectRequest 加入RequestQuene
+MyApplication.requestQueue.add(request);
+Log.d("liow","request start");
+MyApplication.requestQueue.start();
 	
+}
 	
 	private void initTab2() {
 		// TODO Auto-generated method stub
@@ -202,21 +271,7 @@ public void onClickMyfocus(View view){
 
 	private void initTab1() {
 		// TODO Auto-generated method stub
-		 tab1fragments=new ArrayList<Fragment>();
-			tab1categorysEntities=new ArrayList<CategorysEntity>();
-			tab1categorysEntities.add(new CategorysEntity("分享区"));
-			tab1fragments.add(new Tab1SocietyShareFragment());
-			tab1categorysEntities.add(new CategorysEntity("我的关注"));
-			tab1fragments.add(new Tab1SocietyForceFragment());
-			
-			tab1Indicator=(TitlePageIndicator) view1.findViewById(R.id.tab1_indicator);
-			tab1Viewpage=(ViewPager) view1.findViewById(R.id.tab1_pager);
-			MiddlePageAdapter mInsidePageAdapter=new MiddlePageAdapter(getSupportFragmentManager());
-			tab1Viewpage.setAdapter(mInsidePageAdapter);
-			tab1Viewpage.setOffscreenPageLimit(2);
-			mInsidePageAdapter.addFragments(tab1fragments,tab1categorysEntities);
-			tab1Indicator.setViewPager(tab1Viewpage);
-			tab1Indicator.setOnPageChangeListener( new MyPageChangeListener());
+		
 	}
 
 
@@ -241,7 +296,50 @@ public void onClickMyfocus(View view){
 
 
 
+	private void addTab0ViewpageFragment(){
+		tab0fragments=new ArrayList<Fragment>();
+		tab0categorysEntities=new ArrayList<CategorysEntity>();
+		tab0categorysEntities.add(new CategorysEntity("家庭套餐"));
+		tab0fragments.add(new Tab0MyRecipeFragment());
+		tab0categorysEntities.add(new CategorysEntity("情侣套餐"));
+		tab0fragments.add(new Tab0MyRecipeFragment());
+		tab0categorysEntities.add(new CategorysEntity("食客分享"));
+		tab0fragments.add(new Tab0MyRecipeFragment());
+		
+		
+		tab0Indicator=(TitlePageIndicator) view0.findViewById(R.id.tab0_indicator);
+		tab0Viewpage=(ViewPager) view0.findViewById(R.id.tab0_pager);
+		MiddlePageAdapter mInsidePageAdapter=new MiddlePageAdapter(getSupportFragmentManager());
+		tab0Viewpage.setAdapter(mInsidePageAdapter);
+		tab0Viewpage.setOffscreenPageLimit(3);
+		mInsidePageAdapter.addFragments(tab0fragments,tab0categorysEntities);
+		tab0Indicator.setViewPager(tab0Viewpage);
+		tab0Indicator.setOnPageChangeListener( new MyPageChangeListener());
+		tab0Viewpage.setCurrentItem(1);
+		
+		
+		
+	}
+
+
+
 	private void addTab1ViewpageFragment() {
+		
+		 tab1fragments=new ArrayList<Fragment>();
+			tab1categorysEntities=new ArrayList<CategorysEntity>();
+			tab1categorysEntities.add(new CategorysEntity("分享区"));
+			tab1fragments.add(new Tab1SocietyShareFragment());
+			tab1categorysEntities.add(new CategorysEntity("我的关注"));
+			tab1fragments.add(new Tab1SocietyForceFragment());
+			
+			tab1Indicator=(TitlePageIndicator) view1.findViewById(R.id.tab1_indicator);
+			tab1Viewpage=(ViewPager) view1.findViewById(R.id.tab1_pager);
+			MiddlePageAdapter mInsidePageAdapter=new MiddlePageAdapter(getSupportFragmentManager());
+			tab1Viewpage.setAdapter(mInsidePageAdapter);
+			tab1Viewpage.setOffscreenPageLimit(2);
+			mInsidePageAdapter.addFragments(tab1fragments,tab1categorysEntities);
+			tab1Indicator.setViewPager(tab1Viewpage);
+			tab1Indicator.setOnPageChangeListener( new MyPageChangeListener());
 		// TODO Auto-generated method stub
 		
 	}
@@ -263,30 +361,7 @@ public void onClickMyfocus(View view){
 	}
 
 
-void addTab0ViewpageFragment(){
-	tab0fragments=new ArrayList<Fragment>();
-	tab0categorysEntities=new ArrayList<CategorysEntity>();
-	tab0categorysEntities.add(new CategorysEntity("家庭套餐"));
-	tab0fragments.add(new Tab0MyRecipeFragment());
-	tab0categorysEntities.add(new CategorysEntity("情侣套餐"));
-	tab0fragments.add(new Tab0MyRecipeFragment());
-	tab0categorysEntities.add(new CategorysEntity("食客分享"));
-	tab0fragments.add(new Tab0MyRecipeFragment());
-	tab0Indicator=(TitlePageIndicator) view0.findViewById(R.id.tab0_indicator);
-	tab0Viewpage=(ViewPager) view0.findViewById(R.id.tab0_pager);
-	MiddlePageAdapter mInsidePageAdapter=new MiddlePageAdapter(getSupportFragmentManager());
-	tab0Viewpage.setAdapter(mInsidePageAdapter);
-	tab0Viewpage.setOffscreenPageLimit(3);
-	mInsidePageAdapter.addFragments(tab0fragments,tab0categorysEntities);
-	tab0Indicator.setViewPager(tab0Viewpage);
-	tab0Indicator.setOnPageChangeListener( new MyPageChangeListener());
-	tab0Viewpage.setCurrentItem(1);
-	
-	
-	
-}
-	
-	@Override
+@Override
 	protected void onPause() {
 		super.onPause();
 	}
@@ -366,6 +441,13 @@ void addTab0ViewpageFragment(){
 			case 3:
 				mTab3.setImageDrawable(getResources().getDrawable(
 						R.drawable.tab_3_pressed));
+				//初始化我的信息界面
+				tab3accountTextView.setText(UserInfo.getInstance().getUseraccount());
+				tab3levelnametTextView.setText(UserInfo.getInstance().getLevelname());
+				tab3nicknameTextView.setText(UserInfo.getInstance().getUsername());
+				
+				
+				
 				if (currIndex == 0) {
 					mTab0.setImageDrawable(getResources().getDrawable(
 							R.drawable.tab_0_normal));
@@ -431,7 +513,54 @@ void addTab0ViewpageFragment(){
 
 
 
+	 private void getUserInfo()
+	 {
 
+	 	
+	 	JsonObjectRequest request=new JsonObjectRequest(Method.GET, "http://110.84.129.130:8080/Yuf/user/getUser/"+MyApplication.sessionid, null,  new Response.Listener<JSONObject>()  
+	     {  
+
+	         @Override  
+	         public void onResponse(JSONObject response)  
+	         {  
+	         	
+	             Log.e("TAG", response.toString()); 
+	             
+	             UserInfo tmpInfo=UserInfo.getInstance();
+	         
+	             try {
+					tmpInfo.setLeveldiscout(response.getDouble("leveldiscount"));
+					tmpInfo.setUsername(response.getString("username"));
+					tmpInfo.setUserfollows(response.getInt("userfollows"));
+					tmpInfo.setUserfans(response.getInt("userfans"));
+					tmpInfo.setUserpoints(response.getInt("userpoints"));
+					tmpInfo.setUseraccount(response.getString("useraccount"));
+					tmpInfo.setLevelname(response.getString("levelname"));
+					
+					
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	             
+	             
+	             
+	             
+	             
+	         }  
+	     }, new Response.ErrorListener()  
+	     {  
+
+	         @Override  
+	         public void onErrorResponse(VolleyError error)  
+	         {  
+	             Log.e("TAG", error.getMessage(), error);  
+	         }  
+	     });
+	 	MyApplication.requestQueue.add(request);
+	 	Log.d("liow","request start");
+	 	MyApplication.requestQueue.start();
+	 }
 	 
 	 
 }// end this Main class

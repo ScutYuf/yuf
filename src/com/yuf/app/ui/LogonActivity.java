@@ -78,8 +78,7 @@ public class LogonActivity extends Activity {
 							if(response.get("logon").equals("success"))
 							{
 								Log.d("liow", "注册成功");
-								Intent intent=new Intent(getApplicationContext(),Main.class);
-								startActivity(intent);
+
 								finish();
 							}
 							else {
