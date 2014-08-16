@@ -100,6 +100,7 @@ public class LoginActivity extends Activity {
 						if(response.get("login").equals("success"))
 						{
 							MyApplication.sessionid=response.getString("sessionid");
+							MyApplication.userid=response.getString("userid");
 							Intent intent=new Intent(getApplicationContext(),Main.class);
 							startActivity(intent);
 							finish();

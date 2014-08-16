@@ -209,7 +209,7 @@ public void onClickMyfocus(View view){
 public void onClickLogout(View view) {
 	JSONObject logJsonObject=new JSONObject();
 	try{
-	logJsonObject.put("userId",UserInfo.getInstance().getUseraccount());
+	logJsonObject.put("userId",MyApplication.userid);
 	logJsonObject.put("sessionId",MyApplication.sessionid);
 	}catch (JSONException e) {
 		// TODO Auto-generated catch block
