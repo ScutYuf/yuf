@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class LogonActivity extends Activity {
@@ -29,6 +30,7 @@ public class LogonActivity extends Activity {
 	private EditText paswordeEditText;
 	private EditText confirmEditText;
 	private EditText nameEditText;
+	private ImageView backImageView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
@@ -40,6 +42,18 @@ public class LogonActivity extends Activity {
 		paswordeEditText=(EditText)findViewById(R.id.logon_password_editText);
 		confirmEditText=(EditText)findViewById(R.id.logon_confirm_edittext);
 		nameEditText=(EditText)findViewById(R.id.logon_name_edittext);
+		
+		backImageView=(ImageView)findViewById(R.id.logon_back_imageView);
+		backImageView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+			
+				onBackPressed();// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		submitButton.setOnClickListener(new OnClickListener() {
 			
 			@Override

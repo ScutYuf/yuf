@@ -207,57 +207,7 @@ public void onClickMyfocus(View view){
 }	
 	
 public void onClickLogout(View view) {
-	JSONObject logJsonObject=new JSONObject();
-	try{
-	logJsonObject.put("userId",MyApplication.userid);
-	logJsonObject.put("sessionId",MyApplication.sessionid);
-	}catch (JSONException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}	
-	JsonObjectRequest request=new JsonObjectRequest(Method.POST, "http://110.84.129.130:8080/Yuf/user/logout", logJsonObject,  new Response.Listener<JSONObject>()  
-    {  
-
-        @Override  
-        public void onResponse(JSONObject response)  
-        {  
-        	try {
-				if(response.get("logout").equals("success"))
-				{
-					finish();
-					Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
-					startActivity(intent);
-					
-					
-				}
-				else {
-					Toast toast = Toast.makeText(getApplicationContext(),
-						    "登出失败", Toast.LENGTH_SHORT);
-						   toast.setGravity(Gravity.CENTER, 0, 0);
-						   toast.show();
-				}
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        	
-             
-        }  
-    }, new Response.ErrorListener()  
-    {  
-
-        @Override  
-        public void onErrorResponse(VolleyError error)  
-        {  
-            Log.e("TAG", error.getMessage(), error);  
-        }  
-    });
-
-	//将JsonObjectRequest 加入RequestQuene
-MyApplication.requestQueue.add(request);
-Log.d("liow","request start");
-MyApplication.requestQueue.start();
-	
+	logout();
 }
 	
 	private void initTab2() {
@@ -483,7 +433,7 @@ MyApplication.requestQueue.start();
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 		
 				if (System.currentTimeMillis() - frist_back_time < 1500) {
-					finish();
+					exitApplication();
 				}
 				frist_back_time=System.currentTimeMillis();
 	}
@@ -511,8 +461,111 @@ MyApplication.requestQueue.start();
 	 
 	 
 
+private void exitApplication() {
+	JSONObject logJsonObject=new JSONObject();
+	try{
+	logJsonObject.put("userId",MyApplication.userid);
+	logJsonObject.put("sessionId",MyApplication.sessionid);
+	}catch (JSONException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}	
+	JsonObjectRequest request=new JsonObjectRequest(Method.POST, "http://110.84.129.130:8080/Yuf/user/logout", logJsonObject,  new Response.Listener<JSONObject>()  
+    {  
 
+        @Override  
+        public void onResponse(JSONObject response)  
+        {  
+        	try {
+				if(response.get("logout").equals("success"))
+				{
+					finish();
+					
+				}
+				else {
+					Toast toast = Toast.makeText(getApplicationContext(),
+						    "登出失败", Toast.LENGTH_SHORT);
+						   toast.setGravity(Gravity.CENTER, 0, 0);
+						   toast.show();
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	
+             
+        }  
+    }, new Response.ErrorListener()  
+    {  
 
+        @Override  
+        public void onErrorResponse(VolleyError error)  
+        {  
+            Log.e("TAG", error.getMessage(), error);  
+        }  
+    });
+
+	//将JsonObjectRequest 加入RequestQuene
+MyApplication.requestQueue.add(request);
+Log.d("liow","request start");
+MyApplication.requestQueue.start();
+}
+private void logout() {
+
+	JSONObject logJsonObject=new JSONObject();
+	try{
+	logJsonObject.put("userId",MyApplication.userid);
+	logJsonObject.put("sessionId",MyApplication.sessionid);
+	}catch (JSONException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}	
+	JsonObjectRequest request=new JsonObjectRequest(Method.POST, "http://110.84.129.130:8080/Yuf/user/logout", logJsonObject,  new Response.Listener<JSONObject>()  
+    {  
+
+        @Override  
+        public void onResponse(JSONObject response)  
+        {  
+        	try {
+				if(response.get("logout").equals("success"))
+				{
+					finish();
+					Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
+					startActivity(intent);
+					
+					
+				}
+				else {
+					Toast toast = Toast.makeText(getApplicationContext(),
+						    "登出失败", Toast.LENGTH_SHORT);
+						   toast.setGravity(Gravity.CENTER, 0, 0);
+						   toast.show();
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	
+             
+        }  
+    }, new Response.ErrorListener()  
+    {  
+
+        @Override  
+        public void onErrorResponse(VolleyError error)  
+        {  
+            Log.e("TAG", error.getMessage(), error);  
+        }  
+    });
+
+	//将JsonObjectRequest 加入RequestQuene
+MyApplication.requestQueue.add(request);
+Log.d("liow","request start");
+MyApplication.requestQueue.start();
+	
+
+	
+}
 	 private void getUserInfo()
 	 {
 

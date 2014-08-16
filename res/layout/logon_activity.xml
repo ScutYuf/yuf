@@ -1,67 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="昵称" />
+    <RelativeLayout
+        android:id="@+id/RelativeLayout01"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/title_bar"
+        android:gravity="center_vertical" >
 
-    <EditText
-        android:id="@+id/logon_name_edittext"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="注册"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/logon_back_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:src="@drawable/button_details_gohome" 
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10" >
-<requestFocus />
-	</EditText>
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="邮箱/手机号码" />
+        android:background="#f0a118"
+        android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/logon_account_edittext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10" >
+        <EditText
+            android:id="@+id/logon_account_edittext"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/logon_name_edittext"
+            android:layout_below="@+id/textView1"
+            android:ems="10" />
 
-        
-    </EditText>
+        <EditText
+            android:id="@+id/logon_password_editText"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/logon_account_edittext"
+            android:layout_below="@+id/textView2"
+            android:ems="10"
+            android:inputType="textPassword" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="密码" />
+        <EditText
+            android:id="@+id/logon_confirm_edittext"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/logon_password_editText"
+            android:layout_below="@+id/textView3"
+            android:ems="10"
+            android:inputType="textPassword" />
 
-    <EditText
-        android:id="@+id/logon_password_editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPassword" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/logon_confirm_edittext"
+            android:layout_below="@+id/logon_password_editText"
+            android:text="确认密码"
+            android:textColor="#fff" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="确认密码" />
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/logon_account_edittext"
+            android:layout_below="@+id/logon_name_edittext"
+            android:text="邮箱/手机号码"
+            android:textColor="#fff" />
 
-    <EditText
-        android:id="@+id/logon_confirm_edittext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10" 
-        android:inputType="textPassword"/>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/logon_account_edittext"
+            android:layout_below="@+id/logon_account_edittext"
+            android:text="密码"
+            android:textColor="#fff" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/logon_name_edittext"
+            android:text="昵称"
+            android:textColor="#fff" />
+
+        <EditText
+            android:id="@+id/logon_name_edittext"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView4"
+            android:layout_centerHorizontal="true"
+            android:ems="10" >
+
+            <requestFocus />
+        </EditText>
+
+    </RelativeLayout>
 
     <Button
         android:id="@+id/logon_submit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="提交注册" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/shape3"
+        android:text="提交注册"
+        android:textColor="#fff" />
 
 </LinearLayout>

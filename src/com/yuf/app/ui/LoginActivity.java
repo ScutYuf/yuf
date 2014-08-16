@@ -54,7 +54,11 @@ public class LoginActivity extends Activity {
 		passwordET=(EditText)findViewById(R.id.password_editText);
 		accountET.setText(sharepPreferences.getString("account", ""));
 		passwordET.setText(sharepPreferences.getString("password", ""));
+		
 		rememberCheckBox=(CheckBox)findViewById(R.id.remember_checkbox);
+		if (sharepPreferences.getBoolean("isRemeber", false)) {
+			rememberCheckBox.setChecked(true);
+		}
 		testBtn=(Button)findViewById(R.id.test_button_login);
 		testBtn.setOnClickListener(new OnClickListener() {
 			
@@ -75,6 +79,13 @@ public class LoginActivity extends Activity {
 		if(rememberCheckBox.isChecked())
 		{
 			saveAccountPassword();
+		}
+		else {
+			Editor editor = sharepPreferences.edit();//获取编辑器
+			editor.putString("account","");
+			editor.putString("password","");
+			editor.putBoolean("isRemeber", false);
+			editor.commit();//提交修改
 		}
 				
 				
@@ -156,6 +167,7 @@ private void saveAccountPassword()
 	Editor editor = sharepPreferences.edit();//获取编辑器
 	editor.putString("account", accountET.getText().toString());
 	editor.putString("password", passwordET.getText().toString());
+	editor.putBoolean("isRemeber", true);
 	editor.commit();//提交修改
 }
 }

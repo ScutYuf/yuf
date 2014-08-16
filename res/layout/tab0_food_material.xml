@@ -82,7 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fadingEdge="vertical|none"
-                android:numColumns="2" >
+                android:numColumns="3" >
 
             </com.yuf.app.mywidget.MyGridView>
 
@@ -105,7 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fadingEdge="vertical|none"
-                android:numColumns="2" >
+                android:numColumns="3" >
 
             </com.yuf.app.mywidget.MyGridView>
 
@@ -128,7 +128,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fadingEdge="vertical|none"
-                android:numColumns="2" >
+                android:numColumns="3" >
 
 </com.yuf.app.mywidget.MyGridView>
 
