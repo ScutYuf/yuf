@@ -392,9 +392,7 @@ public void onClickLogout(View view) {
 				mTab3.setImageDrawable(getResources().getDrawable(
 						R.drawable.tab_3_pressed));
 				//初始化我的信息界面
-				tab3accountTextView.setText(UserInfo.getInstance().getUseraccount());
-				tab3levelnametTextView.setText(UserInfo.getInstance().getLevelname());
-				tab3nicknameTextView.setText(UserInfo.getInstance().getUsername());
+				setTab3UserInfo();
 				
 				
 				
@@ -566,6 +564,13 @@ MyApplication.requestQueue.start();
 
 	
 }
+private void setTab3UserInfo() {
+	
+	tab3accountTextView.setText(UserInfo.getInstance().getUseraccount());
+	tab3levelnametTextView.setText(UserInfo.getInstance().getLevelname());
+	tab3nicknameTextView.setText(UserInfo.getInstance().getUsername());
+}
+
 	 private void getUserInfo()
 	 {
 
@@ -625,7 +630,12 @@ MyApplication.requestQueue.start();
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
+					try {
+						tmpInfo.setLevelpoints(response.getInt("levelpoints"));
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 	             
 	             
 	             

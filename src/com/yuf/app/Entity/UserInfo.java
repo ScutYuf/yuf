@@ -17,8 +17,10 @@ public class UserInfo {
 	private double leveldiscout;
 	private String username;
 	private int userfollows;
+
 	private int userfans;
 	private int userpoints;
+	private int levelpoints;
 	private String useraccount;
 	private String levelname;
 	public double getLeveldiscout() {
@@ -64,6 +66,11 @@ public class UserInfo {
 		this.levelname = levelname;
 	}
 	
-	
+	public int getLevelpoints() {
+		return levelpoints;
+	}
+	public void setLevelpoints(int levelpoints) {
+		this.levelpoints = levelpoints;
+	}
 	
 }
