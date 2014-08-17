@@ -581,20 +581,51 @@ MyApplication.requestQueue.start();
 	             
 	             UserInfo tmpInfo=UserInfo.getInstance();
 	         
-	             try {
-					tmpInfo.setLeveldiscout(response.getDouble("leveldiscount"));
-					tmpInfo.setUsername(response.getString("username"));
-					tmpInfo.setUserfollows(response.getInt("userfollows"));
-					tmpInfo.setUserfans(response.getInt("userfans"));
-					tmpInfo.setUserpoints(response.getInt("userpoints"));
-					tmpInfo.setUseraccount(response.getString("useraccount"));
-					tmpInfo.setLevelname(response.getString("levelname"));
+
+					try {
+						tmpInfo.setLeveldiscout(response.getDouble("leveldiscount"));
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						tmpInfo.setUsername(response.getString("username"));
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						tmpInfo.setUserfollows(response.getInt("userfollows"));
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						tmpInfo.setUserfans(response.getInt("userfans"));
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						tmpInfo.setUserpoints(response.getInt("userpoints"));
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						tmpInfo.setUseraccount(response.getString("useraccount"));
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
+					try {
+						tmpInfo.setLevelname(response.getString("levelname"));
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					
-					
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 	             
 	             
 	             

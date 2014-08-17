@@ -2,9 +2,16 @@ package com.yuf.app.Entity;
 
 public class UserInfo {
 
-	private static UserInfo instance=new UserInfo();
+	private static UserInfo instance;
 	public static UserInfo getInstance() {
-		return instance;
+		if (instance==null) {
+			instance=new UserInfo();
+			return instance;
+		}
+		else {
+			return instance;
+		}
+		
 		
 	}
 	private double leveldiscout;
