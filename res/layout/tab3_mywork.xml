@@ -46,12 +46,10 @@
 
     </RelativeLayout>
 
-    <ListView
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/tab3_mywork_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fadingEdgeLength="0dp" >
-
-    </ListView>
+        android:fadingEdgeLength="0dp" />
 
 </LinearLayout>
