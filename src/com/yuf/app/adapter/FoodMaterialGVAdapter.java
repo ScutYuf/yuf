@@ -1,11 +1,14 @@
 package com.yuf.app.adapter;
 
+import com.yuf.app.MyApplication;
+import com.yuf.app.mywidget.MyDialog;
 import com.yuf.app.ui.R;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
@@ -37,31 +40,28 @@ public class FoodMaterialGVAdapter extends BaseAdapter {
      
     //创建View方法 
     @SuppressLint("ViewHolder") public View getView(int position, View convertView, ViewGroup parent) { 
-//         ImageView imageView; 
-//            if (convertView == null) { 
-//                imageView = new ImageView(context); 
-//                imageView.setLayoutParams(new GridView.LayoutParams(75, 75));//设置ImageView对象布局 
-//                imageView.setAdjustViewBounds(false);//设置边界对齐 
-//                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);//设置刻度的类型 
-//                imageView.setPadding(8, 8, 8, 8);//设置间距 
-//            }  
-//            else { 
-//                imageView = (ImageView) convertView; 
-//            } 
-//            imageView.setImageResource(imgs[position]);//为ImageView设置图片资源 
-//            
+       
     	View view;
     	if (convertView==null) {
 			
     		LayoutInflater myinflater=LayoutInflater.from(context);
-    		 view=myinflater.inflate(R.layout.food_material_gridview_item, null);
+    		 view=myinflater.inflate(R.layout.tab2_food_material_gridview_item, null);
 		}
     	else {
 			view=convertView;
 		}
     	//加载数据
             
-            
+            view.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					MyDialog myDialog=new MyDialog(context);
+					myDialog.showDialog(R.layout.material_detail_dialg,0, 0);
+					// TODO Auto-generated method stub
+					
+				}
+			});
             return view; 
     } 
 

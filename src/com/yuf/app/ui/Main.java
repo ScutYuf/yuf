@@ -462,8 +462,8 @@ public void onClickLogout(View view) {
 private void exitApplication() {
 	JSONObject logJsonObject=new JSONObject();
 	try{
-	logJsonObject.put("userId",MyApplication.userid);
-	logJsonObject.put("sessionId",MyApplication.sessionid);
+	logJsonObject.put("userId",UserInfo.getInstance().getUserid());
+	logJsonObject.put("sessionId",UserInfo.getInstance().getSessionid());
 	}catch (JSONException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -512,8 +512,8 @@ private void logout() {
 
 	JSONObject logJsonObject=new JSONObject();
 	try{
-	logJsonObject.put("userId",MyApplication.userid);
-	logJsonObject.put("sessionId",MyApplication.sessionid);
+	logJsonObject.put("userId",UserInfo.getInstance().getUserid());
+	logJsonObject.put("sessionId",UserInfo.getInstance().getSessionid());
 	}catch (JSONException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -575,7 +575,7 @@ private void setTab3UserInfo() {
 	 {
 
 	 	
-	 	JsonObjectRequest request=new JsonObjectRequest(Method.GET, "http://110.84.129.130:8080/Yuf/user/getUser/"+MyApplication.sessionid, null,  new Response.Listener<JSONObject>()  
+	 	JsonObjectRequest request=new JsonObjectRequest(Method.GET, "http://110.84.129.130:8080/Yuf/user/getUser/"+UserInfo.getInstance().getSessionid(), null,  new Response.Listener<JSONObject>()  
 	     {  
 
 	         @Override  

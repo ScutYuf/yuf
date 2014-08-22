@@ -23,6 +23,20 @@ public class UserInfo {
 	private int levelpoints;
 	private String useraccount;
 	private String levelname;
+	public  String sessionid;
+	public  String userid;
+	public String getSessionid() {
+		return sessionid;
+	}
+	public void setSessionid(String sessionid) {
+		this.sessionid = sessionid;
+	}
+	public String getUserid() {
+		return userid;
+	}
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
 	public double getLeveldiscout() {
 		return leveldiscout;
 	}
@@ -66,11 +80,18 @@ public class UserInfo {
 		this.levelname = levelname;
 	}
 	
+	public boolean isLogin() {
+		return isLogin;
+	}
+	public void setLogin(boolean isLogin) {
+		this.isLogin = isLogin;
+	}
 	public int getLevelpoints() {
 		return levelpoints;
 	}
 	public void setLevelpoints(int levelpoints) {
 		this.levelpoints = levelpoints;
 	}
+	private boolean isLogin;
 	
 }

@@ -138,7 +138,7 @@ public class Tab3MyWorkActivity extends Activity {
 		void getDate(int pageindex)
 		{
 		
-		JsonObjectRequest request=new JsonObjectRequest(Method.GET,String.format("http://110.84.129.130:8080/Yuf/post/getPost/%s/%d", MyApplication.userid,1), null, new com.android.volley.Response.Listener<JSONObject>() {
+		JsonObjectRequest request=new JsonObjectRequest(Method.GET,String.format("http://110.84.129.130:8080/Yuf/post/getPost/%s/%d", UserInfo.getInstance().getUserid(),1), null, new com.android.volley.Response.Listener<JSONObject>() {
 
 			@Override
 			public void onResponse(JSONObject response) {

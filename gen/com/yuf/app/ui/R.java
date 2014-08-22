@@ -10,18 +10,20 @@ package com.yuf.app.ui;
 public final class R {
     public static final class anim {
         public static final int alpha=0x7f040000;
-        public static final int in_from_left=0x7f040001;
-        public static final int in_from_right=0x7f040002;
-        public static final int out_to_left=0x7f040003;
-        public static final int out_to_right=0x7f040004;
-        public static final int slide_in_from_bottom=0x7f040005;
-        public static final int slide_in_from_top=0x7f040006;
-        public static final int slide_out_to_bottom=0x7f040007;
-        public static final int slide_out_to_top=0x7f040008;
-        public static final int textview_in_from_left=0x7f040009;
-        public static final int textview_in_from_right=0x7f04000a;
-        public static final int textview_out_to_left=0x7f04000b;
-        public static final int textview_out_to_right=0x7f04000c;
+        public static final int dialog_enter_anim=0x7f040001;
+        public static final int dialog_exit_anim=0x7f040002;
+        public static final int in_from_left=0x7f040003;
+        public static final int in_from_right=0x7f040004;
+        public static final int out_to_left=0x7f040005;
+        public static final int out_to_right=0x7f040006;
+        public static final int slide_in_from_bottom=0x7f040007;
+        public static final int slide_in_from_top=0x7f040008;
+        public static final int slide_out_to_bottom=0x7f040009;
+        public static final int slide_out_to_top=0x7f04000a;
+        public static final int textview_in_from_left=0x7f04000b;
+        public static final int textview_in_from_right=0x7f04000c;
+        public static final int textview_out_to_left=0x7f04000d;
+        public static final int textview_out_to_right=0x7f04000e;
     }
     public static final class attr {
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
@@ -404,16 +406,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int default_underline_indicator_fades=0x7f080004;
     }
     public static final class color {
-        public static final int default_circle_indicator_fill_color=0x7f060001;
-        public static final int default_circle_indicator_page_color=0x7f060002;
-        public static final int default_circle_indicator_stroke_color=0x7f060003;
-        public static final int default_line_indicator_selected_color=0x7f060004;
-        public static final int default_line_indicator_unselected_color=0x7f060005;
-        public static final int default_title_indicator_footer_color=0x7f060006;
-        public static final int default_title_indicator_selected_color=0x7f060007;
-        public static final int default_title_indicator_text_color=0x7f060008;
-        public static final int default_underline_indicator_selected_color=0x7f060009;
+        public static final int default_circle_indicator_fill_color=0x7f060002;
+        public static final int default_circle_indicator_page_color=0x7f060003;
+        public static final int default_circle_indicator_stroke_color=0x7f060004;
+        public static final int default_line_indicator_selected_color=0x7f060005;
+        public static final int default_line_indicator_unselected_color=0x7f060006;
+        public static final int default_title_indicator_footer_color=0x7f060007;
+        public static final int default_title_indicator_selected_color=0x7f060008;
+        public static final int default_title_indicator_text_color=0x7f060009;
+        public static final int default_underline_indicator_selected_color=0x7f06000a;
         public static final int transparent=0x7f060000;
+        public static final int vifrification=0x7f060001;
     }
     public static final class dimen {
         public static final int default_circle_indicator_radius=0x7f070005;
@@ -464,37 +467,38 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int login2=0x7f020019;
         public static final int logo_qq=0x7f02001a;
         public static final int logo_sinaweibo=0x7f02001b;
-        public static final int medal=0x7f02001c;
-        public static final int menu_bg=0x7f02001d;
-        public static final int menu_bg_pressed=0x7f02003a;
-        public static final int menu_btn_bg=0x7f02001e;
-        public static final int mywork=0x7f02001f;
-        public static final int normal=0x7f020038;
-        public static final int notify=0x7f020020;
-        public static final int peiliao=0x7f020021;
-        public static final int pressed=0x7f020039;
-        public static final int rightrow=0x7f020022;
-        public static final int shape=0x7f020023;
-        public static final int shape2=0x7f020024;
-        public static final int shape3=0x7f020025;
-        public static final int shape4=0x7f020026;
-        public static final int shoppingcart=0x7f020027;
-        public static final int shoucang=0x7f020028;
-        public static final int splash_load=0x7f020029;
-        public static final int tab_0_normal=0x7f02002a;
-        public static final int tab_0_pressed=0x7f02002b;
-        public static final int tab_1_normal=0x7f02002c;
-        public static final int tab_1_pressed=0x7f02002d;
-        public static final int tab_2_normal=0x7f02002e;
-        public static final int tab_2_pressed=0x7f02002f;
-        public static final int tab_3_normal=0x7f020030;
-        public static final int tab_3_pressed=0x7f020031;
-        public static final int tab_right_normal=0x7f020032;
-        public static final int title_bar=0x7f020033;
-        public static final int tuichu=0x7f020034;
-        public static final int xlistview_arrow=0x7f020035;
-        public static final int yifukuan=0x7f020036;
-        public static final int zhuliao=0x7f020037;
+        public static final int meat=0x7f02001c;
+        public static final int medal=0x7f02001d;
+        public static final int menu_bg=0x7f02001e;
+        public static final int menu_bg_pressed=0x7f02003b;
+        public static final int menu_btn_bg=0x7f02001f;
+        public static final int mywork=0x7f020020;
+        public static final int normal=0x7f020039;
+        public static final int notify=0x7f020021;
+        public static final int peiliao=0x7f020022;
+        public static final int pressed=0x7f02003a;
+        public static final int rightrow=0x7f020023;
+        public static final int shape=0x7f020024;
+        public static final int shape2=0x7f020025;
+        public static final int shape3=0x7f020026;
+        public static final int shape4=0x7f020027;
+        public static final int shoppingcart=0x7f020028;
+        public static final int shoucang=0x7f020029;
+        public static final int splash_load=0x7f02002a;
+        public static final int tab_0_normal=0x7f02002b;
+        public static final int tab_0_pressed=0x7f02002c;
+        public static final int tab_1_normal=0x7f02002d;
+        public static final int tab_1_pressed=0x7f02002e;
+        public static final int tab_2_normal=0x7f02002f;
+        public static final int tab_2_pressed=0x7f020030;
+        public static final int tab_3_normal=0x7f020031;
+        public static final int tab_3_pressed=0x7f020032;
+        public static final int tab_right_normal=0x7f020033;
+        public static final int title_bar=0x7f020034;
+        public static final int tuichu=0x7f020035;
+        public static final int xlistview_arrow=0x7f020036;
+        public static final int yifukuan=0x7f020037;
+        public static final int zhuliao=0x7f020038;
     }
     public static final class id {
         public static final int ImageView01=0x7f050040;
@@ -700,15 +704,15 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     public static final class layout {
         public static final int comment_popuwindow=0x7f030000;
         public static final int dialog=0x7f030001;
-        public static final int food_material_gridview_item=0x7f030002;
-        public static final int login_activity=0x7f030003;
-        public static final int logon_activity=0x7f030004;
-        public static final int main=0x7f030005;
-        public static final int main_menu=0x7f030006;
-        public static final int main_tab_0=0x7f030007;
-        public static final int main_tab_1=0x7f030008;
-        public static final int main_tab_2=0x7f030009;
-        public static final int main_tab_3=0x7f03000a;
+        public static final int login_activity=0x7f030002;
+        public static final int logon_activity=0x7f030003;
+        public static final int main=0x7f030004;
+        public static final int main_menu=0x7f030005;
+        public static final int main_tab_0=0x7f030006;
+        public static final int main_tab_1=0x7f030007;
+        public static final int main_tab_2=0x7f030008;
+        public static final int main_tab_3=0x7f030009;
+        public static final int material_detail_dialg=0x7f03000a;
         public static final int progress=0x7f03000b;
         public static final int pull_to_refresh_header_horizontal=0x7f03000c;
         public static final int pull_to_refresh_header_vertical=0x7f03000d;
@@ -725,16 +729,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int tab2_address=0x7f030018;
         public static final int tab2_bought=0x7f030019;
         public static final int tab2_bougth_item=0x7f03001a;
-        public static final int tab2_recevice_time=0x7f03001b;
-        public static final int tab2_time_remind=0x7f03001c;
-        public static final int tab2_wait_pay=0x7f03001d;
-        public static final int tab2_waitforpay_item=0x7f03001e;
-        public static final int tab3_about_our=0x7f03001f;
-        public static final int tab3_add_work=0x7f030020;
-        public static final int tab3_degree=0x7f030021;
-        public static final int tab3_mycollection=0x7f030022;
-        public static final int tab3_mywork=0x7f030023;
-        public static final int tab3_mywork_mycollection_item=0x7f030024;
+        public static final int tab2_food_material_gridview_item=0x7f03001b;
+        public static final int tab2_recevice_time=0x7f03001c;
+        public static final int tab2_time_remind=0x7f03001d;
+        public static final int tab2_wait_pay=0x7f03001e;
+        public static final int tab2_waitforpay_item=0x7f03001f;
+        public static final int tab3_about_our=0x7f030020;
+        public static final int tab3_add_work=0x7f030021;
+        public static final int tab3_degree=0x7f030022;
+        public static final int tab3_mycollection=0x7f030023;
+        public static final int tab3_mywork=0x7f030024;
+        public static final int tab3_mywork_mycollection_item=0x7f030025;
     }
     public static final class menu {
         public static final int main=0x7f0c0000;
@@ -773,6 +778,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int AnimFade=0x7f0b0000;
         public static final int Anim_style=0x7f0b0001;
         public static final int MyDialogStyle=0x7f0b0003;
+        public static final int dialogWindowAnim=0x7f0b0004;
         public static final int h_line=0x7f0b0002;
     }
     public static final class styleable {

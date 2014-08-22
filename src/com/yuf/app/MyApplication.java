@@ -16,8 +16,7 @@ public  class MyApplication extends Application {
 	
 	public static RequestQueue requestQueue;
 	public static MyApplication myapplication;
-	public static String sessionid;
-	public static String userid;
+
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub

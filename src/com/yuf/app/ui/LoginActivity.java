@@ -12,6 +12,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.yuf.app.MyApplication;
+import com.yuf.app.Entity.UserInfo;
 
 import android.R.string;
 import android.app.Activity;
@@ -110,8 +111,8 @@ public class LoginActivity extends Activity {
                 	try {
 						if(response.get("login").equals("success"))
 						{
-							MyApplication.sessionid=response.getString("sessionid");
-							MyApplication.userid=response.getString("userid");
+							UserInfo.getInstance().setSessionid(response.getString("sessionid"));
+							UserInfo.getInstance().setUserid(response.getString("userid"));
 							Intent intent=new Intent(getApplicationContext(),Main.class);
 							startActivity(intent);
 							finish();

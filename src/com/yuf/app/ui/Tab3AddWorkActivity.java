@@ -14,6 +14,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.yuf.app.MyApplication;
+import com.yuf.app.Entity.UserInfo;
 import com.yuf.app.http.extend.PostFile;
 
 import android.R.integer;
@@ -61,8 +62,11 @@ public class Tab3AddWorkActivity extends Activity {
 	timeTextView=(TextView)findViewById(R.id.tab3_addwork_time_textview);
 	shareContentEditText=(EditText)findViewById(R.id.tab3_addwork_content_textview);
 	foodImageView=(ImageView)findViewById(R.id.tab3_addwork_photo_image);
-	picName= MyApplication.userid+String.valueOf(System.currentTimeMillis())+".jpg";
-	
+	picName=UserInfo.getInstance().getUserid()+String.valueOf(System.currentTimeMillis())+".jpg";
+	long currentTime = System.currentTimeMillis();
+	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	Date date = new Date(currentTime);
+	timeTextView.setText(formatter.format(date));
 	publicButton.setOnClickListener(new OnClickListener() {
 		
 		@Override
@@ -70,13 +74,9 @@ public class Tab3AddWorkActivity extends Activity {
 			// TODO Auto-generated method stub
 			JSONObject json=new JSONObject();
 			try {
-				json.put("userId",Integer.valueOf( MyApplication.userid));
+				json.put("userId",Integer.valueOf(UserInfo.getInstance().getUserid()));
 				json.put("postTitle", nameEditText.getText().toString());
-				
-				long currentTime = System.currentTimeMillis();
-				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				Date date = new Date(currentTime);
-				json.put("postTime",formatter.format(date));
+				json.put("postTime",timeTextView.getText().toString());
 				json.put("postContent", shareContentEditText.getText().toString());
 				json.put("postPicture",picName);
 			} catch (JSONException e) {
