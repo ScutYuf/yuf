@@ -29,8 +29,6 @@ import com.handmark.pulltorefresh.library.extras.SoundPullEventListener;
 import com.yuf.app.MyApplication;
 import com.yuf.app.Entity.UserInfo;
 import com.yuf.app.http.extend.BitmapCache;
-import com.yuf.app.mywidget.XListView;
-import com.yuf.app.mywidget.XListView.IXListViewListener;
 
 import android.R.bool;
 import android.R.integer;

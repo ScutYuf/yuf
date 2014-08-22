@@ -397,43 +397,43 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int vpiUnderlinePageIndicatorStyle=0x7f010018;
     }
     public static final class bool {
-        public static final int default_circle_indicator_centered=0x7f090000;
-        public static final int default_circle_indicator_snap=0x7f090001;
-        public static final int default_line_indicator_centered=0x7f090002;
-        public static final int default_title_indicator_selected_bold=0x7f090003;
-        public static final int default_underline_indicator_fades=0x7f090004;
+        public static final int default_circle_indicator_centered=0x7f080000;
+        public static final int default_circle_indicator_snap=0x7f080001;
+        public static final int default_line_indicator_centered=0x7f080002;
+        public static final int default_title_indicator_selected_bold=0x7f080003;
+        public static final int default_underline_indicator_fades=0x7f080004;
     }
     public static final class color {
-        public static final int default_circle_indicator_fill_color=0x7f080001;
-        public static final int default_circle_indicator_page_color=0x7f080002;
-        public static final int default_circle_indicator_stroke_color=0x7f080003;
-        public static final int default_line_indicator_selected_color=0x7f080004;
-        public static final int default_line_indicator_unselected_color=0x7f080005;
-        public static final int default_title_indicator_footer_color=0x7f080006;
-        public static final int default_title_indicator_selected_color=0x7f080007;
-        public static final int default_title_indicator_text_color=0x7f080008;
-        public static final int default_underline_indicator_selected_color=0x7f080009;
-        public static final int transparent=0x7f080000;
+        public static final int default_circle_indicator_fill_color=0x7f060001;
+        public static final int default_circle_indicator_page_color=0x7f060002;
+        public static final int default_circle_indicator_stroke_color=0x7f060003;
+        public static final int default_line_indicator_selected_color=0x7f060004;
+        public static final int default_line_indicator_unselected_color=0x7f060005;
+        public static final int default_title_indicator_footer_color=0x7f060006;
+        public static final int default_title_indicator_selected_color=0x7f060007;
+        public static final int default_title_indicator_text_color=0x7f060008;
+        public static final int default_underline_indicator_selected_color=0x7f060009;
+        public static final int transparent=0x7f060000;
     }
     public static final class dimen {
-        public static final int default_circle_indicator_radius=0x7f060005;
-        public static final int default_circle_indicator_stroke_width=0x7f060006;
-        public static final int default_line_indicator_gap_width=0x7f060008;
-        public static final int default_line_indicator_line_width=0x7f060007;
-        public static final int default_line_indicator_stroke_width=0x7f060009;
-        public static final int default_title_indicator_clip_padding=0x7f06000a;
-        public static final int default_title_indicator_footer_indicator_height=0x7f06000c;
-        public static final int default_title_indicator_footer_indicator_underline_padding=0x7f06000d;
-        public static final int default_title_indicator_footer_line_height=0x7f06000b;
-        public static final int default_title_indicator_footer_padding=0x7f06000e;
-        public static final int default_title_indicator_text_size=0x7f06000f;
-        public static final int default_title_indicator_title_padding=0x7f060010;
-        public static final int default_title_indicator_top_padding=0x7f060011;
-        public static final int header_footer_left_right_padding=0x7f060003;
-        public static final int header_footer_top_bottom_padding=0x7f060004;
-        public static final int indicator_corner_radius=0x7f060001;
-        public static final int indicator_internal_padding=0x7f060002;
-        public static final int indicator_right_padding=0x7f060000;
+        public static final int default_circle_indicator_radius=0x7f070005;
+        public static final int default_circle_indicator_stroke_width=0x7f070006;
+        public static final int default_line_indicator_gap_width=0x7f070008;
+        public static final int default_line_indicator_line_width=0x7f070007;
+        public static final int default_line_indicator_stroke_width=0x7f070009;
+        public static final int default_title_indicator_clip_padding=0x7f07000a;
+        public static final int default_title_indicator_footer_indicator_height=0x7f07000c;
+        public static final int default_title_indicator_footer_indicator_underline_padding=0x7f07000d;
+        public static final int default_title_indicator_footer_line_height=0x7f07000b;
+        public static final int default_title_indicator_footer_padding=0x7f07000e;
+        public static final int default_title_indicator_text_size=0x7f07000f;
+        public static final int default_title_indicator_title_padding=0x7f070010;
+        public static final int default_title_indicator_top_padding=0x7f070011;
+        public static final int header_footer_left_right_padding=0x7f070003;
+        public static final int header_footer_top_bottom_padding=0x7f070004;
+        public static final int indicator_corner_radius=0x7f070001;
+        public static final int indicator_internal_padding=0x7f070002;
+        public static final int indicator_right_padding=0x7f070000;
     }
     public static final class drawable {
         public static final int add=0x7f020000;
@@ -523,7 +523,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int account_editText=0x7f050017;
         public static final int analogClock1=0x7f0500a4;
         public static final int both=0x7f050003;
-        public static final int bottom=0x7f05000f;
+        public static final int bottom=0x7f05000c;
         public static final int button1=0x7f0500a5;
         public static final int button2=0x7f0500aa;
         public static final int circle_page_indicator=0x7f050078;
@@ -551,7 +551,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int food_material_gridview1=0x7f05006f;
         public static final int food_material_gridview2=0x7f050071;
         public static final int food_material_gridview3=0x7f050073;
-        public static final int gridview=0x7f050009;
+        public static final int gridview=0x7f05000e;
         public static final int head_img=0x7f050087;
         public static final int imageView1=0x7f050011;
         public static final int imageView2=0x7f050013;
@@ -579,14 +579,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int main_bottom=0x7f05002b;
         public static final int manualOnly=0x7f050004;
         public static final int menu_close=0x7f050031;
-        public static final int menu_settings=0x7f0500c8;
+        public static final int menu_settings=0x7f0500bf;
         public static final int more_imageView=0x7f050075;
         public static final int myfocus_account_text=0x7f050085;
         public static final int myfocus_head_img=0x7f050083;
         public static final int myfocus_name_text=0x7f050082;
         public static final int myfocus_right_row=0x7f050084;
         public static final int name_text=0x7f050088;
-        public static final int none=0x7f05000c;
+        public static final int none=0x7f050009;
         public static final int password_editText=0x7f050018;
         public static final int progress=0x7f050059;
         public static final int pullDownFromTop=0x7f050005;
@@ -603,7 +603,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int remember_checkbox=0x7f050019;
         public static final int rotate=0x7f050007;
         public static final int scrollView1=0x7f050042;
-        public static final int scrollview=0x7f05000b;
+        public static final int scrollview=0x7f050010;
         public static final int search_imageView=0x7f050033;
         public static final int share_TextView=0x7f05006e;
         public static final int share_text=0x7f05008b;
@@ -685,26 +685,17 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int time_text=0x7f05008c;
         public static final int time_textview=0x7f050068;
         public static final int title=0x7f050032;
-        public static final int top=0x7f050010;
-        public static final int triangle=0x7f05000d;
-        public static final int underline=0x7f05000e;
-        public static final int webview=0x7f05000a;
-        public static final int xlistview_footer_content=0x7f0500bf;
-        public static final int xlistview_footer_hint_textview=0x7f0500c1;
-        public static final int xlistview_footer_progressbar=0x7f0500c0;
-        public static final int xlistview_header_arrow=0x7f0500c6;
-        public static final int xlistview_header_content=0x7f0500c2;
-        public static final int xlistview_header_hint_textview=0x7f0500c4;
-        public static final int xlistview_header_progressbar=0x7f0500c7;
-        public static final int xlistview_header_text=0x7f0500c3;
-        public static final int xlistview_header_time=0x7f0500c5;
+        public static final int top=0x7f05000d;
+        public static final int triangle=0x7f05000a;
+        public static final int underline=0x7f05000b;
+        public static final int webview=0x7f05000f;
     }
     public static final class integer {
-        public static final int default_circle_indicator_orientation=0x7f0a0000;
-        public static final int default_title_indicator_footer_indicator_style=0x7f0a0001;
-        public static final int default_title_indicator_line_position=0x7f0a0002;
-        public static final int default_underline_indicator_fade_delay=0x7f0a0003;
-        public static final int default_underline_indicator_fade_length=0x7f0a0004;
+        public static final int default_circle_indicator_orientation=0x7f090000;
+        public static final int default_title_indicator_footer_indicator_style=0x7f090001;
+        public static final int default_title_indicator_line_position=0x7f090002;
+        public static final int default_underline_indicator_fade_delay=0x7f090003;
+        public static final int default_underline_indicator_fade_length=0x7f090004;
     }
     public static final class layout {
         public static final int comment_popuwindow=0x7f030000;
@@ -744,42 +735,39 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int tab3_mycollection=0x7f030022;
         public static final int tab3_mywork=0x7f030023;
         public static final int tab3_mywork_mycollection_item=0x7f030024;
-        public static final int xlistview_footer=0x7f030025;
-        public static final int xlistview_header=0x7f030026;
     }
     public static final class menu {
         public static final int main=0x7f0c0000;
     }
     public static final class string {
-        public static final int app_name=0x7f070006;
-        public static final int description=0x7f07000e;
-        public static final int httpError=0x7f07000f;
-        public static final int httpisNull=0x7f070010;
-        public static final int menu=0x7f07000d;
-        public static final int menu_settings=0x7f070007;
-        public static final int press_again_exit=0x7f070017;
+        public static final int app_name=0x7f0a0006;
+        public static final int description=0x7f0a000e;
+        public static final int httpError=0x7f0a000f;
+        public static final int httpisNull=0x7f0a0010;
+        public static final int menu=0x7f0a000d;
+        public static final int menu_settings=0x7f0a0007;
+        public static final int press_again_exit=0x7f0a0017;
         /**  Just use standard Pull Down String when pulling up. These can be set for languages which require it 
- Just use standard Pull Down String when pulling up. These can be set for languages which require it 
          */
-        public static final int pull_to_refresh_from_bottom_pull_label=0x7f070003;
-        public static final int pull_to_refresh_from_bottom_refreshing_label=0x7f070005;
-        public static final int pull_to_refresh_from_bottom_release_label=0x7f070004;
-        public static final int pull_to_refresh_pull_label=0x7f070000;
-        public static final int pull_to_refresh_refreshing_label=0x7f070002;
-        public static final int pull_to_refresh_release_label=0x7f070001;
-        public static final int tab0_title=0x7f070009;
-        public static final int tab1_title=0x7f07000a;
-        public static final int tab2_title=0x7f07000b;
-        public static final int tab3_title=0x7f07000c;
-        public static final int title_activity_main=0x7f070008;
-        public static final int xlistview_footer_hint_normal=0x7f070015;
-        public static final int xlistview_footer_hint_ready=0x7f070016;
-        public static final int xlistview_header_hint_loading=0x7f070013;
+        public static final int pull_to_refresh_from_bottom_pull_label=0x7f0a0003;
+        public static final int pull_to_refresh_from_bottom_refreshing_label=0x7f0a0005;
+        public static final int pull_to_refresh_from_bottom_release_label=0x7f0a0004;
+        public static final int pull_to_refresh_pull_label=0x7f0a0000;
+        public static final int pull_to_refresh_refreshing_label=0x7f0a0002;
+        public static final int pull_to_refresh_release_label=0x7f0a0001;
+        public static final int tab0_title=0x7f0a0009;
+        public static final int tab1_title=0x7f0a000a;
+        public static final int tab2_title=0x7f0a000b;
+        public static final int tab3_title=0x7f0a000c;
+        public static final int title_activity_main=0x7f0a0008;
+        public static final int xlistview_footer_hint_normal=0x7f0a0015;
+        public static final int xlistview_footer_hint_ready=0x7f0a0016;
+        public static final int xlistview_header_hint_loading=0x7f0a0013;
         /**  上拉下拉 
          */
-        public static final int xlistview_header_hint_normal=0x7f070011;
-        public static final int xlistview_header_hint_ready=0x7f070012;
-        public static final int xlistview_header_last_time=0x7f070014;
+        public static final int xlistview_header_hint_normal=0x7f0a0011;
+        public static final int xlistview_header_hint_ready=0x7f0a0012;
+        public static final int xlistview_header_last_time=0x7f0a0014;
     }
     public static final class style {
         public static final int AnimFade=0x7f0b0000;
