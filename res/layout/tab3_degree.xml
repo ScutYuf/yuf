@@ -130,7 +130,7 @@
             android:src="@drawable/medal" />
 
         <TextView
-            android:id="@+id/TextView02"
+            android:id="@+id/tab3_myfocus_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -145,7 +145,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@+id/TextView02"
+            android:layout_toRightOf="@+id/tab3_myfocus_textview"
             android:text="1"
             android:textSize="20sp" />
     </RelativeLayout>

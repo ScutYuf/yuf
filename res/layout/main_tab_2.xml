@@ -98,7 +98,7 @@
                 android:src="@drawable/yifukuan" />
 
             <TextView
-                android:id="@+id/TextView02"
+                android:id="@+id/tab3_myfocus_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

@@ -37,7 +37,7 @@
             android:src="@drawable/button_details_gohome" />
     </RelativeLayout>
 
-    <com.yuf.app.mywidget.XListView
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/tab3_mycollection_listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -1,5 +1,7 @@
 package com.yuf.app.ui;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +34,7 @@ import com.yuf.app.http.extend.BitmapCache;
 
 import android.R.bool;
 import android.R.integer;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.DataSetObserver;
@@ -95,7 +98,8 @@ public class Tab3MyWorkActivity extends Activity {
 		public void onLastItemVisible() {
 		
 				Toast.makeText(Tab3MyWorkActivity.this, "End of List!", Toast.LENGTH_SHORT).show();
-			
+			getDate(++currentPage);
+				
 		}
 	});
 	madaAdapter=new MyListAdapter();
@@ -146,6 +150,7 @@ public class Tab3MyWorkActivity extends Activity {
 				try {
 					jsonArray = response.getJSONArray("postData");
 					mjsonArray=MyApplication.joinJSONArray(mjsonArray, jsonArray);
+					madaAdapter.notifyDataSetChanged();
 					Log.d("mywork", mjsonArray.toString());
 					Log.d("mywork",String.valueOf( mjsonArray.length()));
 				} catch (JSONException e1) {
@@ -156,18 +161,20 @@ public class Tab3MyWorkActivity extends Activity {
 				
 				
 				try {
-					if (response.getInt("currentPage")>=response.getInt("postMaxpage")) {
+					if (response.getInt("currentPage")>=response.getInt("postMaxPage")) {
 						listView.setMode(Mode.PULL_FROM_START);
 					}
-					listView.onRefreshComplete();
+					
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				madaAdapter.notifyDataSetChanged();
+				
 				// Call onRefreshComplete when the list has been refreshed.
 				
 				// TODO Auto-generated method stub
+				listView.onRefreshComplete();
+				
 				
 			}
 		}, new com.android.volley.Response.ErrorListener() {
@@ -221,7 +228,7 @@ public class Tab3MyWorkActivity extends Activity {
 				return position;
 			}
 
-			@Override
+			@SuppressLint("SimpleDateFormat") @Override
 			public View getView(int position, View convertView, ViewGroup parent) {
 				Log.d("mywork", "get");
 				if (convertView==null) {
@@ -230,14 +237,29 @@ public class Tab3MyWorkActivity extends Activity {
 				}
 				NetworkImageView imageView=(NetworkImageView)convertView.findViewById(R.id.tab3_mywork_item_img);
 				try {
-					imageView.setImageURI(Uri.parse("http://110.84.129.130:8080/Yuf/images/post"+mjsonArray.getJSONObject(position).getString("postpicurl")));
+					imageView.setImageUrl("http://110.84.129.130:8080/Yuf"+mjsonArray.getJSONObject(position).getString("postpicurl"),mImageLoader);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				TextView posttitle=(TextView)convertView.findViewById(R.id.tab3_mywork_item_name);
+				try {
+					posttitle.setText(mjsonArray.getJSONObject(position).getString("posttitle"));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				TextView posttime=(TextView)convertView.findViewById(R.id.tab3_mywork_item_time);
+				try {
+					long currentTime=mjsonArray.getJSONObject(position).getLong("posttime");
 				
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					Date date = new Date(currentTime);
+					posttime.setText(formatter.format(date));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				// TODO Auto-generated method stub
 				return convertView;
 			}
@@ -250,6 +272,7 @@ public class Tab3MyWorkActivity extends Activity {
 		private void refreshListView()
 		{
 			currentPage=0;
+			mjsonArray=new JSONArray();
 			getDate(++currentPage);
 			listView.setMode(Mode.BOTH);
 		}

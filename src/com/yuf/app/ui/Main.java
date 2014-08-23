@@ -3,6 +3,7 @@ package com.yuf.app.ui;
 import java.util.ArrayList;
 import java.util.Timer;
 
+import org.apache.http.client.UserTokenHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -82,7 +83,7 @@ public class Main extends FragmentActivity {
 	private TextView tab3nicknameTextView;
 	private TextView tab3accountTextView;
 	private TextView tab3levelnametTextView;
-	
+	private TextView tab3userfollowsTextView;
 	
 	
 	public static FragmentActivity mainActivity;
@@ -148,16 +149,7 @@ public class Main extends FragmentActivity {
 
 		 
 	
-	private void initTab3() {
-		
-		tab3accountTextView=(TextView)view3.findViewById(R.id.tab3_account);
-		tab3levelnametTextView=(TextView)view3.findViewById(R.id.tab3_levelname);
-		tab3nicknameTextView=(TextView)view3.findViewById(R.id.tab3_nickname);
-		
-		
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 //tab2 onclick 函数的关联在xml文件中
 	
@@ -209,6 +201,19 @@ public void onClickLogout(View view) {
 	logout();
 }
 	
+	private void initTab3() {
+	
+	tab3accountTextView=(TextView)view3.findViewById(R.id.tab3_account);
+	tab3levelnametTextView=(TextView)view3.findViewById(R.id.tab3_levelname);
+	tab3nicknameTextView=(TextView)view3.findViewById(R.id.tab3_nickname);
+	tab3userfollowsTextView=(TextView)view3.findViewById(R.id.tab3_myfocus_textview);
+	
+	// TODO Auto-generated method stub
+	
+}
+
+
+
 	private void initTab2() {
 		// TODO Auto-generated method stub
 				// TODO Auto-generated method stub
@@ -391,11 +396,7 @@ public void onClickLogout(View view) {
 			case 3:
 				mTab3.setImageDrawable(getResources().getDrawable(
 						R.drawable.tab_3_pressed));
-				//初始化我的信息界面
-				setTab3UserInfo();
-				
-				
-				
+
 				if (currIndex == 0) {
 					mTab0.setImageDrawable(getResources().getDrawable(
 							R.drawable.tab_0_normal));
@@ -432,6 +433,7 @@ public void onClickLogout(View view) {
 		
 				if (System.currentTimeMillis() - frist_back_time < 1500) {
 					exitApplication();
+				
 				}
 				frist_back_time=System.currentTimeMillis();
 	}
@@ -475,7 +477,7 @@ private void exitApplication() {
         public void onResponse(JSONObject response)  
         {  
         	try {
-				if(response.get("logout").equals("success"))
+        		if(response.getInt("code")==0)
 				{
 					finish();
 					
@@ -569,6 +571,7 @@ private void setTab3UserInfo() {
 	tab3accountTextView.setText(UserInfo.getInstance().getUseraccount());
 	tab3levelnametTextView.setText(UserInfo.getInstance().getLevelname());
 	tab3nicknameTextView.setText(UserInfo.getInstance().getUsername());
+	tab3userfollowsTextView.setText("我的关注："+String.valueOf(UserInfo.getInstance().getUserfollows()));
 }
 
 	 private void getUserInfo()
@@ -636,7 +639,7 @@ private void setTab3UserInfo() {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-	             
+					setTab3UserInfo();
 	             
 	             
 	             
