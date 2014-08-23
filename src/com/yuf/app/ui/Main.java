@@ -67,6 +67,7 @@ public class Main extends FragmentActivity {
 	private TitlePageIndicator tab0Indicator;
 	private ViewPager tab0Viewpage;
 	private ImageView tab0SearchImageView;
+	private JSONObject recomnddish;
 	//tab1的变量
 	private ListView tab1ShareListView;
 	private ListView tab1FocusListView;
@@ -138,9 +139,7 @@ public class Main extends FragmentActivity {
 		//四模块初始化
 		
 		initTab0();
-		addTab0ViewpageFragment();
 		initTab1();
-		addTab1ViewpageFragment();
 		initTab2();
 		initTab3();
 		getUserInfo();
@@ -221,7 +220,7 @@ public void onClickLogout(View view) {
 
 	private void initTab1() {
 		// TODO Auto-generated method stub
-		
+		addTab1ViewpageFragment();
 	}
 
 
@@ -242,6 +241,7 @@ public void onClickLogout(View view) {
 				
 			}
 		});
+			addTab0ViewpageFragment();
 	}
 
 
@@ -655,6 +655,87 @@ private void setTab3UserInfo() {
 	 	Log.d("liow","request start");
 	 	MyApplication.requestQueue.start();
 	 }
-	 
+	 private void getShareInfo()
+	 {
+		 JsonObjectRequest request=new JsonObjectRequest(Method.GET, "http://110.84.129.130:8080/Yuf/user/getUser/"+UserInfo.getInstance().getSessionid(), null,  new Response.Listener<JSONObject>()  
+			     {  
+
+			         @Override  
+			         public void onResponse(JSONObject response)  
+			         {  
+			         	
+			             Log.e("TAG", response.toString()); 
+			             
+			             UserInfo tmpInfo=UserInfo.getInstance();
+			         
+
+							try {
+								tmpInfo.setLeveldiscout(response.getDouble("leveldiscount"));
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							try {
+								tmpInfo.setUsername(response.getString("username"));
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							try {
+								tmpInfo.setUserfollows(response.getInt("userfollows"));
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							try {
+								tmpInfo.setUserfans(response.getInt("userfans"));
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							try {
+								tmpInfo.setUserpoints(response.getInt("userpoints"));
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							try {
+								tmpInfo.setUseraccount(response.getString("useraccount"));
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						
+							try {
+								tmpInfo.setLevelname(response.getString("levelname"));
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							try {
+								tmpInfo.setLevelpoints(response.getInt("levelpoints"));
+							} catch (JSONException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+			             
+			             
+			             
+			             
+			             
+			         }  
+			     }, new Response.ErrorListener()  
+			     {  
+
+			         @Override  
+			         public void onErrorResponse(VolleyError error)  
+			         {  
+			             Log.e("TAG", error.getMessage(), error);  
+			         }  
+			     });
+			 	MyApplication.requestQueue.add(request);
+			 	Log.d("liow","request start");
+			 	MyApplication.requestQueue.start();
+	 }
 	 
 }// end this Main class

@@ -1,21 +1,14 @@
 package com.yuf.app.ui;
 
+import java.net.URL;
 import java.util.ArrayList;
-
-import com.yuf.app.adapter.OutsidePagerAdapter;
-import com.yuf.app.mywidget.FoodViewPage;
-import com.yuf.app.ui.R.drawable;
-import com.yuf.app.ui.indicator.CirclePageIndicator;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,20 +18,29 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.yuf.app.adapter.OutsidePagerAdapter;
+import com.yuf.app.mywidget.FoodViewPage;
+import com.yuf.app.ui.indicator.CirclePageIndicator;
 
 @SuppressLint("ValidFragment")
 public class Tab0MyRecipeFragment extends Fragment {
 
-	private ImageView lefImageView;
-	private ImageView righImageView;
+
 	private Button detailButton;
 	private Button commentbuttoButton;
 	private Button collectionButton;
 	private CirclePageIndicator foodindiactor;
 	private FoodViewPage viewPager;
 	private ArrayList<View> mViews;
+	private ArrayList<String>imgUrlList;
+//	
+//	Tab0MyRecipeFragment(ArrayList<String>_imgUrlList)
+//	{
+//		super();
+//		imgUrlList=_imgUrlList;
+//	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

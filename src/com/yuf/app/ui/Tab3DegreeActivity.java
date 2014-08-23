@@ -31,8 +31,7 @@ public class Tab3DegreeActivity extends Activity {
 	leveldiscountTextView.setText(String.valueOf(UserInfo.getInstance().getLeveldiscout()));
 	levelnameTextView.setText(UserInfo.getInstance().getLevelname());
 	userpointsTextView.setText(String.valueOf(UserInfo.getInstance().getUserpoints()));
-	levelpointsBar.setMax(UserInfo.getInstance().getLevelpoints());
-	levelpointsBar.setProgress(UserInfo.getInstance().getUserpoints());
+	levelpointsBar.setProgress(UserInfo.getInstance().getUserpoints()/UserInfo.getInstance().getLevelpoints()*100);
 	
 	
 	
