@@ -35,6 +35,7 @@ import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.DataSetObserver;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.DateUtils;
@@ -62,8 +63,7 @@ public class Tab3MyWorkActivity extends Activity {
 	private MyListAdapter madaAdapter;
 	private Boolean isEnd=false;
 	private Boolean isLoading=false;
-	private int pageindex=0;
-	private int max_page_index;
+	private int currentPage=0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +71,7 @@ public class Tab3MyWorkActivity extends Activity {
 		super.onCreate(savedInstanceState);
 	setContentView(R.layout.tab3_mywork);
 	mjsonArray=new JSONArray();
+	Log.d("mywork", mjsonArray.toString());
 	mImageLoader = new ImageLoader(MyApplication.requestQueue, new BitmapCache()); 
 	listView=(PullToRefreshListView)findViewById(R.id.tab3_mywork_listview);
 	listView.setAdapter(new MyListAdapter());
@@ -79,16 +80,13 @@ public class Tab3MyWorkActivity extends Activity {
 		public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 			String label = DateUtils.formatDateTime(getApplicationContext(), System.currentTimeMillis(),
 					DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
-
 			// Update the LastUpdatedLabel
 			refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 
 			// Do work to refresh the list here.
-			getDate(++pageindex);
-			if (pageindex>=max_page_index) {
-				listView.setMode(listView.getMode() == Mode.BOTH ? Mode.PULL_FROM_START
-						: Mode.BOTH);
-			}
+			refreshListView();
+
+			
 		}
 	});
 	listView.setOnLastItemVisibleListener(new OnLastItemVisibleListener() {
@@ -102,8 +100,7 @@ public class Tab3MyWorkActivity extends Activity {
 	});
 	madaAdapter=new MyListAdapter();
 	listView.setAdapter(madaAdapter);
-	listView.setMode(listView.getMode() == Mode.BOTH ? Mode.PULL_FROM_START
-			: Mode.BOTH);
+	listView.setMode(Mode.BOTH);
 
 	
 	backImageView=(ImageView)findViewById(R.id.tab3_mywork_back_imageview);
@@ -129,23 +126,44 @@ public class Tab3MyWorkActivity extends Activity {
 			
 		}
 	});
+	
+	refreshListView();
 }
 	
 	
 
 		
 		
-		void getDate(int pageindex)
+		void getDate(int _pageindex)
 		{
 		
-		JsonObjectRequest request=new JsonObjectRequest(Method.GET,String.format("http://110.84.129.130:8080/Yuf/post/getPost/%s/%d", UserInfo.getInstance().getUserid(),1), null, new com.android.volley.Response.Listener<JSONObject>() {
+		JsonObjectRequest request=new JsonObjectRequest(Method.GET,String.format("http://110.84.129.130:8080/Yuf/post/getPost/%s/%d", UserInfo.getInstance().getUserid(),_pageindex), null, new com.android.volley.Response.Listener<JSONObject>() {
 
 			@Override
 			public void onResponse(JSONObject response) {
 				Log.d(TAG, response.toString());
-			
-					JSONArray jsonArray=response.names();
-				mjsonArray=MyApplication.joinJSONArray(mjsonArray, jsonArray);
+				JSONArray jsonArray;
+				try {
+					jsonArray = response.getJSONArray("postData");
+					mjsonArray=MyApplication.joinJSONArray(mjsonArray, jsonArray);
+					Log.d("mywork", mjsonArray.toString());
+					Log.d("mywork",String.valueOf( mjsonArray.length()));
+				} catch (JSONException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+				
+				try {
+					if (response.getInt("currentPage")>=response.getInt("postMaxpage")) {
+						listView.setMode(Mode.PULL_FROM_START);
+					}
+					listView.onRefreshComplete();
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				madaAdapter.notifyDataSetChanged();
 				// Call onRefreshComplete when the list has been refreshed.
 				
@@ -162,6 +180,8 @@ public class Tab3MyWorkActivity extends Activity {
 			
 	
 		} );
+		MyApplication.requestQueue.add(request);
+		MyApplication.requestQueue.start();
 		}
 	
 
@@ -179,8 +199,8 @@ public class Tab3MyWorkActivity extends Activity {
 			@Override
 			public int getCount() {
 				// TODO Auto-generated method stub
-//				return mjsonArray.length();
-				return 3;
+				return mjsonArray.length();
+			
 			}
 
 			@Override
@@ -203,12 +223,18 @@ public class Tab3MyWorkActivity extends Activity {
 
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
+				Log.d("mywork", "get");
 				if (convertView==null) {
 					convertView=getLayoutInflater().inflate(R.layout.tab3_mywork_mycollection_item,null);
 					
 				}
 				NetworkImageView imageView=(NetworkImageView)convertView.findViewById(R.id.tab3_mywork_item_img);
-//				imageView.setImageURI(mjsonArray.getString(""+"postpicurl"))
+				try {
+					imageView.setImageURI(Uri.parse("http://110.84.129.130:8080/Yuf/images/post"+mjsonArray.getJSONObject(position).getString("postpicurl")));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				TextView posttitle=(TextView)convertView.findViewById(R.id.tab3_mywork_item_name);
 				TextView posttime=(TextView)convertView.findViewById(R.id.tab3_mywork_item_time);
 				
@@ -220,5 +246,11 @@ public class Tab3MyWorkActivity extends Activity {
 		
 			
 			
+		}
+		private void refreshListView()
+		{
+			currentPage=0;
+			getDate(++currentPage);
+			listView.setMode(Mode.BOTH);
 		}
 }

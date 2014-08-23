@@ -26,6 +26,9 @@ public  class MyApplication extends Application {
 	}
 	
 	public static JSONArray joinJSONArray(JSONArray mData, JSONArray array) {
+	if (mData.toString().equals("[]")) {
+		return array;
+	}
 	    StringBuffer buffer = new StringBuffer();
 	    try {
 	      int len = mData.length();

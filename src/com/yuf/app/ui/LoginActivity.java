@@ -109,7 +109,7 @@ public class LoginActivity extends Activity {
                 public void onResponse(JSONObject response)  
                 {  
                 	try {
-						if(response.get("login").equals("success"))
+						if(response.getInt("code")==0)
 						{
 							UserInfo.getInstance().setSessionid(response.getString("sessionid"));
 							UserInfo.getInstance().setUserid(response.getString("userid"));

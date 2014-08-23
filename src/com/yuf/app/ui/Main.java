@@ -525,7 +525,7 @@ private void logout() {
         public void onResponse(JSONObject response)  
         {  
         	try {
-				if(response.get("logout").equals("success"))
+				if(response.getInt("code")==0)
 				{
 					finish();
 					Intent intent=new Intent(getApplicationContext(),LoginActivity.class);

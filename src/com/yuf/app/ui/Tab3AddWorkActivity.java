@@ -1,6 +1,8 @@
 package com.yuf.app.ui;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -55,7 +57,7 @@ public class Tab3AddWorkActivity extends Activity {
 		super.onCreate(savedInstanceState);
 	setContentView(R.layout.tab3_add_work);
 	saveDir= Environment.getExternalStorageDirectory()
-			.getPath() + "/temp_image";
+			.getPath() + "/yuf_image";
 	photoButton=(Button)findViewById(R.id.tab3_addwork_photo_button);
 	publicButton=(Button)findViewById(R.id.tab3_addwork_public_button);
 	nameEditText=(AutoCompleteTextView)findViewById(R.id.tab3_addwork_name);
@@ -130,6 +132,9 @@ MyApplication.requestQueue.start();
 				file.delete();
 				if (!file.exists()) {
 					try {
+						if (!file.getParentFile().exists()) {
+							file.getParentFile().mkdirs();
+						}
 						file.createNewFile();
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -198,9 +203,29 @@ MyApplication.requestQueue.start();
 		@Override
 		protected Long doInBackground(File... params) {
 			// TODO Auto-generated method stub
+			compressBmpToFile(photo, params[0]);
 			PostFile.uploadFile(params[0], "http://110.84.129.130:8080/Yuf/post/upload/picture");
 			return null;
 		}
+	 }
+	 private void compressBmpToFile(Bitmap bmp,File file)
+	 {
+		 ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+	        int options = 80;//个人喜欢从80开始,  
+	        bmp.compress(Bitmap.CompressFormat.JPEG, options, baos);  
+	        while (baos.toByteArray().length / 1024 > 100) {   
+	            baos.reset();  
+	            options -= 10;  
+	            bmp.compress(Bitmap.CompressFormat.JPEG, options, baos);  
+	        }  
+	        try {  
+	            FileOutputStream fos = new FileOutputStream(file);  
+	            fos.write(baos.toByteArray());  
+	            fos.flush();  
+	            fos.close();  
+	        } catch (Exception e) {  
+	            e.printStackTrace();  
+	        }  
 	 }
 
 

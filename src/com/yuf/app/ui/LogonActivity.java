@@ -89,7 +89,7 @@ public class LogonActivity extends Activity {
 	                	try {
 	                		//注册成功，提示注册成功，后就调用登陆接口进入Main
 	                		
-							if(response.get("logon").equals("success"))
+							if(response.getInt("code")==0)
 							{
 								Log.d("liow", "注册成功");
 
@@ -97,10 +97,10 @@ public class LogonActivity extends Activity {
 							}
 							else {
 								Toast toast = Toast.makeText(getApplicationContext(),
-									     response.getString("reason"), Toast.LENGTH_SHORT);
+									     response.getString("msg"), Toast.LENGTH_SHORT);
 									   toast.setGravity(Gravity.CENTER, 0, 0);
 									   toast.show();
-									   if (response.getString("reason").equals("username existed")) 
+									   if (response.getInt("code")==2) 
 										   nameEditText.setText("");
 									else 
 										accountEditText.setText("");
