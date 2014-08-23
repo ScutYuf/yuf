@@ -12,7 +12,7 @@
         android:layout_height="45dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:background="@drawable/title_bar"
+        android:background="#000"
         android:gravity="center_vertical" >
 
         <TextView
@@ -21,6 +21,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:layout_alignParentTop="true"
+             android:layout_centerInParent="true"
+            android:layout_marginLeft="20dp"
             android:text="总额："
             android:textColor="#fff"
             android:textColorHint="#fff"
@@ -70,8 +73,9 @@
 
                 <ImageView
                     android:id="@+id/imageView2"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="15dp"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/zhuliao" />
 
@@ -93,8 +97,8 @@
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/fuliao" />
 
@@ -116,8 +120,8 @@
 
                 <ImageView
                     android:id="@+id/imageView4"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/peiliao" />
 
