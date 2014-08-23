@@ -1,7 +1,10 @@
 package com.yuf.app.ui;
 
-import java.net.URL;
 import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -9,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,12 +21,17 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
+import com.yuf.app.MyApplication;
 import com.yuf.app.adapter.OutsidePagerAdapter;
+import com.yuf.app.http.extend.BitmapCache;
 import com.yuf.app.mywidget.FoodViewPage;
 import com.yuf.app.ui.indicator.CirclePageIndicator;
+//import com.yuf.app.mywidget.FoodViewPage;
 
 @SuppressLint("ValidFragment")
 public class Tab0MyRecipeFragment extends Fragment {
@@ -34,61 +43,37 @@ public class Tab0MyRecipeFragment extends Fragment {
 	private CirclePageIndicator foodindiactor;
 	private FoodViewPage viewPager;
 	private ArrayList<View> mViews;
-	private ArrayList<String>imgUrlList;
-//	
-//	Tab0MyRecipeFragment(ArrayList<String>_imgUrlList)
-//	{
-//		super();
-//		imgUrlList=_imgUrlList;
-//	}
+	private JSONArray mdataArray;
+	private ImageLoader mImageLoader;
+	private TextView difficultyTextView;
+	private TextView doseTextView;
+	private TextView skillTextView;
+	private TextView timeTextView;
+	private TextView nameTextView;
+	public Tab0MyRecipeFragment(JSONArray _dataArray) {
+		mdataArray=_dataArray;
+		// TODO Auto-generated constructor stub
+	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		Log.d("liow", "myrecipefragment");
-		mViews=new ArrayList<View>();
 		
 		
 		
 		
-		//初始化7张图片
-		for(int i=0;i<7;i++)
-		{
-			
-			ImageView imageView=new ImageView(getActivity());
-			if (i%2==0) {
-				imageView.setImageResource(R.drawable.food1);
-				
-			}
-			else {
-				imageView.setImageResource(R.drawable.food2);
-			}
-			
-			mViews.add(imageView);
-		}
+		mImageLoader = new ImageLoader(MyApplication.requestQueue, new BitmapCache()); 
 		
-//		//初始化viewpage
-//		
+		
+		
+		
 		View view=inflater.inflate(R.layout.tab0_recipe_fragment,container,false);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		viewPager=(FoodViewPage)view.findViewById(R.id.recipe_fragment_viewpage);
-		viewPager.setAdapter(new OutsidePagerAdapter(mViews) );
-		viewPager.setOffscreenPageLimit(7);
-		
-		foodindiactor=(CirclePageIndicator)view.findViewById(R.id.circle_page_indicator);
-		foodindiactor.setViewPager(viewPager);
 
-		
-			
-		
+		difficultyTextView=(TextView)view.findViewById(R.id.tab0_recipe_fragment__dishdifficulty_textview);
+		doseTextView=(TextView)view.findViewById(R.id.tab0_recipe_fragment_dishamount_textview);
+		timeTextView=(TextView)view.findViewById(R.id.tab0_recipe_fragment_dishcooktime_textview);
+		nameTextView=(TextView)view.findViewById(R.id.tab0_recipe_fragment_foodname_textview);
 		commentbuttoButton=(Button)view.findViewById(R.id.comment_button);
 		commentbuttoButton.setOnClickListener(new OnClickListener() {
 			
@@ -149,15 +134,83 @@ public class Tab0MyRecipeFragment extends Fragment {
 				
 				Intent intent=new Intent(Main.mainActivity,
 						Tab0FoodActivity.class);
+//				inten
 				startActivity(intent);
 				// TODO Auto-generated method stub
 				
 			}
 		});
 		
+		//
+		try {
+			initView();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		viewPager=(FoodViewPage)view.findViewById(R.id.recipe_fragment_viewpage);
+		viewPager.setAdapter(new OutsidePagerAdapter(mViews) );
+		viewPager.setOffscreenPageLimit(7);
+		foodindiactor=(CirclePageIndicator)view.findViewById(R.id.circle_page_indicator);
+		foodindiactor.setViewPager(viewPager);
+		foodindiactor.setOnPageChangeListener(new MyPageChangeAdapter1());
+	
 		return  view;
 	}
 	
-	
+	private void initView() throws JSONException
+	{
+		mViews=new ArrayList<View>();
+		//初始化7张图片
+		for(int i=0;i<7;i++)
+		{
+			NetworkImageView imageView=new NetworkImageView(getActivity());
+			imageView.setImageUrl("http://110.84.129.130:8080/Yuf"+mdataArray.getJSONObject(i).getString("dishpicurl"), mImageLoader);
+			mViews.add(imageView);
+		}
+		JSONObject jObject = mdataArray.getJSONObject(0);
+		difficultyTextView.setText(String.valueOf(jObject.getDouble("dishdifficulty")));
+		doseTextView.setText(String.valueOf(jObject.getInt("dishamount")));
+//		skillTextView.setText(jObject.getString(""));
+		timeTextView.setText(jObject.getString("dishcooktime"));
+		commentbuttoButton.setText(String.format("评论(%s)",String.valueOf(jObject.getInt("dishcommentnum"))));
+		collectionButton.setText(String.format("收藏(%s)",String.valueOf(jObject.getInt("dishcollectionnum"))));
+		nameTextView.setText(jObject.getString("dishname"));
+	}
+	class MyPageChangeAdapter1 implements OnPageChangeListener
+	{
 
+		@Override
+		public void onPageScrollStateChanged(int arg0) {
+			// TODO Auto-generated method stub
+		Log.d("", "");
+		}
+
+		@Override
+		public void onPageScrolled(int arg0, float arg1, int arg2) {
+			// TODO Auto-generated method stub
+			Log.d("", "");
+		}
+
+		@Override
+		public void onPageSelected(int arg0) {
+			// TODO Auto-generated method stub
+			JSONObject jObject;
+			try {
+				jObject = mdataArray.getJSONObject(arg0);
+				difficultyTextView.setText(String.valueOf(jObject.getDouble("dishdifficulty")));
+				doseTextView.setText(String.valueOf(jObject.getInt("dishamount")));
+//				skillTextView.setText(jObject.getString(""));
+				timeTextView.setText(jObject.getString("dishcooktime"));
+				commentbuttoButton.setText(String.format("评论(%s)", String.valueOf(jObject.getInt("dishcommentnum"))));
+				collectionButton.setText(String.format("收藏(%s)",String.valueOf(jObject.getInt("dishcollectionnum"))));
+				nameTextView.setText(jObject.getString("dishname"));
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		}
 }

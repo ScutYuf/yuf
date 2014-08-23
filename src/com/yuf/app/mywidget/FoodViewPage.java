@@ -21,7 +21,7 @@ public class FoodViewPage extends ViewPager {
 		Log.d("foodviewpage", "onInterceptTouchEvent"); 
 		getParent().requestDisallowInterceptTouchEvent(true);
 		 super.onInterceptTouchEvent(arg0);
-return true;
+		 return true;
 	}
 
 	@Override
@@ -32,5 +32,9 @@ return true;
 		return true;
 	}
 	
-
+@Override
+public void setOnPageChangeListener(OnPageChangeListener listener) {
+	// TODO Auto-generated method stub
+	super.setOnPageChangeListener(listener);
+}
 }

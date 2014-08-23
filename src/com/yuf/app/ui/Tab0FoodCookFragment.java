@@ -3,6 +3,7 @@ package com.yuf.app.ui;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -33,7 +34,6 @@ public class Tab0FoodCookFragment extends Fragment{
 		// TODO Auto-generated method stub
 		View view=inflater.inflate(R.layout.tab0_food_cook,container,false);
 		comment=(TextView)view.findViewById(R.id.comment_textView);
-		
 		showComment=(TextView)view.findViewById(R.id.show_comment_textView);
 		collection=(TextView)view.findViewById(R.id.collection_textView);
 		share=(TextView)view.findViewById(R.id.share_TextView);
@@ -289,4 +289,5 @@ collection.setClickable(false);
 	
 	
 }
+
 }

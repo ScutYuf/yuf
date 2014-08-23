@@ -51,7 +51,7 @@
                         android:textSize="15sp" />
 
                     <TextView
-                        android:id="@+id/textview"
+                        android:id="@+id/tab0_recipe_fragment__dishdifficulty_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -70,7 +70,7 @@
                         android:textSize="15sp" />
 
                     <TextView
-                        android:id="@+id/dose_textview"
+                        android:id="@+id/tab0_recipe_fragment_dishamount_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -97,7 +97,7 @@
                         android:textSize="15sp" />
 
                     <TextView
-                        android:id="@+id/skill_textview"
+                        android:id="@+id/tab0_recipe_fragment_skill_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
