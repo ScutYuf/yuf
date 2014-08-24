@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:background="#FFE5E5E5"
+            android:background="#92000000"
             android:padding="8dp"
             app:fillColor="#FFF7931E"
             app:pageColor="#ffffffff"

@@ -45,7 +45,7 @@
         android:src="@drawable/rightrow" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tab0_food_cook_step_steporder_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tab3_mywork_item_name"
@@ -56,7 +56,7 @@
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/tab0_food_cook_step_steporder_textview"
         android:layout_centerHorizontal="true"
         android:text="评论（XX）"
         android:textSize="10sp" />

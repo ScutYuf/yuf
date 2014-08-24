@@ -25,7 +25,7 @@
             android:id="@+id/search_imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/textView1"
+            android:layout_toLeftOf="@+id/tab0_food_cook_step_steporder_textview"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:src="@drawable/button_title_query" />

@@ -42,7 +42,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/logon_name_edittext"
-            android:layout_below="@+id/textView1"
+            android:layout_below="@+id/tab0_food_cook_step_steporder_textview"
             android:ems="10" />
 
         <EditText
@@ -73,7 +73,7 @@
             android:textColor="#fff" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/tab0_food_cook_step_steporder_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/logon_account_edittext"

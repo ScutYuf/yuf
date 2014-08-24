@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,7 +21,7 @@ import android.widget.TextView;
 
 
 public class Tab1SocietyShareFragment extends Fragment {
-	private ListView listView;
+	private PullToRefreshListView listView;
 	
 	
 	
@@ -28,7 +30,7 @@ public class Tab1SocietyShareFragment extends Fragment {
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View view=inflater.inflate(R.layout.tab1_share,container,false);
-		listView=(ListView)view.findViewById(R.id.tab1_share_listview);
+		listView=(PullToRefreshListView)view.findViewById(R.id.tab1_share_listview);
 		
 		
 		//listview adddate

@@ -36,7 +36,7 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tab0_food_cook_step_steporder_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tab3_mywork_item_name"
@@ -66,14 +66,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/button1"
-        android:layout_toRightOf="@+id/textView1"
+        android:layout_toRightOf="@+id/tab0_food_cook_step_steporder_textview"
         android:text="28元" />
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/tab0_food_cook_step_steporder_textview"
         android:layout_toRightOf="@+id/tab3_mywork_item_name"
         android:text="修改份数"
         android:textSize="10sp" />

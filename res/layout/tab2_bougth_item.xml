@@ -45,7 +45,7 @@
         android:src="@drawable/rightrow" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/tab0_food_cook_step_steporder_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/tab3_mywork_item_img"
@@ -57,8 +57,8 @@
         android:id="@+id/TextView01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView1"
-        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignBaseline="@+id/tab0_food_cook_step_steporder_textview"
+        android:layout_alignBottom="@+id/tab0_food_cook_step_steporder_textview"
         android:layout_toRightOf="@+id/tab3_mywork_item_name"
         android:text="28元" />
 

@@ -4,12 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ListView
-        android:id="@+id/tab1_myfocus_listview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:dividerHeight="2dp" >
+   
 
-    </ListView>
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+       android:id="@+id/tab1_myfocus_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="2dp" />
+ 
+
 
 </LinearLayout>
