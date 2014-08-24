@@ -32,7 +32,7 @@ public class Tab1SocietyShareFragment extends Fragment {
 		View view=inflater.inflate(R.layout.tab1_share,container,false);
 		listView=(PullToRefreshListView)view.findViewById(R.id.tab1_share_listview);
 		
-		
+		//
 		//listview adddate
 		SimpleAdapter adapter = new SimpleAdapter(getActivity(),getData(),R.layout.tab1_share_list_item,
 				new String[]{"name","head_img","share_text"},
