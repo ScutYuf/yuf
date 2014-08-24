@@ -4,12 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ListView
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/tab1_share_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="#ccc"
-        android:dividerHeight="0.8dp" >
-    </ListView>
+        android:dividerHeight="0.8dp"
+        android:fadingEdgeLength="0dp" >
+
+    </com.handmark.pulltorefresh.library.PullToRefreshListView>
 
 </LinearLayout>

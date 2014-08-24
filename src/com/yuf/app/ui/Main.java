@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 
 import org.apache.http.client.UserTokenHandler;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -252,26 +253,9 @@ public void onClickLogout(View view) {
 
 
 	private void addTab0ViewpageFragment(){
-		tab0fragments=new ArrayList<Fragment>();
-		tab0categorysEntities=new ArrayList<CategorysEntity>();
-		tab0categorysEntities.add(new CategorysEntity("家庭套餐"));
-		tab0fragments.add(new Tab0MyRecipeFragment());
-		tab0categorysEntities.add(new CategorysEntity("情侣套餐"));
-		tab0fragments.add(new Tab0MyRecipeFragment());
-		tab0categorysEntities.add(new CategorysEntity("食客分享"));
-		tab0fragments.add(new Tab0MyRecipeFragment());
 		
 		
-		tab0Indicator=(TitlePageIndicator) view0.findViewById(R.id.tab0_indicator);
-		tab0Viewpage=(ViewPager) view0.findViewById(R.id.tab0_pager);
-		MiddlePageAdapter mInsidePageAdapter=new MiddlePageAdapter(getSupportFragmentManager());
-		tab0Viewpage.setAdapter(mInsidePageAdapter);
-		tab0Viewpage.setOffscreenPageLimit(3);
-		mInsidePageAdapter.addFragments(tab0fragments,tab0categorysEntities);
-		tab0Indicator.setViewPager(tab0Viewpage);
-		tab0Indicator.setOnPageChangeListener( new MyPageChangeListener());
-		tab0Viewpage.setCurrentItem(1);
-		
+		getRecommendedDishSet();
 		
 		
 	}
@@ -280,13 +264,12 @@ public void onClickLogout(View view) {
 
 	private void addTab1ViewpageFragment() {
 		
-		 tab1fragments=new ArrayList<Fragment>();
+		 	tab1fragments=new ArrayList<Fragment>();
 			tab1categorysEntities=new ArrayList<CategorysEntity>();
 			tab1categorysEntities.add(new CategorysEntity("分享区"));
 			tab1fragments.add(new Tab1SocietyShareFragment());
 			tab1categorysEntities.add(new CategorysEntity("我的关注"));
 			tab1fragments.add(new Tab1SocietyForceFragment());
-			
 			tab1Indicator=(TitlePageIndicator) view1.findViewById(R.id.tab1_indicator);
 			tab1Viewpage=(ViewPager) view1.findViewById(R.id.tab1_pager);
 			MiddlePageAdapter mInsidePageAdapter=new MiddlePageAdapter(getSupportFragmentManager());
@@ -740,5 +723,54 @@ private void setTab3UserInfo() {
 			 	Log.d("liow","request start");
 			 	MyApplication.requestQueue.start();
 	 }
-	 
+	 private void getRecommendedDishSet() {
+		 JsonObjectRequest request=new JsonObjectRequest(Method.GET, "http://110.84.129.130:8080/Yuf/dishset/getRecommendedDishset", null,  
+				 new Response.Listener<JSONObject>()  
+			     {  
+
+			         @Override  
+			         public void onResponse(JSONObject response)  
+			         {  
+			        	JSONArray dishsetsArray;
+						try {
+							dishsetsArray = response.getJSONArray("dishsets");
+							tab0fragments=new ArrayList<Fragment>();
+							tab0categorysEntities=new ArrayList<CategorysEntity>();
+							tab0categorysEntities.add(new CategorysEntity("家庭套餐"));
+							tab0fragments.add(new Tab0MyRecipeFragment(dishsetsArray.getJSONObject(0).getJSONArray("dishsetdetail")));
+							tab0categorysEntities.add(new CategorysEntity("情侣套餐"));
+							tab0fragments.add(new Tab0MyRecipeFragment(dishsetsArray.getJSONObject(1).getJSONArray("dishsetdetail")));
+							tab0categorysEntities.add(new CategorysEntity("食客分享"));
+							tab0fragments.add(new Tab0MyRecipeFragment(dishsetsArray.getJSONObject(2).getJSONArray("dishsetdetail")));
+							tab0Indicator=(TitlePageIndicator) view0.findViewById(R.id.tab0_indicator);
+							tab0Viewpage=(ViewPager) view0.findViewById(R.id.tab0_pager);
+							MiddlePageAdapter mInsidePageAdapter=new MiddlePageAdapter(getSupportFragmentManager());
+							tab0Viewpage.setAdapter(mInsidePageAdapter);
+							tab0Viewpage.setOffscreenPageLimit(3);
+							mInsidePageAdapter.addFragments(tab0fragments,tab0categorysEntities);
+							tab0Indicator.setViewPager(tab0Viewpage);
+							tab0Indicator.setOnPageChangeListener( new MyPageChangeListener());
+							tab0Viewpage.setCurrentItem(1);
+							Log.e("TAG", response.toString()); 
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			             
+			             
+			         }  
+			     }, 
+			     new Response.ErrorListener()  
+			     {  
+
+			         @Override  
+			         public void onErrorResponse(VolleyError error)  
+			         {  
+			             Log.e("TAG", error.getMessage(), error);  
+			         }  
+			     });
+			 	MyApplication.requestQueue.add(request);
+			 	Log.d("liow","request start");
+			 	MyApplication.requestQueue.start();
+	}
 }// end this Main class

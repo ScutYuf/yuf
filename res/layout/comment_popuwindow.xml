@@ -16,7 +16,8 @@
             android:src="@drawable/add" />
 
         <TextView
-            android:id="@+id/textView1"
+
+            android:id="@+id/tab0_food_cook_step_steporder_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

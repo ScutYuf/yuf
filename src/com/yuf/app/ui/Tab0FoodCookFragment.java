@@ -1,8 +1,11 @@
 package com.yuf.app.ui;
 
+import java.util.zip.Inflater;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -12,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.view.animation.Animation.AnimationListener;
@@ -23,6 +27,7 @@ public class Tab0FoodCookFragment extends Fragment{
 	 private TextView collection;
 	 private TextView share;
 	private ScrollView mScrollView; 
+	private LinearLayout mLinearLayout;
 	private float start_y=0;
 	private boolean isDisappear=false;
 	
@@ -33,10 +38,10 @@ public class Tab0FoodCookFragment extends Fragment{
 		// TODO Auto-generated method stub
 		View view=inflater.inflate(R.layout.tab0_food_cook,container,false);
 		comment=(TextView)view.findViewById(R.id.comment_textView);
-		
 		showComment=(TextView)view.findViewById(R.id.show_comment_textView);
 		collection=(TextView)view.findViewById(R.id.collection_textView);
 		share=(TextView)view.findViewById(R.id.share_TextView);
+		mLinearLayout=(LinearLayout)view.findViewById(R.id.scrolllinelayout);
 		mScrollView=(ScrollView)view.findViewById(R.id.cook_scrollView);
 		mScrollView.setOnTouchListener(new OnTouchListener() {
 			
@@ -69,6 +74,7 @@ public class Tab0FoodCookFragment extends Fragment{
 			return false;
 			}
 		});
+		addStep();
 		return  view;
 	}
 
@@ -286,7 +292,14 @@ collection.setClickable(false);
 	collection.startAnimation(animation3);
 	share.startAnimation(animation4);
 	
+
 	
+}
+private void addStep() {
 	
+	LayoutInflater inflater=LayoutInflater.from(getActivity());
+	LinearLayout linearLayout=(LinearLayout)inflater.inflate(R.layout.tab0_fook_cook_step, null);
+	linearLayout.setOrientation(LinearLayout.VERTICAL);
+	mLinearLayout.addView(linearLayout);
 }
 }
