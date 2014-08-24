@@ -52,7 +52,7 @@ public class FoodMaterialGVAdapter extends BaseAdapter {
        
     	View view;
     	if (convertView==null) {
-			
+			//
     		LayoutInflater myinflater=LayoutInflater.from(context);
     		 view=myinflater.inflate(R.layout.tab2_food_material_gridview_item, null);
 		}
