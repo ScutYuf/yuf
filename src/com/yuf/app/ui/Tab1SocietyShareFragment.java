@@ -41,7 +41,7 @@ public class Tab1SocietyShareFragment extends Fragment {
 		
 		
 		 
-		 
+		 //
 		 return  view;
 	}
 	
