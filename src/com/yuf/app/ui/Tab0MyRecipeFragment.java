@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -50,6 +51,8 @@ public class Tab0MyRecipeFragment extends Fragment {
 	private TextView skillTextView;
 	private TextView timeTextView;
 	private TextView nameTextView;
+	private int currentPageIndex;
+	private  AlertDialog dlg;
 	public Tab0MyRecipeFragment(JSONArray _dataArray) {
 		mdataArray=_dataArray;
 		// TODO Auto-generated constructor stub
@@ -82,27 +85,27 @@ public class Tab0MyRecipeFragment extends Fragment {
 				//显示评论对话框
 				LayoutInflater factory = LayoutInflater.from(getActivity());
 				final View textEntryView = factory.inflate(R.layout.dialog, null);
-                AlertDialog dlg = new AlertDialog.Builder(getActivity())
-               
-                .setTitle("评论：")
+				Button commentButton =(Button)textEntryView.findViewById(R.id.comment_dialog_comment_button);
+				commentButton.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						dlg.dismiss();
+					}
+				});
+				Button cancleButton=(Button)textEntryView.findViewById(R.id.comment_dialog_cancle_buttoon);
+               cancleButton.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+				
+					dlg.dismiss();
+				}
+			});
+				dlg = new AlertDialog.Builder(getActivity())
                 .setView(textEntryView)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                      System.out.println("-------------->6");
-                      EditText secondPwd = (EditText) textEntryView.findViewById(R.id.comment_comment_editText);
-                      String inputPwd = secondPwd.getText().toString();
-                      System.out.println("-------------->1");
-                      
-//输入的内容会在页面上显示来因为是做来测试，所以功能不是很全，只写了username没有学password
-                       
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                     System.out.println("-------------->2");
-                       
-                    }
-                })
                 .create();
                 dlg.show();
 				
@@ -134,7 +137,15 @@ public class Tab0MyRecipeFragment extends Fragment {
 				
 				Intent intent=new Intent(Main.mainActivity,
 						Tab0FoodActivity.class);
-//				inten
+				Bundle bundle = new Bundle();                           //创建Bundle对象   
+				try {
+					bundle.putString("dishid",mdataArray.getJSONObject(currentPageIndex).getString("dishid") );
+					bundle.putString("dishname",mdataArray.getJSONObject(currentPageIndex).getString("dishname") );
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}     //装入数据   
+				intent.putExtras(bundle);                                //把Bundle塞入Intent里面  
 				startActivity(intent);
 				// TODO Auto-generated method stub
 				
@@ -195,6 +206,7 @@ public class Tab0MyRecipeFragment extends Fragment {
 		@Override
 		public void onPageSelected(int arg0) {
 			// TODO Auto-generated method stub
+			currentPageIndex=arg0;
 			JSONObject jObject;
 			try {
 				jObject = mdataArray.getJSONObject(arg0);

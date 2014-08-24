@@ -3,12 +3,18 @@ package com.yuf.app.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.content.Intent;
 import android.graphics.drawable.PaintDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,7 +22,17 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.TabHost;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.Request.Method;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.yuf.app.MyApplication;
 import com.yuf.app.Entity.CategorysEntity;
+import com.yuf.app.Entity.UserInfo;
 import com.yuf.app.adapter.MiddlePageAdapter;
 import com.yuf.app.ui.Main.MyPageChangeListener;
 import com.yuf.app.ui.indicator.TitlePageIndicator;
@@ -27,6 +43,7 @@ import com.yuf.app.ui.indicator.TitlePageIndicator;
  */
 public class Tab0FoodActivity extends FragmentActivity {
 private ImageView backImageView;
+private JSONObject jsonObject;
 	class MyPageChangeListener implements OnPageChangeListener {
 	    @Override
 	    public void onPageScrollStateChanged(int arg0) {
@@ -52,12 +69,14 @@ private ImageView backImageView;
 	private MiddlePageAdapter mInsidePageAdapter;
 	private ImageView moreImageView;
 	private PopupWindow mPopupWindow; 
+	private TextView foodnameTextView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tab0_recipe_detail);
-		
+		foodnameTextView=(TextView)findViewById(R.id.tab0_detail_foodname);
+		foodnameTextView.setText(getIntent().getExtras().getString("dishname"));
 		backImageView=(ImageView)findViewById(R.id.tab0_detail_back_imageView);
 		backImageView.setOnClickListener(new OnClickListener() {
 			
@@ -72,7 +91,7 @@ private ImageView backImageView;
 		
 		
 		
-		addFragment();
+	getDishDetail();
 		
 		
 		
@@ -82,11 +101,16 @@ private ImageView backImageView;
 	void addFragment(){
 		 fragments=new ArrayList<Fragment>();
 		fooddetailcategorysEntities=new ArrayList<CategorysEntity>();
-		
 		fooddetailcategorysEntities.add(new CategorysEntity("烹饪方法"));
-		fragments.add(new Tab0FoodCookFragment());
-		fooddetailcategorysEntities.add(new CategorysEntity("食材"));
-		fragments.add(new Tab0FoodMaterialFragment());
+		fooddetailcategorysEntities.add(new CategorysEntity("食材"));		
+		try {
+			
+			fragments.add(new Tab0FoodCookFragment(jsonObject.getJSONArray("Recipe"),jsonObject.getJSONObject("Dish")));
+			fragments.add(new Tab0FoodMaterialFragment(jsonObject.getJSONArray("RelatedFood")));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		fooddetailIndicator=(TitlePageIndicator) findViewById(R.id.tab0_indicator);
@@ -118,5 +142,38 @@ private ImageView backImageView;
 		});
 		
 		
+	}
+	private void getDishDetail() {
+	
+		JsonObjectRequest request=new JsonObjectRequest(Method.GET, "http://110.84.129.130:8080/Yuf/dish/getDishById/"+getIntent().getExtras().getString("dishid"), null,  new Response.Listener<JSONObject>()  
+        {  
+
+            @Override  
+            public void onResponse(JSONObject response)  
+            {  
+            	
+            	try {
+					jsonObject=response.getJSONObject("dishDetail");
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            	addFragment();
+                 
+            }  
+        }, new Response.ErrorListener()  
+        {  
+
+            @Override  
+            public void onErrorResponse(VolleyError error)  
+            {  
+                Log.e("TAG", error.getMessage(), error);  
+            }  
+        });
+
+		//将JsonObjectRequest 加入RequestQuene
+MyApplication.requestQueue.add(request);
+Log.d("liow","request start");
+MyApplication.requestQueue.start();
 	}
 }

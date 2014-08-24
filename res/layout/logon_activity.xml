@@ -56,7 +56,7 @@
             android:layout_height="40dp"
             android:layout_alignLeft="@+id/logon_account_edittext"
             android:layout_alignRight="@+id/logon_account_edittext"
-            android:layout_below="@+id/textView2"
+            android:layout_below="@+id/tab1_share_item_titile_textview"
             android:ems="10"
             android:inputType="textPassword"
             android:background="@drawable/shape7"
@@ -99,7 +99,7 @@
             android:textColor="#fff" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tab1_share_item_titile_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/logon_account_edittext"

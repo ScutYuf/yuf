@@ -38,7 +38,7 @@
             android:src="@drawable/add" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tab1_share_item_titile_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

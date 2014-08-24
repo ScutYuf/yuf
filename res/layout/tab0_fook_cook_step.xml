@@ -8,10 +8,11 @@
         android:id="@+id/tab0_food_cook_step_steporder_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-        android:text="TextView" />
+        android:layout_gravity="center_horizontal"
+        android:text="TextView"
+        android:textSize="20sp" />
 
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView 
         android:id="@+id/tab0_food_cook_step_image_imageview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -14,6 +14,7 @@
         android:gravity="center_vertical" >
 
         <TextView
+            android:id="@+id/tab0_detail_foodname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"

@@ -25,7 +25,7 @@
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tab1_share_item_titile_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tab0_food_cook_step_steporder_textview"
@@ -37,7 +37,7 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/tab1_share_item_titile_textview"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:text="TextView" />

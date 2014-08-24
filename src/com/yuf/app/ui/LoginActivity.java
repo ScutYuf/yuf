@@ -77,76 +77,8 @@ public class LoginActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-		if(rememberCheckBox.isChecked())
-		{
-			saveAccountPassword();
-		}
-		else {
-			Editor editor = sharepPreferences.edit();//获取编辑器
-			editor.putString("account","");
-			editor.putString("password","");
-			editor.putBoolean("isRemeber", false);
-			editor.commit();//提交修改
-		}
-				
-				
-				
-				
-				// TODO Auto-generated method stub
-				Log.d("liow","loginBtn onclick");
-			JSONObject logJsonObject=new JSONObject();
-			try{
-			logJsonObject.put("userAccount",accountET.getText().toString());
-			logJsonObject.put("userPassword",passwordET.getText().toString());
-			}catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}	
-			JsonObjectRequest request=new JsonObjectRequest(Method.POST, "http://110.84.129.130:8080/Yuf/user/login", logJsonObject,  new Response.Listener<JSONObject>()  
-            {  
-  
-                @Override  
-                public void onResponse(JSONObject response)  
-                {  
-                	try {
-						if(response.getInt("code")==0)
-						{
-							UserInfo.getInstance().setSessionid(response.getString("sessionid"));
-							UserInfo.getInstance().setUserid(response.getString("userid"));
-							Intent intent=new Intent(getApplicationContext(),Main.class);
-							startActivity(intent);
-							finish();
-							
-						}
-						else {
-							Toast toast = Toast.makeText(getApplicationContext(),
-								    "登陆失败，密码或账号错误", Toast.LENGTH_SHORT);
-								   toast.setGravity(Gravity.CENTER, 0, 0);
-								   toast.show();
-						}
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-                	
-                     
-                }  
-            }, new Response.ErrorListener()  
-            {  
-  
-                @Override  
-                public void onErrorResponse(VolleyError error)  
-                {  
-                    Log.e("TAG", error.getMessage(), error);  
-                }  
-            });
-
-			//将JsonObjectRequest 加入RequestQuene
-MyApplication.requestQueue.add(request);
-Log.d("liow","request start");
-MyApplication.requestQueue.start();
-				
-		}
+				login();
+			}
 			});
 		
 		
@@ -171,4 +103,78 @@ private void saveAccountPassword()
 	editor.putBoolean("isRemeber", true);
 	editor.commit();//提交修改
 }
+private void login()
+{
+
+	if(rememberCheckBox.isChecked())
+	{
+		saveAccountPassword();
+	}
+	else {
+		Editor editor = sharepPreferences.edit();//获取编辑器
+		editor.putString("account","");
+		editor.putString("password","");
+		editor.putBoolean("isRemeber", false);
+		editor.commit();//提交修改
+	}
+			
+			
+			
+			
+			// TODO Auto-generated method stub
+			Log.d("liow","loginBtn onclick");
+		JSONObject logJsonObject=new JSONObject();
+		try{
+		logJsonObject.put("userAccount",accountET.getText().toString());
+		logJsonObject.put("userPassword",passwordET.getText().toString());
+		}catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		JsonObjectRequest request=new JsonObjectRequest(Method.POST, "http://110.84.129.130:8080/Yuf/user/login", logJsonObject,  new Response.Listener<JSONObject>()  
+        {  
+
+            @Override  
+            public void onResponse(JSONObject response)  
+            {  
+            	try {
+					if(response.getInt("code")==0)
+					{
+						UserInfo.getInstance().setSessionid(response.getString("sessionid"));
+						UserInfo.getInstance().setUserid(response.getString("userid"));
+						Intent intent=new Intent(getApplicationContext(),Main.class);
+						startActivity(intent);
+						finish();
+						
+					}
+					else {
+						Toast toast = Toast.makeText(getApplicationContext(),
+							    "登陆失败，密码或账号错误", Toast.LENGTH_SHORT);
+							   toast.setGravity(Gravity.CENTER, 0, 0);
+							   toast.show();
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            	
+                 
+            }  
+        }, new Response.ErrorListener()  
+        {  
+
+            @Override  
+            public void onErrorResponse(VolleyError error)  
+            {  
+                Log.e("TAG", error.getMessage(), error);  
+            }  
+        });
+
+		//将JsonObjectRequest 加入RequestQuene
+MyApplication.requestQueue.add(request);
+Log.d("liow","request start");
+MyApplication.requestQueue.start();
+			
+	
+	}
 }

@@ -77,7 +77,7 @@ public class Tab3MyWorkActivity extends Activity {
 	Log.d("mywork", mjsonArray.toString());
 	mImageLoader = new ImageLoader(MyApplication.requestQueue, new BitmapCache()); 
 	listView=(PullToRefreshListView)findViewById(R.id.tab3_mywork_listview);
-	listView.setAdapter(new MyListAdapter());
+	
 	listView.setOnRefreshListener(new OnRefreshListener<ListView>() {
 		@Override
 		public void onRefresh(PullToRefreshBase<ListView> refreshView) {
