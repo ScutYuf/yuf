@@ -6,58 +6,10 @@
     android:fadingEdge="none"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:id="@+id/title"
-        android:layout_width="fill_parent"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:background="#000"
-        android:gravity="center_vertical" >
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_alignParentTop="true"
-             android:layout_centerInParent="true"
-            android:layout_marginLeft="20dp"
-            android:text="总额："
-            android:textColor="#fff"
-            android:textColorHint="#fff"
-            android:textColorLink="#fff"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/tab1_share_item_titile_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView1"
-            android:layout_alignBottom="@+id/textView1"
-            android:layout_toRightOf="@+id/textView1"
-            android:text="XXX元"
-            android:textColor="#fff"
-            android:textColorHint="#fff"
-            android:textColorLink="@color/default_circle_indicator_fill_color"
-            android:textSize="20sp" />
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/tab_right_normal" />
-
-    </RelativeLayout>
-
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/title"
         android:fadingEdge="vertical|none"
         android:fadingEdgeLength="0dp" >
 

@@ -62,6 +62,7 @@ public class FoodMaterialGVAdapter extends BaseAdapter {
     	//加载数据
             
     	NetworkImageView imageView=(NetworkImageView) view.findViewById(R.id.tab0_materil_grideview_item_img);
+    	imageView.setDefaultImageResId(R.drawable.no_pic);
     	TextView doseTextView=(TextView) view.findViewById(R.id.tab0_material_gridview_item_dose_textview);
     	TextView namTextView=(TextView) view.findViewById(R.id.tab0_material_gridview_item_name_textview);
     	try {

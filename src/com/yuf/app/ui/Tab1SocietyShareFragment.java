@@ -193,6 +193,7 @@ private class MylistAdapter extends BaseAdapter
 		try {
 			JSONObject jsonObject=jsonArray.getJSONObject(position);
 			NetworkImageView headimageView=(NetworkImageView)convertView.findViewById(R.id.tab1_share_list_item_headimg);
+			headimageView.setDefaultImageResId(R.drawable.no_pic);
 			headimageView.setImageUrl("http://110.84.129.130:8080/Yuf"+jsonObject.getString("useravatarurl"),mImageLoader);
 			NetworkImageView foodImageView=(NetworkImageView)convertView.findViewById(R.id.tab1_share_list_item_foodimage);
 			foodImageView.setImageUrl("http://110.84.129.130:8080/Yuf"+jsonObject.getString("postpicurl"), mImageLoader);		

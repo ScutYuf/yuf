@@ -8,8 +8,8 @@
 
     <com.android.volley.toolbox.NetworkImageView 
         android:id="@+id/tab1_share_list_item_headimg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_margin="10dp"
@@ -38,19 +38,20 @@
 
     <LinearLayout
         android:id="@+id/LinearLayout555"
-        android:layout_below="@+id/tab1_share_list_item_headimg"
-        android:layout_marginLeft="60dp"
+        android:layout_below="@+id/tab1_share_item_titile_textview"
+        android:layout_alignLeft="@+id/tab1_share_list_item_name_textview"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
         android:layout_weight="0.1"
         android:background="#eeebe7"
         android:orientation="horizontal" >
         <com.android.volley.toolbox.NetworkImageView 
         android:id="@+id/tab1_share_list_item_foodimage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:src="@drawable/meat" />
@@ -61,8 +62,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        android:text="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" 
-        android:textSize="12dip"
+        android:text="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" 
+        android:textSize="13dip"
         android:layout_marginRight="5dp"
         android:textColor="#707070"
         />
@@ -92,7 +93,8 @@
         android:id="@+id/tab1_share_item_titile_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tab1_share_list_item_headimg"
+        android:layout_below="@+id/tab1_share_list_item_name_textview"
+        android:layout_marginTop="5dp"
         android:layout_alignLeft="@+id/tab1_share_list_item_name_textview"
         android:text="TextView" />
 

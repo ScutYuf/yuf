@@ -44,6 +44,7 @@ import com.yuf.app.ui.indicator.TitlePageIndicator;
 public class Tab0FoodActivity extends FragmentActivity {
 private ImageView backImageView;
 private JSONObject jsonObject;
+private ImageView goPayImageView;
 	class MyPageChangeListener implements OnPageChangeListener {
 	    @Override
 	    public void onPageScrollStateChanged(int arg0) {
@@ -75,6 +76,17 @@ private JSONObject jsonObject;
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tab0_recipe_detail);
+		goPayImageView=(ImageView)findViewById(R.id.tab0_recipe_detail_gopay_image);
+		goPayImageView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent=new Intent(getApplicationContext(), Tab2WaitForPayActivity.class);
+				startActivity(intent);
+			}
+		});
+		
 		foodnameTextView=(TextView)findViewById(R.id.tab0_detail_foodname);
 		foodnameTextView.setText(getIntent().getExtras().getString("dishname"));
 		backImageView=(ImageView)findViewById(R.id.tab0_detail_back_imageView);

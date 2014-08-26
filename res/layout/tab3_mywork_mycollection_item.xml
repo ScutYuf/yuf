@@ -13,7 +13,8 @@
        android:layout_alignLeft="@+id/tab3_mywork_item_time"
        android:layout_below="@+id/tab3_mywork_item_time"
        android:layout_marginBottom="10dp"
-       android:layout_marginTop="6dp" />
+       android:layout_marginTop="6dp"
+       android:background="@drawable/no_pic" />
 
     <TextView
         android:layout_width="wrap_content"
