@@ -142,6 +142,9 @@ private void login()
 					{
 						UserInfo.getInstance().setSessionid(response.getString("sessionid"));
 						UserInfo.getInstance().setUserid(response.getString("userid"));
+						Editor editor = sharepPreferences.edit();//获取编辑器
+						editor.putBoolean("isLogined", true);
+						editor.commit();
 						Intent intent=new Intent(getApplicationContext(),Main.class);
 						startActivity(intent);
 						finish();

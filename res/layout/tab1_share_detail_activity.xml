@@ -12,7 +12,7 @@
         android:gravity="center_vertical" >
 
         <TextView
-            android:id="@+id/tab0_comment_title_textview"
+            android:id="@+id/tab1_share_detail_title_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -21,11 +21,20 @@
             android:textSize="20sp" />
 
         <ImageView
-            android:id="@+id/tab0_comment_back_imageView"
+            android:id="@+id/tab1_share_detail_back_imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:src="@drawable/button_details_gohome" />
+
+        <ImageView
+            android:id="@+id/tab1_share_detail_addfocus_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/add" />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -38,7 +47,7 @@
             android:layout_height="match_parent" >
 
             <RelativeLayout
-                android:id="@+id/RelativeLayout1"
+                android:id="@+id/tab1_share_detail_relativeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
@@ -52,8 +61,8 @@
                     android:text="TextView"
                     android:textSize="25sp" />
 
-                <ImageView
-                    android:id="@+id/tab0_comment_food_imageView"
+                <com.android.volley.toolbox.NetworkImageView 
+                    android:id="@+id/tab0_share_detail_food_imageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tab1_share_detail_recipename_textview"
@@ -62,11 +71,11 @@
                     android:src="@drawable/icon" />
 
                 <TextView
-                    android:id="@+id/tab0_comment_comment_textView"
+                    android:id="@+id/tab0_share_detail_comment_textView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentLeft="true"
-                    android:layout_below="@+id/tab0_comment_shareconten_textview"
+                    android:layout_below="@+id/tab0_share_detail_sharecontent_textview"
                     android:background="@drawable/say"
                     android:gravity="center"
                     android:text="评论"
@@ -74,11 +83,11 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tab0_comment_collection_textView"
+                    android:id="@+id/tab0_share_detail_collection_textView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@+id/tab0_comment_shareconten_textview"
+                    android:layout_below="@+id/tab0_share_detail_sharecontent_textview"
                    
                     android:background="@drawable/say"
                     android:gravity="center"
@@ -87,11 +96,11 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tab0_comment_share_TextView"
+                    android:id="@+id/tab0_share_detail_share_TextView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@+id/tab0_comment_collection_textView"
+                    android:layout_below="@+id/tab0_share_detail_collection_textView"
                     android:background="@drawable/say"
                     android:gravity="center"
                     android:text="分享"
@@ -99,10 +108,10 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tab0_comment_shareconten_textview"
+                    android:id="@+id/tab0_share_detail_sharecontent_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tab0_comment_food_imageView"
+                    android:layout_below="@+id/tab0_share_detail_food_imageView"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
                     android:text="TextView" />

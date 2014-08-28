@@ -25,9 +25,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request.Method;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.yuf.app.MyApplication;
+import com.yuf.app.Entity.UserInfo;
 import com.yuf.app.adapter.OutsidePagerAdapter;
 import com.yuf.app.http.extend.BitmapCache;
 import com.yuf.app.mywidget.FoodViewPage;
@@ -82,36 +87,7 @@ public class Tab0MyRecipeFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
-				//显示评论对话框
-				LayoutInflater factory = LayoutInflater.from(getActivity());
-				final View textEntryView = factory.inflate(R.layout.dialog, null);
-				Button commentButton =(Button)textEntryView.findViewById(R.id.comment_dialog_comment_button);
-				commentButton.setOnClickListener(new OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						dlg.dismiss();
-					}
-				});
-				Button cancleButton=(Button)textEntryView.findViewById(R.id.comment_dialog_cancle_buttoon);
-               cancleButton.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-				
-					dlg.dismiss();
-				}
-			});
-				dlg = new AlertDialog.Builder(getActivity())
-                .setView(textEntryView)
-                .create();
-                dlg.show();
-				
-				
-				// TODO Auto-generated method stub
-				
+				showDialg();
 			}
 		});
 		
@@ -169,6 +145,43 @@ public class Tab0MyRecipeFragment extends Fragment {
 		return  view;
 	}
 	
+	protected void showDialg() {
+
+		//显示评论对话框
+		LayoutInflater factory = LayoutInflater.from(getActivity());
+		final View textEntryView = factory.inflate(R.layout.dialog, null);
+		final EditText editText=(EditText)textEntryView.findViewById(R.id.comment_comment_editText);
+		Button commentButton =(Button)textEntryView.findViewById(R.id.comment_dialog_comment_button);
+		commentButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				commentDish(editText.getText().toString());
+				dlg.dismiss();
+			}
+		});
+		Button cancleButton=(Button)textEntryView.findViewById(R.id.comment_dialog_cancle_buttoon);
+       cancleButton.setOnClickListener(new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+		
+			dlg.dismiss();
+		}
+	});
+		dlg = new AlertDialog.Builder(getActivity())
+        .setView(textEntryView)
+        .create();
+        dlg.show();
+		
+		
+		// TODO Auto-generated method stub
+		
+	// TODO Auto-generated method stub
+		
+	}
 	private void initView() throws JSONException
 	{
 		mViews=new ArrayList<View>();
@@ -188,6 +201,49 @@ public class Tab0MyRecipeFragment extends Fragment {
 		collectionButton.setText(String.format("收藏(%s)",String.valueOf(jObject.getInt("dishcollectionnum"))));
 		nameTextView.setText(jObject.getString("dishname"));
 	}
+	private void commentDish(String commentContent) {
+			JSONObject jsonObject=new JSONObject();
+			try {
+				jsonObject.put("userId",Integer.valueOf(UserInfo.getInstance().getUserid()));
+				JSONObject mjsonObject=mdataArray.getJSONObject(currentPageIndex);
+				jsonObject.put("dishId", mjsonObject.getInt("dishid"));
+				jsonObject.put("dishcommentContent", commentContent);
+			} catch (JSONException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			JsonObjectRequest request=new JsonObjectRequest(Method.POST,"http://110.84.129.130:8080/Yuf/dishcomment/postDishcomment/", jsonObject, new Response.Listener<JSONObject>()  
+			        {  
+	
+	            @Override  
+	            public void onResponse(JSONObject response)  
+	            {
+	            	try {
+						if (response.getInt("code")==0) {
+							Toast toast=Toast.makeText(getActivity().getApplicationContext(), "评论成功", Toast.LENGTH_SHORT);
+							toast.show();
+							
+						}
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	            }}, new Response.ErrorListener()  
+	        {  
+	
+	            @Override  
+	            public void onErrorResponse(VolleyError error)  
+	            {  
+	                Log.e("TAG", error.getMessage(), error);  
+	            }  
+	        });
+	
+	
+		//将JsonObjectRequest 加入RequestQuene
+	MyApplication.requestQueue.add(request);
+	Log.d("liow","request start");
+	MyApplication.requestQueue.start();
+		}
 	class MyPageChangeAdapter1 implements OnPageChangeListener
 	{
 

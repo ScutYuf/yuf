@@ -1,7 +1,9 @@
 package com.yuf.app.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -50,9 +52,18 @@ public class SplashActivity extends Activity {
     }
 
     private void goHome() {
-    	Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
-      startActivity(intent);
-      finish();
+    	SharedPreferences sharepPreferences=getSharedPreferences("login", Context.MODE_PRIVATE);
+    	if (sharepPreferences.getBoolean("isLogined", false)) {
+    		Intent intent=new Intent(getApplicationContext(), Main.class);
+    		startActivity(intent);
+    		finish();
+		}
+    	else {
+			
+    		Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
+    		startActivity(intent);
+    		finish();
+		}
     }
 
    

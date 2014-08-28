@@ -9,7 +9,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.R.bool;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -27,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -415,7 +419,7 @@ public void onClickLogout(View view) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 		
 				if (System.currentTimeMillis() - frist_back_time < 1500) {
-					exitApplication();
+					finish();
 				
 				}
 				frist_back_time=System.currentTimeMillis();
@@ -444,55 +448,6 @@ public void onClickLogout(View view) {
 	 
 	 
 
-private void exitApplication() {
-	JSONObject logJsonObject=new JSONObject();
-	try{
-	logJsonObject.put("userId",UserInfo.getInstance().getUserid());
-	logJsonObject.put("sessionId",UserInfo.getInstance().getSessionid());
-	}catch (JSONException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}	
-	JsonObjectRequest request=new JsonObjectRequest(Method.POST, "http://110.84.129.130:8080/Yuf/user/logout", logJsonObject,  new Response.Listener<JSONObject>()  
-    {  
-
-        @Override  
-        public void onResponse(JSONObject response)  
-        {  
-        	try {
-        		if(response.getInt("code")==0)
-				{
-					finish();
-					
-				}
-				else {
-					Toast toast = Toast.makeText(getApplicationContext(),
-						    "登出失败", Toast.LENGTH_SHORT);
-						   toast.setGravity(Gravity.CENTER, 0, 0);
-						   toast.show();
-				}
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        	
-             
-        }  
-    }, new Response.ErrorListener()  
-    {  
-
-        @Override  
-        public void onErrorResponse(VolleyError error)  
-        {  
-            Log.e("TAG", error.getMessage(), error);  
-        }  
-    });
-
-	//将JsonObjectRequest 加入RequestQuene
-MyApplication.requestQueue.add(request);
-Log.d("liow","request start");
-MyApplication.requestQueue.start();
-}
 private void logout() {
 
 	JSONObject logJsonObject=new JSONObject();
@@ -512,6 +467,11 @@ private void logout() {
         	try {
 				if(response.getInt("code")==0)
 				{
+					SharedPreferences sharepPreferences=getSharedPreferences("login", Context.MODE_PRIVATE);
+					Editor editor = sharepPreferences.edit();//获取编辑器
+					editor.putBoolean("isLogined", false);
+					editor.commit();
+					
 					finish();
 					Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
 					startActivity(intent);

@@ -123,6 +123,15 @@
             >
             
         </activity>
+        <activity android:name=".Tab1ShareDetailActivity"
+            android:screenOrientation="portrait">
+            
+        </activity>
+         <activity android:name=".CommentListAcitvity"
+            android:screenOrientation="portrait">
+            
+        </activity>
+        
     </application>
 
 </manifest>

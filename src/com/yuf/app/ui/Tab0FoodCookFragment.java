@@ -6,26 +6,38 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.integer;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request.Method;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.yuf.app.MyApplication;
+import com.yuf.app.Entity.UserInfo;
 import com.yuf.app.http.extend.BitmapCache;
 public class Tab0FoodCookFragment extends Fragment{
 
@@ -42,7 +54,7 @@ public class Tab0FoodCookFragment extends Fragment{
 	private JSONArray stepJsonObject;
 	private JSONObject dishInfoJsonObject;
 	private ImageLoader mImageLoader;
-	
+	private  AlertDialog dlg;
 	private TextView hardLevelTextview;
 	private TextView doseTextView;
 	private TextView skillTextView;
@@ -72,7 +84,35 @@ public class Tab0FoodCookFragment extends Fragment{
 		timeTextView=(TextView)view.findViewById(R.id.tab0_cookfood_time_textview);
 		
 		comment=(TextView)view.findViewById(R.id.comment_textView);
+		comment.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				showDialg();
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		showComment=(TextView)view.findViewById(R.id.show_comment_textView);
+		showComment.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent=new Intent(getActivity(), CommentListAcitvity.class);
+				Bundle bundle=new Bundle();
+				try {
+					bundle.putInt("dishid", dishInfoJsonObject.getInt("dishid"));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				intent.putExtras(bundle);
+				startActivity(intent);
+				
+				
+			}
+		});
 		collection=(TextView)view.findViewById(R.id.collection_textView);
 		share=(TextView)view.findViewById(R.id.share_TextView);
 		addcart=(TextView)view.findViewById(R.id.add_cart_textview);
@@ -423,6 +463,89 @@ if (event.getAction()==MotionEvent.ACTION_MOVE&&start_y!=0) {
 }
 return false;
 }
+
+
+protected void showDialg() {
+
+	//显示评论对话框
+	LayoutInflater factory = LayoutInflater.from(getActivity());
+	final View textEntryView = factory.inflate(R.layout.dialog, null);
+	final EditText editText=(EditText)textEntryView.findViewById(R.id.comment_comment_editText);
+	Button commentButton =(Button)textEntryView.findViewById(R.id.comment_dialog_comment_button);
+	commentButton.setOnClickListener(new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			commentDish(editText.getText().toString());
+			dlg.dismiss();
+		}
+	});
+	Button cancleButton=(Button)textEntryView.findViewById(R.id.comment_dialog_cancle_buttoon);
+   cancleButton.setOnClickListener(new OnClickListener() {
+	
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+	
+		dlg.dismiss();
+	}
+});
+	dlg = new AlertDialog.Builder(getActivity())
+    .setView(textEntryView)
+    .create();
+    dlg.show();
+	
+	
+	// TODO Auto-generated method stub
+	
+// TODO Auto-generated method stub
+	
+}
+
+
+private void commentDish(String commentContent) {
+		JSONObject jsonObject=new JSONObject();
+		try {
+			jsonObject.put("userId",Integer.valueOf(UserInfo.getInstance().getUserid()));
+			jsonObject.put("dishId", dishInfoJsonObject.getInt("dishid"));
+			jsonObject.put("dishcommentContent", commentContent);
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		JsonObjectRequest request=new JsonObjectRequest(Method.POST,"http://110.84.129.130:8080/Yuf/dishcomment/postDishcomment/", jsonObject, new Response.Listener<JSONObject>()  
+		        {  
+
+            @Override  
+            public void onResponse(JSONObject response)  
+            {
+            	try {
+					if (response.getInt("code")==0) {
+						Toast toast=Toast.makeText(getActivity().getApplicationContext(), "评论成功", Toast.LENGTH_SHORT);
+						toast.show();
+						
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }}, new Response.ErrorListener()  
+        {  
+
+            @Override  
+            public void onErrorResponse(VolleyError error)  
+            {  
+                Log.e("TAG", error.getMessage(), error);  
+            }  
+        });
+
+
+	//将JsonObjectRequest 加入RequestQuene
+MyApplication.requestQueue.add(request);
+Log.d("liow","request start");
+MyApplication.requestQueue.start();
+	}
 
 
 }

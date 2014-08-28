@@ -14,11 +14,14 @@ import org.json.JSONObject;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yuf.app.MyApplication;
 import com.yuf.app.Entity.UserInfo;
+
 
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
@@ -28,6 +31,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -36,9 +40,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Tab1SocietyForceFragment extends Fragment {
-	private JSONArray jsonArray;
+
 	private PullToRefreshListView listView;
-	
+	private ImageLoader mImageLoader;
+	private JSONArray jsonArray;
+	private int currentPage;
+	private MylistAdapter mAdaAdapter;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +56,129 @@ public class Tab1SocietyForceFragment extends Fragment {
 		
 		return  view;
 	}
+
+	private	void getFocusPage(int page)
+		{
+		
+	
+			JsonObjectRequest request=new JsonObjectRequest(Method.GET, "http://110.84.129.130:8080/Yuf/post/getAllPost/"+String.valueOf(page), null,  new Response.Listener<JSONObject>()  
+	        {  
+	
+	            @Override  
+	            public void onResponse(JSONObject response)  
+	            {  
+						try {
+							
+							
+							jsonArray=MyApplication.joinJSONArray(jsonArray, response.getJSONArray("postData"));
+							
+							Log.d("tab1share", "resopn"+String.valueOf(jsonArray.length()));
+							
+							if (response.getInt("currentPageNum")>=response.getInt("maxPageNum")) {
+								listView.setMode(Mode.PULL_FROM_START);
+								Toast.makeText(getActivity(), "End of List!", Toast.LENGTH_SHORT).show();
+							}
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						listView.onRefreshComplete();
+						mAdaAdapter.notifyDataSetChanged();
+	                 
+	        }}, new Response.ErrorListener()  
+	        {  
+	
+	            @Override  
+	            public void onErrorResponse(VolleyError error)  
+	            {  
+	                Log.e("TAG", error.getMessage(), error);  
+	            }  
+	        });
+	
+			//将JsonObjectRequest 加入RequestQuene
+	MyApplication.requestQueue.add(request);
+	Log.d("liow","request start");
+	MyApplication.requestQueue.start();
+			
+		}
+
+	private class MylistAdapter extends BaseAdapter
+	{
+	
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			Log.d("tab1share", String.valueOf(jsonArray.length()));
+			return jsonArray.length();
+	
+		}
+	
+		@Override
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			try {
+				return jsonArray.getJSONObject(position);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+	
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return position;
+		}
+	
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			// TODO Auto-generated method stub
+			Log.d("mywork", "get");
+			if (convertView==null) {
+				convertView=getActivity().getLayoutInflater().inflate(R.layout.tab1_share_list_item,null);
+				
+			}
+			try {
+				JSONObject jsonObject=jsonArray.getJSONObject(position);
+				NetworkImageView headimageView=(NetworkImageView)convertView.findViewById(R.id.tab1_share_list_item_headimg);
+				headimageView.setDefaultImageResId(R.drawable.no_pic);
+				headimageView.setImageUrl("http://110.84.129.130:8080/Yuf"+jsonObject.getString("useravatarurl"),mImageLoader);
+				NetworkImageView foodImageView=(NetworkImageView)convertView.findViewById(R.id.tab1_share_list_item_foodimage);
+				foodImageView.setImageUrl("http://110.84.129.130:8080/Yuf"+jsonObject.getString("postpicurl"), mImageLoader);		
+				TextView titleTextView=(TextView)convertView.findViewById(R.id.tab1_share_item_titile_textview);
+				titleTextView.setText(jsonObject.getString("posttitle"));
+				TextView usernameTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_name_textview);
+				usernameTextView.setText(jsonObject.getString("username"));
+				TextView timeTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_time_textview);
+				long currentTime =jsonObject.getLong("posttime");
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				Date date = new Date(currentTime);
+				timeTextView.setText(formatter.format(date));
+				TextView contentTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_content_textview);
+				contentTextView.setText(jsonObject.getString("postcontent"));
+				
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			TextView collectionTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_collection_textview);
+			collectionTextView.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			
+			
+			// TODO Auto-generated method stub
+			return convertView;
+		}
+		
+		}
 	
 	
 

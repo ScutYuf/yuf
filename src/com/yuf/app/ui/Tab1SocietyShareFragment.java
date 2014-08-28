@@ -35,6 +35,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -49,6 +51,7 @@ public class Tab1SocietyShareFragment extends Fragment {
 	private JSONArray jsonArray;
 	private int currentPage;
 	private MylistAdapter mAdaAdapter;
+	private boolean isEnd;
 	Tab1SocietyShareFragment(){
 		super();
 		mImageLoader=new ImageLoader(MyApplication.requestQueue, new BitmapCache());
@@ -80,14 +83,44 @@ public class Tab1SocietyShareFragment extends Fragment {
 			@Override
 			public void onLastItemVisible() {
 			
-					
-					loadingNextPage();
+					if (!isEnd) {
+						
+						loadingNextPage();
+					}
 					
 			}	});
 
 		listView.setMode(Mode.BOTH);
 		mAdaAdapter=new MylistAdapter();
 		listView.setAdapter(mAdaAdapter);
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent intent=new Intent(Tab1SocietyShareFragment.this.getActivity(),
+						Tab1ShareDetailActivity.class);
+				Bundle bundle = new Bundle();                           //创建Bundle对象   
+				try {
+					JSONObject jsonObject=jsonArray.getJSONObject(position);
+					bundle.putInt("postid",jsonObject.getInt("postid"));
+					bundle.putInt("userid", jsonObject.getInt("userid"));
+					bundle.putString("posttitle", jsonObject.getString("posttitle"));
+					bundle.putString("postpicurl", jsonObject.getString("postpicurl"));
+					bundle.putString("postcontent",jsonObject.getString("postcontent"));
+				
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}     //装入数据   
+				intent.putExtras(bundle);                                //把Bundle塞入Intent里面  
+				startActivity(intent);
+				// TODO Auto-generated method stub
+	
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		refreshListView();
 		 
 		 //
@@ -95,6 +128,7 @@ public class Tab1SocietyShareFragment extends Fragment {
 	}
 		private void refreshListView() {
 			// TODO Auto-generated method stub
+			isEnd=false;
 			listView.setMode(Mode.BOTH);
 			jsonArray=new JSONArray();
 			currentPage=0;
@@ -128,6 +162,7 @@ public class Tab1SocietyShareFragment extends Fragment {
 						
 						if (response.getInt("currentPageNum")>=response.getInt("maxPageNum")) {
 							listView.setMode(Mode.PULL_FROM_START);
+							isEnd=true;
 							Toast.makeText(getActivity(), "End of List!", Toast.LENGTH_SHORT).show();
 						}
 					} catch (JSONException e) {
