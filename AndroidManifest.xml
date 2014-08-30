@@ -132,6 +132,11 @@
             
         </activity>
         
+         <provider  
+    android:authorities="com.yuf.app.myprovider"  
+    android:name=".MyProvider" >  
+</provider> 
+        
     </application>
 
 </manifest>

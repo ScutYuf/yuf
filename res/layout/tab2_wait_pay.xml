@@ -40,7 +40,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/title"
+        android:id="@+id/bottem"
         android:layout_width="fill_parent"
         android:layout_height="45dp"
         android:layout_alignParentBottom="true"
@@ -82,17 +82,17 @@
             android:textColor="#fff"/>
     </RelativeLayout>
 
-    <ListView
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/tab2_waitforpay_listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/title"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottem"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/RelativeLayout01"
-        android:fadingEdgeLength="0dp"
         android:divider="#ccc"
-        android:dividerHeight="0.8dp" >
+        android:dividerHeight="0.8dp"
+        android:fadingEdgeLength="0dp" >
 
-    </ListView>
+    </com.handmark.pulltorefresh.library.PullToRefreshListView>
 
 </RelativeLayout>
