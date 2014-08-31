@@ -15,6 +15,13 @@ public class TestProvider extends android.test.ProviderTestCase2<MyProvider> {
 	{
 
 		Order order=new Order();
+		order.dishId=1;
+		order.orderAmount=1;
+		order.orderPaymethod="cash";
+		order.orderPrice=12.1;
+		order.orderTime="sdf";
+		order.userId=1;
+		
 		order.writeToDb();
 	}
 

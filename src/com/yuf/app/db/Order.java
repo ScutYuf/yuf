@@ -12,6 +12,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 public class Order {
 	public static final String ID = "_id";
@@ -22,12 +23,12 @@ public class Order {
 	public static final String ORDERAMOUNT = "orderAmount";
 	public static final String ORDERDISHID = "dishId";
 
-	int userId;
-	int dishId;
-	String orderPrice;
-	String orderTime;
-	String orderPaymethod;
-	int orderAmount;
+	public int userId;
+	public int dishId;
+	public double orderPrice;
+	public String orderTime;
+	public String orderPaymethod;
+	public int orderAmount;
 
 	public JSONObject toJsonObject() {
 		JSONObject object = new JSONObject();
@@ -50,15 +51,15 @@ public class Order {
 		   ContentResolver contentResolver = MyApplication.myapplication.getContentResolver();  
            Uri url = Uri.parse("content://com.yuf.app.myprovider/order");  
            ContentValues values = new ContentValues();  
-           values.put("USERID", userId);  
-           values.put("ORDERPRICE", orderPrice);  
-           values.put("ORDERTIME", orderTime);  
-           values.put("ORDERPAYMETHOD", orderPaymethod);  
-           values.put("ORDERAMOUNT", orderAmount);  
-           values.put("ORDERDISHID", dishId);  
+           values.put(Order.USERID, userId);  
+           values.put(Order.ORDERPRICE, orderPrice);  
+           values.put(Order.ORDERTIME, orderTime);  
+           values.put(Order.ORDERPAYMETHOD, orderPaymethod);  
+           values.put(Order.ORDERAMOUNT, orderAmount);  
+           values.put(Order.ORDERDISHID, dishId);  
            Uri result = contentResolver.insert(url, values); 
            if (ContentUris.parseId(result)>0) {  
-               System.out.println("添加成功！");        
+               Log.d("liow","添加成功！");        
            }  
 	}
 
@@ -71,7 +72,7 @@ public class Order {
         	Order order = new Order();
         	order.userId = cursor.getInt(cursor.getColumnIndex("userId"));  
         	order.dishId = cursor.getInt(cursor.getColumnIndex("dishId"));  
-        	order.orderPrice = cursor.getString(cursor.getColumnIndex("orderPrice"));  
+        	order.orderPrice = cursor.getDouble(cursor.getColumnIndex("orderPrice"));  
         	order.orderTime = cursor.getString(cursor.getColumnIndex("orderTime"));  
         	order.orderPaymethod = cursor.getString(cursor.getColumnIndex("orderPaymethod"));  
         	order.orderAmount = cursor.getInt(cursor.getColumnIndex("orderAmount"));  
