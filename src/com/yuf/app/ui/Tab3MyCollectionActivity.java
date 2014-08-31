@@ -41,6 +41,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Tab3MyCollectionActivity extends Activity {
+	//
 	private ImageView backImageView;
 	private PullToRefreshListView listView;
 	private ImageLoader mImageLoader;
