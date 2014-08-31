@@ -16,7 +16,7 @@ public  class MyApplication extends Application {
 	
 	public static RequestQueue requestQueue;
 	public static MyApplication myapplication;
-
+//
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
