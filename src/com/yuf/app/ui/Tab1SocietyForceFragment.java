@@ -18,15 +18,22 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yuf.app.MyApplication;
 import com.yuf.app.Entity.UserInfo;
 
 
+import android.R.string;
+import android.app.NativeActivity;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
+import android.graphics.pdf.PdfDocument.Page;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -46,22 +53,49 @@ public class Tab1SocietyForceFragment extends Fragment {
 	private JSONArray jsonArray;
 	private int currentPage;
 	private MylistAdapter mAdaAdapter;
-	
+	private Boolean isEnd;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
 		// TODO Auto-generated method stub
 		View view=inflater.inflate(R.layout.tab1_myfocus,container,false);
-		
+		mAdaAdapter=new MylistAdapter();
+		jsonArray=new JSONArray();
+		listView=(PullToRefreshListView)view.findViewById(R.id.tab1_myfocus_listview);
+		listView.setMode(Mode.BOTH);
+		listView.setOnRefreshListener(new OnRefreshListener<ListView>() {
+			@Override
+			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+				String label = DateUtils.formatDateTime(getActivity().getApplicationContext(), System.currentTimeMillis(),
+						DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
+				// Update the LastUpdatedLabel
+				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+				// Do work to refresh the list here.
+				jsonArray=new JSONArray();
+				currentPage=0;
+				isEnd=false;
+				listView.setMode(Mode.BOTH);
+				getFocusNextPage();
+			
+			}
+		});
+		listView.setOnLastItemVisibleListener(new OnLastItemVisibleListener() {@Override
+			public void onLastItemVisible() {
+			
+			if (!isEnd) {
+				getFocusNextPage();
+			}
+			
+	}	});
 		return  view;
 	}
 
-	private	void getFocusPage(int page)
+	private	void getFocusNextPage()
 		{
 		
 	
-			JsonObjectRequest request=new JsonObjectRequest(Method.GET, "http://110.84.129.130:8080/Yuf/post/getAllPost/"+String.valueOf(page), null,  new Response.Listener<JSONObject>()  
+			JsonObjectRequest request=new JsonObjectRequest(Method.GET, String.format("http://110.84.129.130:8080/Yuf/relation/getFollowsInfo/%d/%d", String.valueOf(UserInfo.getInstance().userid),++currentPage), null,  new Response.Listener<JSONObject>()  
 	        {  
 	
 	            @Override  
@@ -70,13 +104,14 @@ public class Tab1SocietyForceFragment extends Fragment {
 						try {
 							
 							
-							jsonArray=MyApplication.joinJSONArray(jsonArray, response.getJSONArray("postData"));
+							jsonArray=MyApplication.joinJSONArray(jsonArray, response.getJSONArray("followsData"));
 							
 							Log.d("tab1share", "resopn"+String.valueOf(jsonArray.length()));
 							
-							if (response.getInt("currentPageNum")>=response.getInt("maxPageNum")) {
+							if (response.getInt("currentPage")>=response.getInt("followsMaxPage")) {
 								listView.setMode(Mode.PULL_FROM_START);
 								Toast.makeText(getActivity(), "End of List!", Toast.LENGTH_SHORT).show();
+								isEnd=true;
 							}
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
@@ -136,43 +171,23 @@ public class Tab1SocietyForceFragment extends Fragment {
 			// TODO Auto-generated method stub
 			Log.d("mywork", "get");
 			if (convertView==null) {
-				convertView=getActivity().getLayoutInflater().inflate(R.layout.tab1_share_list_item,null);
+				convertView=getActivity().getLayoutInflater().inflate(R.layout.tab1_myfocus_list_item,null);
 				
 			}
+			JSONObject jsonObject;
 			try {
-				JSONObject jsonObject=jsonArray.getJSONObject(position);
-				NetworkImageView headimageView=(NetworkImageView)convertView.findViewById(R.id.tab1_share_list_item_headimg);
-				headimageView.setDefaultImageResId(R.drawable.no_pic);
-				headimageView.setImageUrl("http://110.84.129.130:8080/Yuf"+jsonObject.getString("useravatarurl"),mImageLoader);
-				NetworkImageView foodImageView=(NetworkImageView)convertView.findViewById(R.id.tab1_share_list_item_foodimage);
-				foodImageView.setImageUrl("http://110.84.129.130:8080/Yuf"+jsonObject.getString("postpicurl"), mImageLoader);		
-				TextView titleTextView=(TextView)convertView.findViewById(R.id.tab1_share_item_titile_textview);
-				titleTextView.setText(jsonObject.getString("posttitle"));
-				TextView usernameTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_name_textview);
-				usernameTextView.setText(jsonObject.getString("username"));
-				TextView timeTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_time_textview);
-				long currentTime =jsonObject.getLong("posttime");
-				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				Date date = new Date(currentTime);
-				timeTextView.setText(formatter.format(date));
-				TextView contentTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_content_textview);
-				contentTextView.setText(jsonObject.getString("postcontent"));
-				
-				
+				jsonObject = jsonArray.getJSONObject(position);
+				TextView nameTextView=(TextView) convertView.findViewById(R.id.myfocus_name_text);
+				nameTextView.setText(jsonObject.getString("username"));
+				TextView accountTextView=(TextView)convertView.findViewById(R.id.myfocus_account_text);
+				accountTextView.setText(String.format("账号：%s", jsonObject.getString("useraccount")));
+				NetworkImageView headImageView=(NetworkImageView)convertView.findViewById(R.id.myfocus_head_img);
+				headImageView.setDefaultImageResId(R.drawable.no_pic);
+				headImageView.setImageUrl(String.format("http://110.84.129.130:8080/Yuf%s", jsonObject.getString("useravatarurl")),mImageLoader);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			TextView collectionTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_collection_textview);
-			collectionTextView.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
-			
 			
 			// TODO Auto-generated method stub
 			return convertView;
