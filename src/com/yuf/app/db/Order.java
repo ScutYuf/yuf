@@ -48,7 +48,7 @@ public class Order {
 
 	public void writeToDb() {
 		   ContentResolver contentResolver = MyApplication.myapplication.getContentResolver();  
-           Uri url = Uri.parse("content://com.yuf.app.myprovider/ORDER");  
+           Uri url = Uri.parse("content://com.yuf.app.myprovider/order");  
            ContentValues values = new ContentValues();  
            values.put("USERID", userId);  
            values.put("ORDERPRICE", orderPrice);  
@@ -64,7 +64,7 @@ public class Order {
 
 	public static ArrayList<Order> readFromDb() {
 		ArrayList<Order> list = new ArrayList<Order>();
-		Uri url = Uri.parse("content://com.yuf.app.myprovider/ORDER");  
+		Uri url = Uri.parse("content://com.yuf.app.myprovider/order");  
         Cursor cursor = MyApplication.myapplication.getContentResolver().query(url,  
                   new String[] { "_id", "userId", "orderPrice","orderTime","orderPaymethod","orderAmount","dishId" }, null, null, "_id");  
         while (cursor.moveToNext()) {  

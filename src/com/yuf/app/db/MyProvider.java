@@ -20,7 +20,7 @@ public class MyProvider extends ContentProvider {
 	private static final int ORDERS = 1;
 	private static final int ORDER = 2;
 	static {
-		MATCHER.addURI("com.yuf.app.myprovider", "orders", ORDERS);
+		MATCHER.addURI("com.yuf.app.myprovider", "order", ORDERS);
 		MATCHER.addURI("com.yuf.app.myprovider", "orders/#", ORDER);
 
 	}
