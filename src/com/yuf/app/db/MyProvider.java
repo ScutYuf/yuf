@@ -20,7 +20,7 @@ public class MyProvider extends ContentProvider {
 	private static final int ORDERS = 1;
 	private static final int ORDER = 2;
 	static {
-		MATCHER.addURI("com.yuf.app.myprovider", "orders", ORDERS);
+		MATCHER.addURI("com.yuf.app.myprovider", "order", ORDERS);
 		MATCHER.addURI("com.yuf.app.myprovider", "orders/#", ORDER);
 
 	}
@@ -82,12 +82,10 @@ public class MyProvider extends ContentProvider {
 		Uri insertUri = null;
 		switch (MATCHER.match(uri)) {
 		case ORDERS:
-
-			long rowid = db.insert("ORDER", "name", values);
+			long rowid = db.insert("orders", "name", values);
 			insertUri = ContentUris.withAppendedId(uri, rowid);
 
 			break;
-
 		default:
 			throw new IllegalArgumentException("Unkwon Uri:" + uri.toString());
 		}
@@ -101,7 +99,7 @@ public class MyProvider extends ContentProvider {
 		int count = 0;
 		switch (MATCHER.match(uri)) {
 		case ORDERS:
-			count = db.delete("ORDER", selection, selectionArgs);
+			count = db.delete("orders", selection, selectionArgs);
 			return count;
 
 		case ORDER:
@@ -110,7 +108,7 @@ public class MyProvider extends ContentProvider {
 			if (selection != null && !"".equals(selection)) {
 				where = selection + " and " + where;
 			}
-			count = db.delete("ORDER", where, selectionArgs);
+			count = db.delete("orders", where, selectionArgs);
 			return count;
 
 		default:
@@ -128,7 +126,7 @@ public class MyProvider extends ContentProvider {
 		int count = 0;
 		switch (MATCHER.match(uri)) {
 		case ORDERS:
-			count = db.update("ORDER", values, selection, selectionArgs);
+			count = db.update("orders", values, selection, selectionArgs);
 			break;
 		case ORDER:
 			// 通过ContentUri工具类得到ID
@@ -137,7 +135,7 @@ public class MyProvider extends ContentProvider {
 			if (selection != null && !"".equals(selection)) {
 				where = selection + " and " + where;
 			}
-			count = db.update("ORDER", values, where, selectionArgs);
+			count = db.update("orders", values, where, selectionArgs);
 			break;
 		default:
 			throw new IllegalArgumentException("Unkwon Uri:" + uri.toString());

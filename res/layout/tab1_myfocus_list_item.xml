@@ -27,7 +27,7 @@
         android:layout_centerVertical="true"
         android:src="@drawable/rightrow" />
 
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView 
         android:id="@+id/myfocus_head_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
