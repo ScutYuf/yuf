@@ -23,6 +23,7 @@ private ImageLoader mImageLoader;
 		// TODO Auto-generated method stub
 		//
 		//
+		//
 		super.onCreate(savedInstanceState);
 		mImageLoader=new ImageLoader(MyApplication.requestQueue, new BitmapCache());
 		setContentView(R.layout.tab3_setuserinfo_activity);
