@@ -131,10 +131,14 @@
             android:screenOrientation="portrait">
             
         </activity>
+        <activity android:name=".Tab3SetUserInfoActivity"
+            android:screenOrientation="portrait">
+            
+        </activity>
         
          <provider  
     android:authorities="com.yuf.app.myprovider"  
-    android:name=".MyProvider" >  
+    android:name="com.yuf.app.db.MyProvider" >  
 </provider> 
         
     </application>
