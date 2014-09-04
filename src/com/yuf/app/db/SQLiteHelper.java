@@ -23,7 +23,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	}
 	
 	public SQLiteHelper(Context context) {
-		super(context, "yuf", null, 2);
+		super(context, "yuf", null, 5);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -40,7 +40,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				Order.ORDERPRICE+ " float," + 
 				Order.ORDERTIME+ " varchar,"+
 				Order.ORDERPAYMETHOD+ " varchar,"+
-				Order.ORDERAMOUNT+ " integer "+
+				Order.ORDERAMOUNT+ " integer,"+
+				Order.ORDERIMAGE+ " varchar, "+
+				Order.ORDERNAME+ " varchar"+
 				")");
 	}
 	

@@ -52,7 +52,7 @@ public class Tab1SocietyShareFragment extends Fragment {
 	private int currentPage;
 	private MylistAdapter mAdaAdapter;
 	private boolean isEnd;
-	Tab1SocietyShareFragment(){
+	public Tab1SocietyShareFragment(){
 		super();
 		mImageLoader=new ImageLoader(MyApplication.requestQueue, new BitmapCache());
 		jsonArray=new JSONArray();
