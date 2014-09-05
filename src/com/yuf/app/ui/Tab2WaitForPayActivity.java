@@ -88,6 +88,7 @@ public class Tab2WaitForPayActivity extends Activity {
 
 	private void loadingNextPage() {
 		//orderList = Order.readFromDb();
+		
 		listView.onRefreshComplete();
 		mAdapter.notifyDataSetChanged();
 	}

@@ -47,11 +47,11 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/bk"
                 android:clickable="true" 
-               android:onClick="onClickMyInfo"
+               android:onClick="onClickSettingInfo"
                 
                 >
 
-                <ImageView
+                <com.android.volley.toolbox.NetworkImageView
                     android:id="@+id/tab3_profile"
                     android:layout_width="91dp"
                     android:layout_height="91dp"
@@ -69,26 +69,9 @@
                 	android:layout_centerVertical="true"
                 	android:src="@drawable/rightrow" />              
 
-                <TextView
-                    android:id="@+id/tab3_levelname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/textView4"
-                    android:layout_alignBottom="@+id/textView4"
-                    android:layout_toRightOf="@+id/textView4"
-                    android:layout_marginLeft="10dp"
-                    android:text="居家好男人"
-                    android:textColor="#117ca9" />
+              
 
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/tab3_profile"
-                    android:layout_alignLeft="@+id/tab3_nickname"
-                    android:layout_marginBottom="5dp"
-                    android:text="我的勋章:"
-                    android:textColor="#000000" />
+             
 
                 <TextView
                     android:id="@+id/tab3_nickname"
@@ -106,12 +89,52 @@
                     android:id="@+id/tab3_account"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tab3_nickname"
+                    android:layout_alignBottom="@+id/tab3_profile"
                     android:layout_alignLeft="@+id/tab3_nickname"
                     android:text="账号：123456" />
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/RelativeLayout11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.10"
+                android:background="@drawable/bk"
+                android:clickable="true"
+                android:onClick="onClickMyInfo" >
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/rightrow" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="4dp"
+                    android:src="@drawable/xunzhang" />
+
+                <TextView
+                    android:id="@+id/tab3_levelname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="我的勋章：居家好男人"
+                    android:textColor="#117ca9" />
+
+            </RelativeLayout>
+            
             <RelativeLayout
                 android:id="@+id/RelativeLayout1"
                 android:layout_width="match_parent"

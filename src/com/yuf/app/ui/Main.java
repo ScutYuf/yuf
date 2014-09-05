@@ -39,6 +39,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.yuf.app.MyApplication;
 import com.yuf.app.Entity.CategorysEntity;
@@ -85,6 +86,7 @@ public class Main extends FragmentActivity {
 
 
 	//tab3
+	private NetworkImageView tab3profileImageView;
 	private TextView tab3nicknameTextView;
 	private TextView tab3accountTextView;
 	private TextView tab3levelnametTextView;
@@ -176,6 +178,10 @@ public class Main extends FragmentActivity {
 	
 
 	//tab3 onclick 函数的关联在xml文件中
+	public void onClickSettingInfo(View view){
+		Intent	intent=new Intent(mainActivity,Tab3SetUserInfoActivity.class);
+		startActivity(intent);
+	}
 public  void onClickMycollection(View view) {
 	
 	Intent	intent=new Intent(mainActivity,Tab3MyCollectionActivity.class);
@@ -207,7 +213,8 @@ public void onClickLogout(View view) {
 }
 	
 	private void initTab3() {
-	
+	tab3profileImageView=(NetworkImageView)view3.findViewById(R.id.tab3_profile);
+	tab3profileImageView.setDefaultImageResId(R.drawable.no_pic);
 	tab3accountTextView=(TextView)view3.findViewById(R.id.tab3_account);
 	tab3levelnametTextView=(TextView)view3.findViewById(R.id.tab3_levelname);
 	tab3nicknameTextView=(TextView)view3.findViewById(R.id.tab3_nickname);
