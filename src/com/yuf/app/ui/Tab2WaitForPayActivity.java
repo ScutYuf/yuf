@@ -3,8 +3,11 @@ package com.yuf.app.ui;
 
 
 import java.util.ArrayList;
+
+import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
@@ -20,6 +23,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yuf.app.MyApplication;
@@ -34,6 +38,7 @@ public class Tab2WaitForPayActivity extends Activity {
     private MyListAdapter mAdapter;  
 	private ImageLoader mImageLoader;
 	private boolean isEnd;
+	private String TAG="tab2waitforpay";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -44,8 +49,6 @@ public class Tab2WaitForPayActivity extends Activity {
 		setContentView(R.layout.tab2_wait_pay);
 		listView=(PullToRefreshListView)findViewById(R.id.tab2_waitforpay_listView);
 		listView.setMode(Mode.BOTH);
-		listView.setAdapter(mAdapter);
-		
 		listView.setOnRefreshListener(new OnRefreshListener<ListView>() {
 			@Override
 			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -57,6 +60,19 @@ public class Tab2WaitForPayActivity extends Activity {
 	             refreshListView();    
 			}
 });
+		listView.setOnLastItemVisibleListener(new OnLastItemVisibleListener() {
+
+			@Override
+			public void onLastItemVisible() {
+			
+				Log.d(TAG, "onLastItemVisible");
+					if (!isEnd) {
+						
+						loadingNextPage();
+					}
+					
+			}	});
+		listView.setAdapter(mAdapter);
 		backImageView=(ImageView)findViewById(R.id.tab2_waitforpay_back_imageView);
 		backImageView.setOnClickListener(new OnClickListener() {
 			
@@ -83,14 +99,16 @@ public class Tab2WaitForPayActivity extends Activity {
 		isEnd=false;
 		listView.setMode(Mode.BOTH);
 		orderList.removeAll(orderList);
+		mAdapter.notifyDataSetChanged();
 		loadingNextPage();
 	}
 
 	private void loadingNextPage() {
-		//orderList = Order.readFromDb();
-		
-		listView.onRefreshComplete();
-		mAdapter.notifyDataSetChanged();
+		Log.d(TAG, "loadnextpage");
+//		listView.onRefreshComplete();
+//		
+		DataBaseTask task=new DataBaseTask();
+		task.execute();
 	}
 	private class MyListAdapter extends BaseAdapter{
 
@@ -124,6 +142,33 @@ public class Tab2WaitForPayActivity extends Activity {
 			payOfOrder.setText(order.orderAmount+"");
 			return convertView;
 		}
+		
+	}
+	
+	class DataBaseTask extends AsyncTask<integer, integer, integer>
+	{
+
+		@Override
+		protected integer doInBackground(integer... params) {
+			// TODO Auto-generated method stub
+//			try {
+//				Thread.sleep(1000);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(integer result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			listView.onRefreshComplete();
+			Log.d(TAG, "onRefreshComplete");
+			mAdapter.notifyDataSetChanged();
+		}
+
 		
 	}
 }
