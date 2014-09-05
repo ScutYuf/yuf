@@ -22,14 +22,17 @@ public class Order {
 	public static final String ORDERPAYMETHOD = "orderPaymethod";
 	public static final String ORDERAMOUNT = "orderAmount";
 	public static final String ORDERDISHID = "dishId";
-
+	public static final String ORDERIMAGE = "orderImage";
+	public static final String ORDERNAME = "orderName";
+	
 	public int userId;
 	public int dishId;
 	public double orderPrice;
 	public String orderTime;
 	public String orderPaymethod;
 	public int orderAmount;
-
+	public String orderImage;
+	public String orderName;
 	public JSONObject toJsonObject() {
 		JSONObject object = new JSONObject();
 		try {
@@ -39,6 +42,8 @@ public class Order {
 			object.put("orderTime", orderTime);
 			object.put("orderPaymethod", orderPaymethod);
 			object.put("orderAmount",orderAmount);
+			object.put("orderImage",orderImage);
+			object.put("orderName",orderName);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -57,6 +62,8 @@ public class Order {
            values.put(Order.ORDERPAYMETHOD, orderPaymethod);  
            values.put(Order.ORDERAMOUNT, orderAmount);  
            values.put(Order.ORDERDISHID, dishId);  
+           values.put(Order.ORDERIMAGE, orderImage); 
+           values.put(Order.ORDERNAME, orderName);  
            Uri result = contentResolver.insert(url, values); 
            if (ContentUris.parseId(result)>0) {  
                Log.d("liow","添加成功！");        
@@ -67,7 +74,7 @@ public class Order {
 		ArrayList<Order> list = new ArrayList<Order>();
 		Uri url = Uri.parse("content://com.yuf.app.myprovider/order");  
         Cursor cursor = MyApplication.myapplication.getContentResolver().query(url,  
-                  new String[] { "_id", "userId", "orderPrice","orderTime","orderPaymethod","orderAmount","dishId" }, null, null, "_id");  
+                  new String[] { "_id", "userId", "orderPrice","orderTime","orderPaymethod","orderAmount","dishId","orderImage","orderName" }, null, null, "_id");  
         while (cursor.moveToNext()) {  
         	Order order = new Order();
         	order.userId = cursor.getInt(cursor.getColumnIndex("userId"));  
@@ -76,6 +83,8 @@ public class Order {
         	order.orderTime = cursor.getString(cursor.getColumnIndex("orderTime"));  
         	order.orderPaymethod = cursor.getString(cursor.getColumnIndex("orderPaymethod"));  
         	order.orderAmount = cursor.getInt(cursor.getColumnIndex("orderAmount"));  
+        	order.orderImage = cursor.getString(cursor.getColumnIndex("orderImage"));  
+        	order.orderName = cursor.getString(cursor.getColumnIndex("orderName"));  
         	list.add(order);  
         }  
         cursor.close();  

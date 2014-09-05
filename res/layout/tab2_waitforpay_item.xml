@@ -7,7 +7,7 @@
     android:orientation="vertical"
      >
 
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView 
         android:id="@+id/tab3_mywork_item_img"
         android:layout_width="90dp"
         android:layout_height="90dp"
