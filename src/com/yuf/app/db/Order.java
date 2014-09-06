@@ -24,7 +24,7 @@ public class Order {
 	public static final String ORDERDISHID = "dishId";
 	public static final String ORDERIMAGE = "orderImage";
 	public static final String ORDERNAME = "orderName";
-	
+	public  static  int positionOfStart =-1;//确定每一次数据库读取的起始位置
 	public int userId;
 	public int dishId;
 	public double orderPrice;
@@ -75,20 +75,33 @@ public class Order {
 		Uri url = Uri.parse("content://com.yuf.app.myprovider/order");  
         Cursor cursor = MyApplication.myapplication.getContentResolver().query(url,  
                   new String[] { "_id", "userId", "orderPrice","orderTime","orderPaymethod","orderAmount","dishId","orderImage","orderName" }, null, null, "_id");  
-        while (cursor.moveToNext()) {  
-        	Order order = new Order();
-        	order.userId = cursor.getInt(cursor.getColumnIndex("userId"));  
-        	order.dishId = cursor.getInt(cursor.getColumnIndex("dishId"));  
-        	order.orderPrice = cursor.getDouble(cursor.getColumnIndex("orderPrice"));  
-        	order.orderTime = cursor.getString(cursor.getColumnIndex("orderTime"));  
-        	order.orderPaymethod = cursor.getString(cursor.getColumnIndex("orderPaymethod"));  
-        	order.orderAmount = cursor.getInt(cursor.getColumnIndex("orderAmount"));  
-        	order.orderImage = cursor.getString(cursor.getColumnIndex("orderImage"));  
-        	order.orderName = cursor.getString(cursor.getColumnIndex("orderName"));  
-        	list.add(order);  
-        }  
+        
+      if(cursor!=null){
+    	cursor.moveToPosition(positionOfStart);
+    	int number =0;
+	    while (cursor.moveToNext()&&number<5) {  
+		number++;
+       	Order order = new Order();
+       	order.userId = cursor.getInt(cursor.getColumnIndex("userId"));  
+       	order.dishId = cursor.getInt(cursor.getColumnIndex("dishId"));  
+       	order.orderPrice = cursor.getDouble(cursor.getColumnIndex("orderPrice"));  
+       	order.orderTime = cursor.getString(cursor.getColumnIndex("orderTime"));  
+       	order.orderPaymethod = cursor.getString(cursor.getColumnIndex("orderPaymethod"));  
+       	order.orderAmount = cursor.getInt(cursor.getColumnIndex("orderAmount"));  
+       	order.orderImage = cursor.getString(cursor.getColumnIndex("orderImage"));  
+       	order.orderName = cursor.getString(cursor.getColumnIndex("orderName"));  
+       	list.add(order); 
+       	positionOfStart++;
+       }  
+       }
         cursor.close();  
 		return list;
+	}
+	public static int numberOfOrders(){
+		Uri url = Uri.parse("content://com.yuf.app.myprovider/order");  
+        Cursor cursor = MyApplication.myapplication.getContentResolver().query(url,  
+                  new String[] { "_id", "userId", "orderPrice","orderTime","orderPaymethod","orderAmount","dishId","orderImage","orderName" }, null, null, "_id");  
+        return cursor.getCount();	
 	}
 
 }

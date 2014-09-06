@@ -52,6 +52,20 @@ public class Tab0FoodCookFragment extends Fragment{
 	private float start_y=0;
 	private boolean isDisappear=false;
 	private JSONArray stepJsonObject;
+	/**
+	 * 菜谱信息
+	 * “dishdifficulty”: float,
+		“dishcollectionnum”: int,
+		“dishid”: int,
+		“dishcommentnum”: int,
+		“dishname”: String,
+		“dishpicurl”: String,
+		“dishamount”: int,
+		“dishcooktime”: String,
+		“dishprice”: double,
+		“dishcookmethod”: String
+
+	 */
 	private JSONObject dishInfoJsonObject;
 	private ImageLoader mImageLoader;
 	private  AlertDialog dlg;

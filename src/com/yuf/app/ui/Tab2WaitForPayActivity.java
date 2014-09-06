@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -37,18 +39,16 @@ public class Tab2WaitForPayActivity extends Activity {
 	private ArrayList<Order> orderList;  
     private MyListAdapter mAdapter;  
 	private ImageLoader mImageLoader;
-	private boolean isEnd;
 	private String TAG="tab2waitforpay";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		mImageLoader = new ImageLoader(MyApplication.requestQueue, new BitmapCache());
 		orderList=Order.readFromDb(); 
 		mAdapter = new MyListAdapter();
 		setContentView(R.layout.tab2_wait_pay);
 		listView=(PullToRefreshListView)findViewById(R.id.tab2_waitforpay_listView);
-		listView.setMode(Mode.BOTH);
+		listView.setMode(Mode.PULL_FROM_END);
 		listView.setOnRefreshListener(new OnRefreshListener<ListView>() {
 			@Override
 			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -57,8 +57,8 @@ public class Tab2WaitForPayActivity extends Activity {
 				 // Update the LastUpdatedLabel  
 	             refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);  
 				// Do work to refresh the list here.
-	             refreshListView();    
-			}
+	             refreshListView();   
+	         }
 });
 		listView.setOnLastItemVisibleListener(new OnLastItemVisibleListener() {
 
@@ -66,8 +66,7 @@ public class Tab2WaitForPayActivity extends Activity {
 			public void onLastItemVisible() {
 			
 				Log.d(TAG, "onLastItemVisible");
-					if (!isEnd) {
-						
+					if (orderList.size()<Order.numberOfOrders()) {
 						loadingNextPage();
 					}
 					
@@ -80,7 +79,8 @@ public class Tab2WaitForPayActivity extends Activity {
 			public void onClick(View v) {
 				onBackPressed();
 				// TODO Auto-generated method stub
-				
+				Order.positionOfStart = -1;
+				Tab2WaitForPayActivity.this.finish();
 			}
 		});
 		okButton=(Button)findViewById(R.id.tab2_waitforpay_ok_button1);
@@ -90,23 +90,29 @@ public class Tab2WaitForPayActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent =new Intent(Tab2WaitForPayActivity.this,Tab2AddressActivity.class);
 				startActivity(intent);
-				// TODO Auto-generated method stub
-				
+				Order.positionOfStart = -1;
+				Tab2WaitForPayActivity.this.finish();
 			}
 		});
 	}
 	private void refreshListView() {
-		isEnd=false;
-		listView.setMode(Mode.BOTH);
-		orderList.removeAll(orderList);
-		mAdapter.notifyDataSetChanged();
-		loadingNextPage();
+		Log.d(TAG, "Refresh!");
+		if(orderList.size()<Order.numberOfOrders())
+		{loadingNextPage();}
+		else {
+			Toast.makeText(Tab2WaitForPayActivity.this, "End of List!", Toast.LENGTH_SHORT).show();
+			DataBaseTask task=new DataBaseTask();
+			task.execute();
+		}
 	}
-
-	private void loadingNextPage() {
+   private void loadingNextPage() {
 		Log.d(TAG, "loadnextpage");
-//		listView.onRefreshComplete();
-//		
+		ArrayList<Order> list0 = orderList;
+		ArrayList<Order> list1 = Order.readFromDb();
+		for(int i=0;i<list1.size();i++){
+			list0.add(list1.get(i));
+		}
+		orderList=list0;
 		DataBaseTask task=new DataBaseTask();
 		task.execute();
 	}
@@ -150,19 +156,11 @@ public class Tab2WaitForPayActivity extends Activity {
 
 		@Override
 		protected integer doInBackground(integer... params) {
-			// TODO Auto-generated method stub
-//			try {
-//				Thread.sleep(1000);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-			return null;
+		return null;
 		}
 
 		@Override
 		protected void onPostExecute(integer result) {
-			// TODO Auto-generated method stub
 			super.onPostExecute(result);
 			listView.onRefreshComplete();
 			Log.d(TAG, "onRefreshComplete");
