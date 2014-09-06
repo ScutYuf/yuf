@@ -148,7 +148,10 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/bk" >
+        android:background="@drawable/bk" 
+        android:clickable="true"
+        android:onClick="onClickMyAddress"
+        >
 
         <TextView
             android:id="@+id/TextView05"

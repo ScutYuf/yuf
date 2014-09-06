@@ -7,6 +7,7 @@ import com.yuf.app.http.extend.BitmapCache;
 
 import android.R.mipmap;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -41,6 +42,9 @@ private ImageLoader mImageLoader;
 			}
 		});
 	}
-	
+	public void onClickMyAddress(View view){
+		Intent	intent=new Intent(Tab3SetUserInfoActivity.this,Tab2AddressActivity.class);
+		startActivity(intent);
+	}
 
 }

@@ -23,19 +23,13 @@
 			android:textColor="#fff"
             android:textSize="20sp" />
         <ImageView
-            android:id="@+id/tab2_address_back_imageView"
+            android:id="@+id/tab2_address_edit_back_imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:src="@drawable/button_details_gohome" />
 
-        <ImageView
-            android:id="@+id/imageView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/notify" />
+     
     </RelativeLayout>
 
     <TableLayout
@@ -65,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName" />
+            <requestFocus />
         </TableRow>
 
         <TableRow
@@ -105,7 +100,7 @@
                 android:inputType="textPostalAddress"
                 android:textColor="@color/default_circle_indicator_stroke_color" >
 
-                <requestFocus />
+                
             </EditText>
         </TableRow>
 

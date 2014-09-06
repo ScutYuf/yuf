@@ -86,7 +86,9 @@
             >
             
         </activity>
-         <activity
+         <activity android:name=".Tab2AddressEditActivity" android:screenOrientation="portrait">
+            
+        </activity><activity
             android:name=".Tab2ReceiveTimeActivity"
              android:screenOrientation="portrait"
             >
@@ -142,6 +144,7 @@
             android:screenOrientation="portrait">
             
         </activity>
+         
         
          <provider  
     android:authorities="com.yuf.app.myprovider"  
