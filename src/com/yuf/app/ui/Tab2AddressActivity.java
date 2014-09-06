@@ -1,5 +1,7 @@
 package com.yuf.app.ui;
 
+import com.yuf.app.db.Order;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

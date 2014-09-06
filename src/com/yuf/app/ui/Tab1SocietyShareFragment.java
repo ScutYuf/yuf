@@ -160,6 +160,7 @@ public class Tab1SocietyShareFragment extends Fragment {
 						
 						Log.d("tab1share", "resopn"+String.valueOf(jsonArray.length()));
 						
+					
 						if (response.getInt("currentPageNum")>=response.getInt("maxPageNum")) {
 							listView.setMode(Mode.PULL_FROM_START);
 							isEnd=true;
@@ -184,7 +185,8 @@ public class Tab1SocietyShareFragment extends Fragment {
 
 		//将JsonObjectRequest 加入RequestQuene
 MyApplication.requestQueue.add(request);
-Log.d("liow","request start");
+
+
 MyApplication.requestQueue.start();
 		
 	}
