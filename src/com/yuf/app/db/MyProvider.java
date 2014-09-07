@@ -2,6 +2,7 @@ package com.yuf.app.db;
 
 
 
+import android.R.integer;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -17,12 +18,20 @@ public class MyProvider extends ContentProvider {
 	// 定义一个UriMatcher类
 	private static final UriMatcher MATCHER = new UriMatcher(
 			UriMatcher.NO_MATCH);
-	private static final int ORDERS = 1;
-	private static final int ORDER = 2;
+	private static final int ORDER = 1;
+	private static final int ORDERS = 2;
+	private static final int ADDRESS = 3;
+	private static final int ADDRESSES = 4;
+	private static final int ADDRESS_ID=5;
+	private static final int ORDER_ID=6;
+	
 	static {
-		MATCHER.addURI("com.yuf.app.myprovider", "order", ORDERS);
-		MATCHER.addURI("com.yuf.app.myprovider", "orders/#", ORDER);
-
+		MATCHER.addURI("com.yuf.app.myprovider", "orders", ORDERS);
+		MATCHER.addURI("com.yuf.app.myprovider", "order", ORDER);
+		MATCHER.addURI("com.yuf.app.myprovider", "order/#", ORDER_ID);
+		MATCHER.addURI("com.yuf.app.myprovider", "addresses", ADDRESSES);
+		MATCHER.addURI("com.yuf.app.myprovider", "address", ADDRESS);
+		MATCHER.addURI("com.yuf.app.myprovider", "address/#", ADDRESS_ID);
 	}
 	@Override
 	public boolean onCreate() {
@@ -43,7 +52,7 @@ public class MyProvider extends ContentProvider {
 			return db.query("orders", projection, selection, selectionArgs,
 					null, null, sortOrder);
 
-		case ORDER:
+		case ORDER_ID:
 			// 查询某个ID的数据
 			// 通过ContentUris这个工具类解释出ID
 			long id = ContentUris.parseId(uri);
@@ -54,6 +63,24 @@ public class MyProvider extends ContentProvider {
 			}
 
 			return db.query("orders", projection, where, selectionArgs, null,
+					null, sortOrder);
+		case ADDRESSES:
+			// 查询所有的数据
+			return db.query("orders", projection, selection, selectionArgs,
+					null, null, sortOrder);
+
+		case ADDRESS:
+			
+			// 查询某个ID的数据
+			// 通过ContentUris这个工具类解释出ID
+			long address_id = ContentUris.parseId(uri);
+			String address_where = " _id=" + address_id;
+			if (!"".equals(selection) && selection != null) {
+				address_where = selection + " and " + address_where;
+
+			}
+
+			return db.query("orders", projection, address_where, selectionArgs, null,
 					null, sortOrder);
 		default:
 
@@ -80,12 +107,17 @@ public class MyProvider extends ContentProvider {
 	public Uri insert(Uri uri, ContentValues values) {
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		Uri insertUri = null;
+		int i=MATCHER.match(uri);
 		switch (MATCHER.match(uri)) {
-		case ORDERS:
+		case ORDER:
 			long rowid = db.insert("orders", "name", values);
 			insertUri = ContentUris.withAppendedId(uri, rowid);
-
 			break;
+		case ADDRESS:
+			
+			break;
+			
+			
 		default:
 			throw new IllegalArgumentException("Unkwon Uri:" + uri.toString());
 		}
@@ -102,7 +134,7 @@ public class MyProvider extends ContentProvider {
 			count = db.delete("orders", selection, selectionArgs);
 			return count;
 
-		case ORDER:
+		case ORDER_ID:
 			long id = ContentUris.parseId(uri);
 			String where = "_id=" + id;
 			if (selection != null && !"".equals(selection)) {
@@ -128,7 +160,7 @@ public class MyProvider extends ContentProvider {
 		case ORDERS:
 			count = db.update("orders", values, selection, selectionArgs);
 			break;
-		case ORDER:
+		case ORDER_ID:
 			// 通过ContentUri工具类得到ID
 			long id = ContentUris.parseId(uri);
 			String where = "_id=" + id;

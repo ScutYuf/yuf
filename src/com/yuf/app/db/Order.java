@@ -72,7 +72,7 @@ public class Order {
 
 	public static ArrayList<Order> readFromDb() {
 		ArrayList<Order> list = new ArrayList<Order>();
-		Uri url = Uri.parse("content://com.yuf.app.myprovider/order");  
+		Uri url = Uri.parse("content://com.yuf.app.myprovider/orders");  
         Cursor cursor = MyApplication.myapplication.getContentResolver().query(url,  
                   new String[] { "_id", "userId", "orderPrice","orderTime","orderPaymethod","orderAmount","dishId","orderImage","orderName" }, null, null, "_id");  
         
@@ -98,7 +98,7 @@ public class Order {
 		return list;
 	}
 	public static int numberOfOrders(){
-		Uri url = Uri.parse("content://com.yuf.app.myprovider/order");  
+		Uri url = Uri.parse("content://com.yuf.app.myprovider/orders");  
         Cursor cursor = MyApplication.myapplication.getContentResolver().query(url,  
                   new String[] { "_id", "userId", "orderPrice","orderTime","orderPaymethod","orderAmount","dishId","orderImage","orderName" }, null, null, "_id");  
         return cursor.getCount();	
