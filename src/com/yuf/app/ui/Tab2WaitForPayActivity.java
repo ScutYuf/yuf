@@ -151,7 +151,7 @@ public class Tab2WaitForPayActivity extends Activity {
 		
 	}
 	
-	class DataBaseTask extends AsyncTask<integer, integer, integer>
+	private class DataBaseTask extends AsyncTask<integer, integer, integer>
 	{
 
 		@Override

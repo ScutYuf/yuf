@@ -1,10 +1,13 @@
 package com.yuf.app.ui;
 
 import java.util.ArrayList;
+import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -13,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -25,24 +29,14 @@ public class Tab2AddressActivity extends Activity {
 	private ImageView addImageView;
 	private PullToRefreshListView addressListView;
 	private MyListAdapter mAdapter;
-	private Boolean isEnd;
 	private ArrayList<Address> addressList;
-	
+	private String TAG="Tab2AddressActivity";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		//初始化数据
-		
+		addressList = Address.readFromDb();
 		mAdapter=new MyListAdapter();
-		isEnd=false;
-		
-		addressList=new ArrayList<Address>();
-		
-		
-		
-		
-		
 		setContentView(R.layout.tab2_address_list);
 		backImageView=(ImageView)findViewById(R.id.tab2_address_back_imageView);
 		backImageView.setOnClickListener(new OnClickListener() {
@@ -50,8 +44,7 @@ public class Tab2AddressActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				onBackPressed();
-				// TODO Auto-generated method stub
-				
+				Address.positionOfStartAddress = -1;
 			}
 		});
 		addImageView=(ImageView)findViewById(R.id.tab2_address_list_add_imageview);
@@ -65,11 +58,15 @@ public class Tab2AddressActivity extends Activity {
 				
 				intent.putExtras(bundle);
 				startActivity(intent);
+				Address.positionOfStartAddress = -1;
+				Tab2AddressActivity.this.finish();
 			}
 		});
 		
 		
 		addressListView=(PullToRefreshListView)findViewById(R.id.tab2_address_list);
+		addressListView.setMode(Mode.PULL_FROM_END);
+		addressListView.setAdapter(mAdapter);
 		addressListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
 			@Override
 			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -80,74 +77,96 @@ public class Tab2AddressActivity extends Activity {
 
 				// Do work to refresh the list here.
 				refreshListView();
-			
 			}
-
-			
-		});
+       });
 		addressListView.setOnLastItemVisibleListener(new OnLastItemVisibleListener() {
-
-			@Override
+            @Override
 			public void onLastItemVisible() {
-			
-					if (!isEnd) {
-						
-						loadingNextPage();
-					}
-					
+				Log.d(TAG, "onLastItemVisible");
+				if (addressList.size()<Address.numberOfAddress()) {
+					loadingNextPage();
+				}		
 			}	});
-
-		addressListView.setMode(Mode.BOTH);
-		addressListView.setAdapter(mAdapter);
-		
+    }
+	protected void refreshListView() {
+		Log.d(TAG, "Refresh!");
+		if(addressList.size()<Address.numberOfAddress())
+		{loadingNextPage();}
+		else {
+			Toast.makeText(Tab2AddressActivity.this, "End of List!", Toast.LENGTH_SHORT).show();
+			DataBaseTask task=new DataBaseTask();
+			task.execute();
+		}
 	}
 	protected void loadingNextPage() {
-		// TODO Auto-generated method stub
-		
+		Log.d(TAG, "loadnextpage");
+		ArrayList<Address> list0 = addressList;
+		ArrayList<Address> list1 = Address.readFromDb();
+		for(int i=0;i<list1.size();i++){
+			list0.add(list1.get(i));
+		}
+		addressList=list0;
+		DataBaseTask task=new DataBaseTask();
+		task.execute();
 	}
-	protected void refreshListView() {
-		// TODO Auto-generated method stub
-		
-	}
-	class MyListAdapter extends BaseAdapter
+	
+	private class MyListAdapter extends BaseAdapter
 	{
-
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
 			return addressList.size();
 		}
 
 		@Override
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
 			return addressList.get(position);
 		}
 
 		@Override
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
 			return position;
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
 			if (convertView==null) {
 				convertView=Tab2AddressActivity.this.getLayoutInflater().inflate(R.layout.tab2_address_list_item,null);
 				
 			}
-			RadioButton  defaultButton=(RadioButton)convertView.findViewById(R.id.tab2_address_list_item_setdefault_radiobutton);
+			Address address = addressList.get(position);
+			RadioButton defaultButton=(RadioButton)convertView.findViewById(R.id.tab2_address_list_item_setdefault_radiobutton);
+			switch (address.isDefault) {
+			case 0:defaultButton.setChecked(false);break;
+			case 1:defaultButton.setChecked(true);break;
+			default:defaultButton.setChecked(false);break;
+			}
 			TextView deleteTextView=(TextView)convertView.findViewById(R.id.tab2_address_list_item_delete_textview);
+			deleteTextView.setText("删除");
 			TextView ediTextView=(TextView)convertView.findViewById(R.id.tab2_address_list_item_edit_textview);
-			
+			ediTextView.setText("编辑");
 			TextView nameTextView=(TextView)convertView.findViewById(R.id.tab2_address_list_item_name_textview);
+			nameTextView.setText(address.nameString);
 			TextView zonetTextView=(TextView)convertView.findViewById(R.id.tab2_address_list_item_zone_textview);
+			zonetTextView.setText(address.zoneString);
 			TextView detailTextView=(TextView)convertView.findViewById(R.id.tab2_address_list_item_detailaddress_textview);
+			detailTextView.setText(address.detailString);
 			TextView phoneTextView=(TextView)convertView.findViewById(R.id.tab2_address_list_item_phone_textview);
-			
+			phoneTextView.setText(address.phoneString);
 			return convertView;
 		}
-		
+	}
+	private class DataBaseTask extends AsyncTask<integer, integer, integer>
+	{
+        @Override
+		protected integer doInBackground(integer... params) {
+		return null;
+		}
+        @Override
+		protected void onPostExecute(integer result) {
+			super.onPostExecute(result);
+			addressListView.onRefreshComplete();
+			Log.d(TAG, "onRefreshComplete");
+			mAdapter.notifyDataSetChanged();
+		}
 	}
 }

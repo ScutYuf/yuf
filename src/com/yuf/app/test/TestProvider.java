@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.util.Log;
 
+import com.yuf.app.db.Address;
 import com.yuf.app.db.MyProvider;
 import com.yuf.app.db.Order;
 
@@ -68,6 +69,17 @@ public class TestProvider extends android.test.ProviderTestCase2<MyProvider> {
 		order4.orderImage = "10";
 		order4.orderName="10";
 		order4.writeToDb();
+	}
+	public void testSave1()
+	{
+
+		Address address=new Address();
+		address.nameString="abc";
+		address.phoneString="abc";
+		address.zoneString="abc";
+		address.detailString="abc";
+		address.isDefault=0;
+		address.writeToDb();
 	}
 	public void testOutput(){
 		ArrayList<Order> list = Order.readFromDb();

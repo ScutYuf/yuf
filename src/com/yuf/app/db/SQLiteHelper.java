@@ -16,7 +16,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
  */
 public class SQLiteHelper extends SQLiteOpenHelper {
 	public static final String TB_NAME = "orders";
-
+	public static final String TB_NAME2 = "addresses";
 	public SQLiteHelper(Context context, String name, CursorFactory factory,
 			int version) {
 		super(context, name, factory, version);
@@ -24,7 +24,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	
 	public SQLiteHelper(Context context) {
 		super(context, "yuf", null, 5);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -44,6 +43,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				Order.ORDERIMAGE+ " varchar, "+
 				Order.ORDERNAME+ " varchar"+
 				")");
+		db.execSQL("CREATE TABLE IF NOT EXISTS " +
+				TB_NAME2 + "(" +
+				Address.ID + " integer primary key," +
+				Address.NAMESTRING + " varchar," + 
+				Address.PHONESTRING + " varchar," + 
+				Address.ZONESTRING+ " varchar," + 
+				Address.DETAILSTRING+ " varchar,"+
+				Address.ISDEFAULT+ " integer"+
+				")");	
 	}
 	
 	/**
@@ -52,6 +60,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS " + TB_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + TB_NAME2);
 		onCreate(db);
 	}
 	
@@ -61,8 +70,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 	 * @param oldColumn
 	 * @param newColumn
 	 * @param typeColumn
-	 */
-	public void updateColumn(SQLiteDatabase db, String oldColumn, String newColumn, String typeColumn){
+	 * public void updateColumn(SQLiteDatabase db, String oldColumn, String newColumn, String typeColumn){
 		try{
 			db.execSQL("ALTER TABLE " +
 					TB_NAME + " CHANGE " +
@@ -73,5 +81,5 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 			e.printStackTrace();
 		}
 	}
-
+	 */
 }

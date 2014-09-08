@@ -41,7 +41,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:text="设为默认地址"
-            android:textColor="#000" />
+            android:textColor="#000"/>
 
     </RelativeLayout>
 

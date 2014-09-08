@@ -1,8 +1,6 @@
 package com.yuf.app.db;
 
 
-
-import android.R.integer;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -10,7 +8,6 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.preference.PreferenceActivity.Header;
 
 public class MyProvider extends ContentProvider {
 
@@ -51,8 +48,7 @@ public class MyProvider extends ContentProvider {
 			// 查询所有的数据
 			return db.query("orders", projection, selection, selectionArgs,
 					null, null, sortOrder);
-
-		case ORDER_ID:
+        case ORDER_ID:
 			// 查询某个ID的数据
 			// 通过ContentUris这个工具类解释出ID
 			long id = ContentUris.parseId(uri);
@@ -61,16 +57,14 @@ public class MyProvider extends ContentProvider {
 				where = selection + " and " + where;
 
 			}
-
-			return db.query("orders", projection, where, selectionArgs, null,
+            return db.query("orders", projection, where, selectionArgs, null,
 					null, sortOrder);
 		case ADDRESSES:
 			// 查询所有的数据
-			return db.query("orders", projection, selection, selectionArgs,
+			return db.query("addresses", projection, selection, selectionArgs,
 					null, null, sortOrder);
 
-		case ADDRESS:
-			
+		case ADDRESS_ID:
 			// 查询某个ID的数据
 			// 通过ContentUris这个工具类解释出ID
 			long address_id = ContentUris.parseId(uri);
@@ -80,7 +74,7 @@ public class MyProvider extends ContentProvider {
 
 			}
 
-			return db.query("orders", projection, address_where, selectionArgs, null,
+			return db.query("addresses", projection, address_where, selectionArgs, null,
 					null, sortOrder);
 		default:
 
@@ -97,6 +91,10 @@ public class MyProvider extends ContentProvider {
 			return "vnd.android.cursor.dir/ORDER";
 		case ORDER:
 			return "vnd.android.cursor.item/ORDER";
+		case ADDRESSES:
+			return "vnd.android.cursor.dir/ADDRESSES";
+		case ADDRESS:
+			return "vnd.android.cursor.item/ADDRESS";
 		default:
 			throw new IllegalArgumentException("Unkwon Uri:" + uri.toString());
 		}
@@ -107,19 +105,17 @@ public class MyProvider extends ContentProvider {
 	public Uri insert(Uri uri, ContentValues values) {
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		Uri insertUri = null;
-		int i=MATCHER.match(uri);
 		switch (MATCHER.match(uri)) {
 		case ORDER:
-			long rowid = db.insert("orders", "name", values);
-			insertUri = ContentUris.withAppendedId(uri, rowid);
+			long rowid1 = db.insert("orders", "name", values);
+			insertUri = ContentUris.withAppendedId(uri, rowid1);
 			break;
 		case ADDRESS:
-			
+			long rowid2 = db.insert("addresses", "name", values);
+			insertUri = ContentUris.withAppendedId(uri, rowid2);
 			break;
-			
-			
 		default:
-			throw new IllegalArgumentException("Unkwon Uri:" + uri.toString());
+			throw new IllegalArgumentException("Unkwon--- Uri:" + uri.toString());
 		}
 		return insertUri;
 	}
@@ -141,6 +137,19 @@ public class MyProvider extends ContentProvider {
 				where = selection + " and " + where;
 			}
 			count = db.delete("orders", where, selectionArgs);
+			return count;
+			
+		case ADDRESSES:
+			count = db.delete("addresses", selection, selectionArgs);
+			return count;
+
+		case ADDRESS_ID:
+			long id2 = ContentUris.parseId(uri);
+			String where2 = "_id=" + id2;
+			if (selection != null && !"".equals(selection)) {
+				where = selection + " and " + where2;
+			}
+			count = db.delete("addresses", where2, selectionArgs);
 			return count;
 
 		default:
@@ -168,6 +177,19 @@ public class MyProvider extends ContentProvider {
 				where = selection + " and " + where;
 			}
 			count = db.update("orders", values, where, selectionArgs);
+			break;
+		//
+		case ADDRESSES:
+			count = db.update("addresses", values, selection, selectionArgs);
+			break;
+		case ADDRESS_ID:
+			// 通过ContentUri工具类得到ID
+			long id2 = ContentUris.parseId(uri);
+			String where2 = "_id=" + id2;
+			if (selection != null && !"".equals(selection)) {
+				where = selection + " and " + where2;
+			}
+			count = db.update("addresses", values, where2, selectionArgs);
 			break;
 		default:
 			throw new IllegalArgumentException("Unkwon Uri:" + uri.toString());
