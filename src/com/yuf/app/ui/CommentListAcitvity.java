@@ -45,12 +45,12 @@ private MylistAdapter listAdapter;
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.comment_list_activity);
+		setContentView(R.layout.tab0_comment_acitivity);
 		dishid=getIntent().getExtras().getInt("dishid");
 		currentpage=0;
 		jsonArray=new JSONArray();
-		listView=(PullToRefreshListView)findViewById(R.id.comment_list_activity_listview);
-		backImageView=(ImageView)findViewById(R.id.comment_list_activity_back_imageView);
+		listView=(PullToRefreshListView)findViewById(R.id.tab0_comment_acitivity_listview);
+		backImageView=(ImageView)findViewById(R.id.tab0_comment_activity_back_imageview);
 		backImageView.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -125,14 +125,14 @@ private MylistAdapter listAdapter;
 			// TODO Auto-generated method stub
 			Log.d("mywork", "get");
 			if (convertView==null) {
-				convertView=CommentListAcitvity.this.getLayoutInflater().inflate(R.layout.comment_list_item,null);
+				convertView=CommentListAcitvity.this.getLayoutInflater().inflate(R.layout.tab0_comment_item,null);
 				
 			}
 			JSONObject jsonObject;
 			try {
 				jsonObject = jsonArray.getJSONObject(position);
-				TextView nameTextView=(TextView)convertView.findViewById(R.id.comment_list_item_username_textview);
-				TextView contentTextView=(TextView)convertView.findViewById(R.id.comment_list_item_content);
+				TextView nameTextView=(TextView)convertView.findViewById(R.id.tab0_comment_item_name_textview);
+				TextView contentTextView=(TextView)convertView.findViewById(R.id.tab0_comment_item_content_textview);
 				nameTextView.setText(jsonObject.getString("username"));
 				contentTextView.setText(jsonObject.getString("dishcommentcontent"));
 			} catch (JSONException e) {

@@ -2,13 +2,18 @@ package com.yuf.app.ui;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
+
 import android.R.integer;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -53,8 +58,27 @@ public class Tab2BougthActivity extends Activity {
 				
 			}
 		});
+			
+				
+				
 		listView.setAdapter(mAdapter);
-		
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent intent=new Intent(Main.mainActivity,
+				Tab0FoodActivity.class);
+				Bundle bundle = new Bundle();                           //创建Bundle对象   
+				bundle.putString("dishid",String.valueOf( ordersList.get(position-1).dishId));
+				bundle.putString("dishname",ordersList.get(position-1).orderName);
+				bundle.putBoolean("isSeeJust",true);
+				intent.putExtras(bundle);                                //把Bundle塞入Intent里面  
+				startActivity(intent);
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		
 		backImageView=(ImageView)findViewById(R.id.tab2_bougth_back_imageView);
@@ -94,7 +118,7 @@ public class Tab2BougthActivity extends Activity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub
 			if (convertView==null) {
-				convertView=Tab2BougthActivity.this.getLayoutInflater().inflate(R.layout.tab2_address_list_item,null);
+				convertView=Tab2BougthActivity.this.getLayoutInflater().inflate(R.layout.tab2_bougth_item,null);
 				
 			}
 			//设置已购买项信息

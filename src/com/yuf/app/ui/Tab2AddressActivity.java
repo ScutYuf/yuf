@@ -1,9 +1,17 @@
 package com.yuf.app.ui;
 
 import java.util.ArrayList;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.R.integer;
+import android.R.interpolator;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.DateUtils;
@@ -12,17 +20,27 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request.Method;
+import com.android.volley.Response.Listener;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.yuf.app.MyApplication;
+import com.yuf.app.Entity.UserInfo;
 import com.yuf.app.db.Address;
+import com.yuf.app.db.Order;
 
 public class Tab2AddressActivity extends Activity {
 	private ImageView backImageView;
@@ -31,20 +49,64 @@ public class Tab2AddressActivity extends Activity {
 	private MyListAdapter mAdapter;
 	private ArrayList<Address> addressList;
 	private String TAG="Tab2AddressActivity";
+	
+	private TextView zoneTextView;
+	private TextView detailTextView;
+	private TextView recevierTextView;
+	private TextView phoneTextView;
+	private SharedPreferences sharepPreferences;
+	private Button okButton;
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		Address.positionOfStartAddress=-1;
+		addressList = Address.readFromDb();
+		mAdapter.notifyDataSetChanged();
+		
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//初始化数据
+		
 		addressList = Address.readFromDb();
 		mAdapter=new MyListAdapter();
+		sharepPreferences=getSharedPreferences("address", Context.MODE_PRIVATE);
 		setContentView(R.layout.tab2_address_list);
+		
+		
+		okButton=(Button)findViewById(R.id.tab2_address_list_ok_button);
+		okButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				payOrders();
+			}
+		});
+		
+		zoneTextView=(TextView)findViewById(R.id.tab2_address_list_zone_textview);
+		detailTextView=(TextView)findViewById(R.id.tab2_address_list_detail_textview);
+		recevierTextView=(TextView)findViewById(R.id.tab2_address_list_receivername_textview);
+		phoneTextView=(TextView)findViewById(R.id.tab2_address_list_phone_textview);
+		
+		//初始化默认地址
+		zoneTextView.setText("区地址："+sharepPreferences.getString(Address.ZONESTRING, ""));
+		detailTextView.setText("详细地址："+sharepPreferences.getString(Address.DETAILSTRING, ""));
+		recevierTextView.setText("姓名："+sharepPreferences.getString(Address.NAMESTRING, ""));
+		phoneTextView.setText("电话号码："+sharepPreferences.getString(Address.PHONESTRING, ""));
+		
+		
+		
 		backImageView=(ImageView)findViewById(R.id.tab2_address_back_imageView);
 		backImageView.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				onBackPressed();
 				Address.positionOfStartAddress = -1;
+				onBackPressed();
 			}
 		});
 		addImageView=(ImageView)findViewById(R.id.tab2_address_list_add_imageview);
@@ -53,13 +115,9 @@ public class Tab2AddressActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent=new Intent(Tab2AddressActivity.this,Tab2AddressEditActivity.class);
-				Bundle bundle=new Bundle();
-				
-				intent.putExtras(bundle);
-				startActivity(intent);
 				Address.positionOfStartAddress = -1;
-				Tab2AddressActivity.this.finish();
+				Intent intent=new Intent(Tab2AddressActivity.this,Tab2AddressEditActivity.class);
+				startActivity(intent);
 			}
 		});
 		
@@ -88,6 +146,55 @@ public class Tab2AddressActivity extends Activity {
 				}		
 			}	});
     }
+	private void payOrders() {
+		ArrayList<Order>orders=Order.readFromDb();
+		for (int i = 0; i < orders.size(); i++) {
+		JSONObject jsonObject=new JSONObject();
+		try {
+			jsonObject.put("userId", Integer.valueOf(UserInfo.getInstance().userid));
+			jsonObject.put("orderPaymethod", "货到付款");
+			jsonObject.put("orderAmount", 1);
+			jsonObject.put("dishId", orders.get(i).dishId);
+			jsonObject.put("orderPrice", orders.get(i).orderPrice);
+			jsonObject.put("orderTime", orders.get(i).orderTime);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		JsonObjectRequest jsonObjectRequest=new JsonObjectRequest(Method.POST,"http://110.84.129.130:8080/Yuf/order/insertOrder", jsonObject, new Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject response) {
+				// TODO Auto-generated method stub
+				Log.d(TAG, response.toString());
+				try {
+					if (response.getString("insertOrder").equals("success")) {
+						Toast.makeText(Tab2AddressActivity.this, "下单成功", Toast.LENGTH_SHORT).show();
+					}
+					else {
+						Toast.makeText(Tab2AddressActivity.this, "下单失败", Toast.LENGTH_SHORT).show();
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}, new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		MyApplication.requestQueue.add(jsonObjectRequest);
+		MyApplication.requestQueue.start();
+		}
+		
+	}
 	protected void refreshListView() {
 		Log.d(TAG, "Refresh!");
 		if(addressList.size()<Address.numberOfAddress())
@@ -133,17 +240,35 @@ public class Tab2AddressActivity extends Activity {
 				convertView=Tab2AddressActivity.this.getLayoutInflater().inflate(R.layout.tab2_address_list_item,null);
 				
 			}
+			final int  index=position;
 			Address address = addressList.get(position);
-			RadioButton defaultButton=(RadioButton)convertView.findViewById(R.id.tab2_address_list_item_setdefault_radiobutton);
-			switch (address.isDefault) {
-			case 0:defaultButton.setChecked(false);break;
-			case 1:defaultButton.setChecked(true);break;
-			default:defaultButton.setChecked(false);break;
-			}
+			Button defaultButton=(Button)convertView.findViewById(R.id.tab2_address_list_item_setdefault_button);
+			defaultButton.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					
+					setDefaultAddress(index);
+					
+					
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			
 			TextView deleteTextView=(TextView)convertView.findViewById(R.id.tab2_address_list_item_delete_textview);
 			deleteTextView.setText("删除");
-			TextView ediTextView=(TextView)convertView.findViewById(R.id.tab2_address_list_item_edit_textview);
-			ediTextView.setText("编辑");
+			deleteTextView.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					deleteAddress(index);
+					
+				}
+			});
+			
+			
 			TextView nameTextView=(TextView)convertView.findViewById(R.id.tab2_address_list_item_name_textview);
 			nameTextView.setText(address.nameString);
 			TextView zonetTextView=(TextView)convertView.findViewById(R.id.tab2_address_list_item_zone_textview);
@@ -154,6 +279,29 @@ public class Tab2AddressActivity extends Activity {
 			phoneTextView.setText(address.phoneString);
 			return convertView;
 		}
+
+	}
+	protected void deleteAddress(int index) {
+		// TODO Auto-generated method stub
+		Address.deleteFromDb(addressList.get(index)._id);
+		addressList.remove(index);
+		mAdapter.notifyDataSetChanged();
+	}
+	private void setDefaultAddress(int index) {
+		
+		Address address=addressList.get(index);
+		Editor editor=sharepPreferences.edit();
+		editor.putString(Address.ZONESTRING, address.zoneString);
+		editor.putString(Address.DETAILSTRING, address.detailString);
+		editor.putString(Address.NAMESTRING, address.nameString);
+		editor.putString(Address.PHONESTRING, address.phoneString);
+		editor.commit();
+		zoneTextView.setText("区地址："+sharepPreferences.getString(Address.ZONESTRING, ""));
+		detailTextView.setText("详细地址："+sharepPreferences.getString(Address.DETAILSTRING, ""));
+		recevierTextView.setText("姓名："+sharepPreferences.getString(Address.NAMESTRING, ""));
+		phoneTextView.setText("电话号码："+sharepPreferences.getString(Address.PHONESTRING, ""));
+		
+		
 	}
 	private class DataBaseTask extends AsyncTask<integer, integer, integer>
 	{

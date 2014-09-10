@@ -7,23 +7,23 @@
     android:orientation="vertical" >
 
      <ImageView
-        android:id="@+id/tab3_mywork_item_img"
+        android:id="@+id/tab2_bought_item_img"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:layout_below="@+id/tab3_mywork_item_time"
-        android:layout_alignLeft="@+id/tab3_mywork_item_time"
+        android:layout_below="@+id/tab2_bought_item_time"
+        android:layout_alignLeft="@+id/tab2_bought_item_time"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="10dp"
         android:src="@drawable/meat" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="5dp"
-        android:layout_below="@+id/tab3_mywork_item_img"
+        android:layout_below="@+id/tab2_bought_item_img"
         android:layout_alignParentLeft="true"
  />
 
     <TextView
-        android:id="@+id/tab3_mywork_item_time"
+        android:id="@+id/tab2_bought_item_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -34,10 +34,10 @@
         android:textSize="12sp" />
 
     <TextView
-        android:id="@+id/tab3_mywork_item_name"
+        android:id="@+id/tab2_bought_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tab3_mywork_item_img"
+        android:layout_alignTop="@+id/tab2_bought_item_img"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:text="红烧牛肉"
@@ -48,7 +48,7 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tab3_mywork_item_name"
+        android:layout_alignLeft="@+id/tab2_bought_item_name"
         android:layout_below="@+id/imageView1"
         android:text="金额:"
         android:textSize="13sp"
@@ -58,7 +58,7 @@
         android:id="@+id/button2"
         android:layout_width="70dp"
         android:layout_height="30dp"
-        android:layout_alignBottom="@+id/tab3_mywork_item_img"
+        android:layout_alignBottom="@+id/tab2_bought_item_img"
         android:layout_alignRight="@+id/imageView1"
         android:layout_marginBottom="5dp"
         android:text="正在配菜"
@@ -71,7 +71,7 @@
         android:id="@+id/imageView1"
         android:layout_width="30dp"
         android:layout_height="25dp"
-        android:layout_alignBottom="@+id/tab3_mywork_item_name"
+        android:layout_alignBottom="@+id/tab2_bought_item_name"
         android:layout_alignParentRight="true"
         android:src="@drawable/rightrow" />
 

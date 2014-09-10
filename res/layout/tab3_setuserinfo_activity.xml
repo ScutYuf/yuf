@@ -35,7 +35,10 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/bk" >
+        android:background="@drawable/bk"
+        android:clickable="true"
+        android:onClick="onClickProfile"
+         >
 
         <TextView
             android:id="@+id/textView1"
@@ -74,7 +77,10 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/bk" >
+        android:background="@drawable/bk" 
+        android:clickable="true"
+        android:onClick="onClickNickName"
+        >
 
         <TextView
             android:id="@+id/textView3"
@@ -111,7 +117,10 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/bk" >
+        android:background="@drawable/bk" 
+        android:clickable="true"
+        android:onClick="onClickPhone"
+        >
 
         <TextView
             android:id="@+id/TextView02"

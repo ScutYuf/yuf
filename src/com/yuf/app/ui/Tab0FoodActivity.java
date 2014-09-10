@@ -34,6 +34,7 @@ import com.yuf.app.MyApplication;
 import com.yuf.app.Entity.CategorysEntity;
 import com.yuf.app.Entity.UserInfo;
 import com.yuf.app.adapter.MiddlePageAdapter;
+import com.yuf.app.db.Order;
 import com.yuf.app.ui.Main.MyPageChangeListener;
 import com.yuf.app.ui.indicator.TitlePageIndicator;
 
@@ -45,6 +46,7 @@ public class Tab0FoodActivity extends FragmentActivity {
 private ImageView backImageView;
 private JSONObject jsonObject;
 private ImageView goPayImageView;
+private boolean isSeeJust;
 	class MyPageChangeListener implements OnPageChangeListener {
 	    @Override
 	    public void onPageScrollStateChanged(int arg0) {
@@ -75,18 +77,28 @@ private ImageView goPayImageView;
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		
+		isSeeJust=getIntent().getExtras().getBoolean("isSeeJust",false);
+		
 		setContentView(R.layout.tab0_recipe_detail);
+		
 		goPayImageView=(ImageView)findViewById(R.id.tab0_recipe_detail_gopay_image);
 		goPayImageView.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent=new Intent(getApplicationContext(), Tab2WaitForPayActivity.class);
+				
+				addOrder();
+				Intent intent=new Intent(Tab0FoodActivity.this, Tab2WaitForPayActivity.class);
 				startActivity(intent);
+				
+				
 			}
 		});
-		
+if (isSeeJust) {
+			goPayImageView.setVisibility(View.GONE);
+		}
 		foodnameTextView=(TextView)findViewById(R.id.tab0_detail_foodname);
 		foodnameTextView.setText(getIntent().getExtras().getString("dishname"));
 		backImageView=(ImageView)findViewById(R.id.tab0_detail_back_imageView);
@@ -100,15 +112,19 @@ private ImageView goPayImageView;
 			}
 		});
 		
-		
-		
-		
 	getDishDetail();
 		
 		
 		
 	}
 	
+
+	protected void addOrder() {
+		// TODO Auto-generated method stub
+		Order order=new Order();
+		
+	}
+
 
 	void addFragment(){
 		 fragments=new ArrayList<Fragment>();
@@ -119,6 +135,8 @@ private ImageView goPayImageView;
 			
 			fragments.add(new Tab0FoodCookFragment(jsonObject.getJSONArray("Recipe"),jsonObject.getJSONObject("Dish")));
 			fragments.add(new Tab0FoodMaterialFragment(jsonObject.getJSONArray("RelatedFood")));
+			
+			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

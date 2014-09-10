@@ -1,5 +1,8 @@
 package com.yuf.app.ui;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
 import javax.security.auth.PrivateCredentialPermission;
 
 import org.json.JSONArray;
@@ -38,6 +41,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.yuf.app.MyApplication;
 import com.yuf.app.Entity.UserInfo;
+import com.yuf.app.db.Order;
 import com.yuf.app.http.extend.BitmapCache;
 public class Tab0FoodCookFragment extends Fragment{
 
@@ -130,6 +134,17 @@ public class Tab0FoodCookFragment extends Fragment{
 		collection=(TextView)view.findViewById(R.id.collection_textView);
 		share=(TextView)view.findViewById(R.id.share_TextView);
 		addcart=(TextView)view.findViewById(R.id.add_cart_textview);
+		addcart.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				addOrder();
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		mLinearLayout=(LinearLayout)view.findViewById(R.id.scrolllinelayout);
 		mScrollView=(ScrollView)view.findViewById(R.id.cook_scrollView);
 		mScrollView.setOnTouchListener(new OnTouchListener() {
@@ -142,6 +157,30 @@ public class Tab0FoodCookFragment extends Fragment{
 		initFoodInfo();
 		addSteps();
 		return  view;
+	}
+
+
+protected void addOrder() {
+		// TODO Auto-generated method stub
+		try {
+			Order order=new Order();
+			order.dishId=dishInfoJsonObject.getInt("dishid");
+			order.orderAmount=1;
+			order.orderImage=dishInfoJsonObject.getString("dishpicurl");
+			order.orderName=dishInfoJsonObject.getString("dishname");
+			order.orderPaymethod="货到付款";
+			order.orderPrice=dishInfoJsonObject.getDouble("dishprice");
+			order.orderTime=timeString();
+			order.userId=Integer.valueOf(UserInfo.getInstance().userid);
+			order.writeToDb();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		
 	}
 
 
@@ -560,6 +599,12 @@ MyApplication.requestQueue.add(request);
 Log.d("liow","request start");
 MyApplication.requestQueue.start();
 	}
-
+private String timeString() {
+	// TODO Auto-generated method stub
+	long currentTime = System.currentTimeMillis();
+	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	Date date = new Date(currentTime);
+	return formatter.format(date);
+}
 
 }

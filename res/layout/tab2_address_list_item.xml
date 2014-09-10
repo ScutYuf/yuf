@@ -12,36 +12,23 @@
         android:layout_height="50dp" >
 
         <TextView
-            android:id="@+id/tab2_address_list_item_edit_textview"
+            android:id="@+id/tab2_address_list_item_delete_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="98dp"
-            android:text="编辑"
-            android:textColor="#000"
-            android:textSize="25sp" />
-
-        <TextView
-            android:id="@+id/tab2_address_list_item_delete_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tab2_address_list_item_edit_textview"
-            android:layout_alignBottom="@+id/tab2_address_list_item_edit_textview"
-            android:layout_alignParentRight="true"
             android:layout_marginRight="29dp"
             android:text="删除"
             android:textColor="#000"
             android:textSize="25sp" />
 
-        <RadioButton
-            android:id="@+id/tab2_address_list_item_setdefault_radiobutton"
+        <Button
+            android:id="@+id/tab2_address_list_item_setdefault_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:text="设为默认地址"
-            android:textColor="#000"/>
+            android:layout_centerVertical="true"
+            android:text="设为默认地址" />
 
     </RelativeLayout>
 

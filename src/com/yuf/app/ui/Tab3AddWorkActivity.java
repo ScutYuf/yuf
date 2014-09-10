@@ -65,10 +65,8 @@ public class Tab3AddWorkActivity extends Activity {
 	shareContentEditText=(EditText)findViewById(R.id.tab3_addwork_content_textview);
 	foodImageView=(ImageView)findViewById(R.id.tab3_addwork_photo_image);
 	picName=UserInfo.getInstance().getUserid()+String.valueOf(System.currentTimeMillis())+".jpg";
-	long currentTime = System.currentTimeMillis();
-	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	Date date = new Date(currentTime);
-	timeTextView.setText(formatter.format(date));
+	
+	timeTextView.setText(timeString());
 	publicButton.setOnClickListener(new OnClickListener() {
 		
 		@Override
@@ -228,5 +226,11 @@ MyApplication.requestQueue.start();
 	        }  
 	 }
 
-
+private String timeString() {
+	// TODO Auto-generated method stub
+	long currentTime = System.currentTimeMillis();
+	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	Date date = new Date(currentTime);
+	return formatter.format(date);
+}
 }

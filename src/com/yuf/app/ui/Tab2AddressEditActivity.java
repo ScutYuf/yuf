@@ -26,9 +26,7 @@ private EditText name,phoneNumber,zoneAddress,detailAddress;
 		backImageView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Tab2AddressEditActivity.this.finish();
-				Intent intent = new Intent(Tab2AddressEditActivity.this, Tab2AddressActivity.class);
-				startActivity(intent);
+			onBackPressed();
 			}
 		});
 		//save the address
@@ -61,6 +59,8 @@ private EditText name,phoneNumber,zoneAddress,detailAddress;
 		address.isDefault = 0;
 		address.writeToDb();
 		Toast.makeText(Tab2AddressEditActivity.this, "地址已存储！", Toast.LENGTH_SHORT).show();
+		onBackPressed();
+		
 	}
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

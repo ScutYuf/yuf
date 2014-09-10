@@ -102,13 +102,12 @@ public class Tab1SocietyShareFragment extends Fragment {
 						Tab1ShareDetailActivity.class);
 				Bundle bundle = new Bundle();                           //创建Bundle对象   
 				try {
-					JSONObject jsonObject=jsonArray.getJSONObject(position);
+					JSONObject jsonObject=jsonArray.getJSONObject(position-1);
 					bundle.putInt("postid",jsonObject.getInt("postid"));
 					bundle.putInt("userid", jsonObject.getInt("userid"));
 					bundle.putString("posttitle", jsonObject.getString("posttitle"));
 					bundle.putString("postpicurl", jsonObject.getString("postpicurl"));
 					bundle.putString("postcontent",jsonObject.getString("postcontent"));
-				
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -252,15 +251,6 @@ private class MylistAdapter extends BaseAdapter
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		TextView collectionTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_collection_textview);
-		collectionTextView.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				collectionPressed();
-			}
-		});
 		
 		
 		// TODO Auto-generated method stub
@@ -269,7 +259,5 @@ private class MylistAdapter extends BaseAdapter
 	
 	}
 
-private void collectionPressed() {
-	
-}
+
 }

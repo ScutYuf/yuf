@@ -4,6 +4,8 @@ package com.yuf.app.ui;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
+
 import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
@@ -91,7 +93,7 @@ public class Tab2WaitForPayActivity extends Activity {
 				Intent intent =new Intent(Tab2WaitForPayActivity.this,Tab2AddressActivity.class);
 				startActivity(intent);
 				Order.positionOfStart = -1;
-				Tab2WaitForPayActivity.this.finish();
+//				Tab2WaitForPayActivity.this.finish();
 			}
 		});
 	}
@@ -103,6 +105,7 @@ public class Tab2WaitForPayActivity extends Activity {
 			Toast.makeText(Tab2WaitForPayActivity.this, "End of List!", Toast.LENGTH_SHORT).show();
 			DataBaseTask task=new DataBaseTask();
 			task.execute();
+			listView.setMode(Mode.DISABLED);
 		}
 	}
    private void loadingNextPage() {
@@ -140,12 +143,44 @@ public class Tab2WaitForPayActivity extends Activity {
 				convertView=Tab2WaitForPayActivity.this.getLayoutInflater().inflate(R.layout.tab2_waitforpay_item,null);
 			}
 			Order order = orderList.get(position);
-			NetworkImageView imageOrder = (NetworkImageView)convertView.findViewById(R.id.tab3_mywork_item_img);
-			//imageOrder.setImageUrl(order.orderImage, mImageLoader);
-			TextView nameOfOrder=(TextView)convertView.findViewById(R.id.tab3_mywork_item_name);
+			NetworkImageView imageOrder = (NetworkImageView)convertView.findViewById(R.id.tab2_waitforpay_item_img);
+			imageOrder.setDefaultImageResId(R.drawable.no_pic);
+			imageOrder.setImageUrl("http://110.84.129.130:8080/Yuf"+order.orderImage, mImageLoader);
+			TextView timeOfOrder=(TextView)convertView.findViewById(R.id.tab2_waitforpay_item_time);
+			timeOfOrder.setText(order.orderTime);
+			
+			TextView nameOfOrder=(TextView)convertView.findViewById(R.id.tab2_waitforpay_item_name);
 			nameOfOrder.setText(order.orderName);
-			TextView payOfOrder=(TextView)convertView.findViewById(R.id.TextView01);
-			payOfOrder.setText(order.orderAmount+"");
+			TextView priceOfOrder=(TextView)convertView.findViewById(R.id.tab2_waitforpay_item_price);
+			priceOfOrder.setText(String.valueOf( order.orderPrice)+"元");
+			
+			final int index=position;
+			ImageView detailImageView=(ImageView)convertView.findViewById(R.id.tab2_waitforpay_item_detail);
+			detailImageView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent intent=new Intent(Main.mainActivity,
+							Tab0FoodActivity.class);
+					Bundle bundle = new Bundle();                           //创建Bundle对象   
+						bundle.putString("dishid",String.valueOf( orderList.get(index).dishId));
+						bundle.putString("dishname",orderList.get(index).orderName);
+						bundle.putBoolean("isSeeJust",true);
+						intent.putExtras(bundle);                                //把Bundle塞入Intent里面  
+					startActivity(intent);
+					// TODO Auto-generated method stub
+				}
+			});
+			Button deletBtn=(Button)convertView.findViewById(R.id.tab2_waitforpay_item_delete_btn);
+			deletBtn.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					deleteOrder(index);
+				
+				}
+			});
 			return convertView;
 		}
 		
@@ -169,4 +204,11 @@ public class Tab2WaitForPayActivity extends Activity {
 
 		
 	}
+	private void deleteOrder(int i)
+	{
+		Order.deleteFromDb(orderList.get(i)._id);
+		orderList.remove(i);
+		mAdapter.notifyDataSetChanged();
+	}
+	
 }

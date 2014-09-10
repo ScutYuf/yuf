@@ -79,17 +79,6 @@
         android:text="2014年05月20日" />
 
     <TextView
-        android:id="@+id/tab1_share_list_item_collection_textview"
-        android:layout_width="50dp"
-        android:layout_height="30dp"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/LinearLayout555"
-        android:layout_marginRight="10dp"
-        android:text="点击收藏" 
-        android:textColor="#8f6f49"
-        android:textSize="12dip"/>
-
-    <TextView
         android:id="@+id/tab1_share_item_titile_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

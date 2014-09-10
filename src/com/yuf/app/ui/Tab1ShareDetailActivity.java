@@ -20,35 +20,56 @@ import com.yuf.app.ui.R;
 
 import android.R.integer;
 import android.R.string;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class Tab1ShareDetailActivity extends Activity {
 
+	private TextView titleTextView;
 	private TextView nameTextView;
 	private TextView commentBtnTextView;
-	private TextView collectionBtnTextView;
 	private TextView shareBtnTextView;
 	private NetworkImageView foodNeworkImageView;
 	private TextView shareContentTextView;
 	private ImageView addFocuseImageView;
 	private ImageView backImageView;
-	
+	private float start_y=0;
+	private boolean isDisappear=false;
 	private RelativeLayout relativeLayout;
 	private String shareid;
-	private JSONObject dishInfoJsonObject;
+	/**
+	 * 菜谱信息
+	 * “dishdifficulty”: float,
+		“dishcollectionnum”: int,
+		“dishid”: int,
+		“dishcommentnum”: int,
+		“dishname”: String,
+		“dishpicurl”: String,
+		“dishamount”: int,
+		“dishcooktime”: String,
+		“dishprice”: double,
+		“dishcookmethod”: String
+
+	 */
 	private JSONArray dishCommentInfoArray;
 	private int currentPage=0;
 	private int postId;
@@ -57,6 +78,7 @@ public class Tab1ShareDetailActivity extends Activity {
 	private String postpicurl;
 	private String postcontent;
 	private ImageLoader mImageLoader;
+	private ScrollView mScrollView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -64,6 +86,18 @@ public class Tab1ShareDetailActivity extends Activity {
 		dishCommentInfoArray=new JSONArray();
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tab1_share_detail_activity);
+		
+		
+		mScrollView=(ScrollView)findViewById(R.id.tab1_share_detail_scrollView);
+		mScrollView.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				return changeTextViewHideOrAppear(event);
+			}
+		});
+		
+		
 		backImageView=(ImageView)findViewById(R.id.tab1_share_detail_back_imageView);
 		backImageView.setOnClickListener(new OnClickListener() {
 			
@@ -73,11 +107,12 @@ public class Tab1ShareDetailActivity extends Activity {
 				
 			}
 		});
+		titleTextView=(TextView)findViewById(R.id.tab1_share_detail_title_textview);
+		
 		nameTextView=(TextView) findViewById(R.id.tab1_share_detail_recipename_textview);
 		foodNeworkImageView=(NetworkImageView)findViewById(R.id.tab0_share_detail_food_imageView);
 		shareContentTextView=(TextView)findViewById(R.id.tab0_share_detail_sharecontent_textview);
 		commentBtnTextView=(TextView)findViewById(R.id.tab0_share_detail_comment_textView);
-		collectionBtnTextView=(TextView)findViewById(R.id.tab0_share_detail_collection_textView);
 		shareBtnTextView=(TextView)findViewById(R.id.tab0_share_detail_share_TextView);
 		addFocuseImageView=(ImageView)findViewById(R.id.tab1_share_detail_addfocus_imageView);
 		relativeLayout=(RelativeLayout)findViewById(R.id.tab1_share_detail_relativeLayout);
@@ -85,12 +120,15 @@ public class Tab1ShareDetailActivity extends Activity {
 	Bundle bundle=intent.getExtras();
 		postId=bundle.getInt("postid");
 		userid=bundle.getInt("userid");
+		
 		posttitle=bundle.getString("posttitle");
 		postpicurl=bundle.getString("postpicurl");
 		postcontent=bundle.getString("postcontent");
 		nameTextView.setText(posttitle);
 		shareContentTextView.setText(postcontent);
-		foodNeworkImageView.setImageUrl("http://110.84.129.130:8080/Yuf/images/post/"+postpicurl, mImageLoader);
+		foodNeworkImageView.setDefaultImageResId(R.drawable.no_pic);
+		foodNeworkImageView.setImageUrl("http://110.84.129.130:8080/Yuf"+postpicurl, mImageLoader);
+//		
 		
 		
 		getShareDetail();
@@ -139,6 +177,7 @@ public class Tab1ShareDetailActivity extends Activity {
 		MyApplication.requestQueue.start();
 	}
 	private void addComments(){
+		titleTextView.setText(String.format("评论（%d）",dishCommentInfoArray.length()));
 		for (int i = 0; i <dishCommentInfoArray.length(); i++) {
 			
 			LayoutInflater inflater=LayoutInflater.from(this);
@@ -210,4 +249,149 @@ MyApplication.requestQueue.add(request);
 Log.d("liow","request start");
 MyApplication.requestQueue.start();
 	}
+	
+	private boolean changeTextViewHideOrAppear(MotionEvent event) {
+
+		// TODO Auto-generated method stub
+		if (event.getAction()==MotionEvent.ACTION_DOWN) {
+			start_y=event.getY();
+		
+		}
+		
+	if (event.getAction()==MotionEvent.ACTION_MOVE&&start_y!=0) {
+		
+		if(event.getY()-start_y<0&&!isDisappear)
+			{
+			
+			disappearTextView();
+			Log.d("liow", "disappeartextview");
+			isDisappear=true;
+			return false;
+			}
+		
+		if(event.getY()-start_y>0&&isDisappear)
+			{
+				appearTextView();
+				Log.d("liow", "appeartextview");
+				isDisappear=false;
+			}
+	}
+	return false;
+	}
+	private void appearTextView() {
+
+		// TODO Auto-generated method stub
+	Animation animation= AnimationUtils.loadAnimation(this,R.anim.textview_in_from_left);
+	animation.setFillAfter(true);
+	animation.setAnimationListener(new AnimationListener() {
+		
+		@Override
+		public void onAnimationStart(Animation animation) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@SuppressLint("NewApi") @Override
+		public void onAnimationEnd(Animation animation) {
+			Log.d("liow", "commenttextview before left:"+String.valueOf(commentBtnTextView.getLeft())+  "right:"+String.valueOf(commentBtnTextView.getRight()));
+			
+			
+			commentBtnTextView.setClickable(true);
+			Log.d("liow", "commenttextview left:"+String.valueOf(commentBtnTextView.getLeft())+  "right:"+String.valueOf(commentBtnTextView.getRight()));
+			// TODO Auto-generated method stub
+			
+		}
+	});
+	
+	Animation animation2= AnimationUtils.loadAnimation(this,R.anim.textview_in_from_right);
+animation2.setFillAfter(true);
+	animation2.setAnimationListener(new AnimationListener() {
+		@Override
+		public void onAnimationStart(Animation animation) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@SuppressLint("NewApi") @Override
+		public void onAnimationEnd(Animation animation) {
+shareBtnTextView.setClickable(true);			
+			// TODO Auto-generated method stub
+			
+		}
+	});
+	
+	
+	commentBtnTextView.startAnimation(animation);
+	shareBtnTextView.startAnimation(animation2);
+		// TODO Auto-generated method stub
+		
+	}
+	private void disappearTextView() {
+		Animation animation= AnimationUtils.loadAnimation(this,R.anim.textview_out_to_left);
+		animation.setFillAfter(true);
+		animation.setAnimationListener(new AnimationListener() {
+			@Override
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@SuppressLint("NewApi") @Override
+			public void onAnimationEnd(Animation animation) {
+				Log.d("liow", "commenttextview before left:"+String.valueOf(commentBtnTextView.getLeft())+  "right:"+String.valueOf(commentBtnTextView.getRight()));
+				commentBtnTextView.setClickable(false);
+				Log.d("liow", "commenttextview left:"+String.valueOf(commentBtnTextView.getLeft())+  "right:"+String.valueOf(commentBtnTextView.getRight()));
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		Animation animation2= AnimationUtils.loadAnimation(this,R.anim.textview_out_to_right);
+		animation2.setFillAfter(true);
+		animation2.setAnimationListener(new AnimationListener() {
+			
+			@Override
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@SuppressLint("NewApi") @Override
+			public void onAnimationEnd(Animation animation) {
+	shareBtnTextView.setClickable(false);			
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		commentBtnTextView.startAnimation(animation);
+		shareBtnTextView.startAnimation(animation2);
+
+		
+	}
+	
 }

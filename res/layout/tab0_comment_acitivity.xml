@@ -21,43 +21,19 @@
             android:textSize="20sp" />
 
         <ImageView
-            android:id="@+id/tab0_comment_back_imageView"
+            android:id="@+id/tab0_comment_activity_back_imageview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:src="@drawable/button_details_gohome" />
     </RelativeLayout>
 
-    <RelativeLayout
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/tab0_comment_acitivity_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:background="#fff" >
 
-        <ScrollView
-            android:id="@+id/scrollView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <LinearLayout
-                android:id="@+id/tab0_comment_container_linearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
-            </LinearLayout>
-        </ScrollView>
-
-        <TextView
-            android:id="@+id/tab0_comment_comment_textView"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="88dp"
-            android:background="@drawable/say"
-            android:gravity="center"
-            android:text="评论"
-            android:textColor="#ffffff"
-            android:textSize="14sp" />
-
-    </RelativeLayout>
+    </com.handmark.pulltorefresh.library.PullToRefreshListView>
 
 </LinearLayout>

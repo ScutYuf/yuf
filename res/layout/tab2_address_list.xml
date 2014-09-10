@@ -35,12 +35,59 @@
             android:src="@drawable/add" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/RelativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tab2_address_list_zone_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="区域" />
+
+        <TextView
+            android:id="@+id/tab2_address_list_detail_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tab2_address_list_zone_textview"
+            android:text="详细地址" />
+
+        <TextView
+            android:id="@+id/tab2_address_list_receivername_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tab2_address_list_detail_textview"
+            android:text="收货人" />
+
+        <TextView
+            android:id="@+id/tab2_address_list_phone_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tab2_address_list_receivername_textview"
+            android:text="电话：" />
+
+        <Button
+            android:id="@+id/tab2_address_list_ok_button"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="确定" />
+
+    </RelativeLayout>
+
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/tab2_address_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#fff" >
-
     </com.handmark.pulltorefresh.library.PullToRefreshListView>
 
 </LinearLayout>

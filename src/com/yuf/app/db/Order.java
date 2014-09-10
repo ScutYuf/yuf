@@ -25,6 +25,7 @@ public class Order {
 	public static final String ORDERIMAGE = "orderImage";
 	public static final String ORDERNAME = "orderName";
 	public  static  int positionOfStart =-1;//确定每一次数据库读取的起始位置
+	public int _id;
 	public int userId;
 	public int dishId;
 	public double orderPrice;
@@ -69,7 +70,20 @@ public class Order {
                Log.d("liow","添加成功！");        
            }  
 	}
-
+	
+	
+	
+public static void deleteFromDb(int i)
+{
+	ContentResolver contentResolver = MyApplication.myapplication.getContentResolver();  
+    Uri url = Uri.parse("content://com.yuf.app.myprovider/order/"+String.valueOf(i));  
+    
+  
+    int result = contentResolver.delete(url, null, null);
+    if (result>0) {  
+        Log.d("liow","删除成功！");        
+    }  
+}
 	public static ArrayList<Order> readFromDb() {
 		ArrayList<Order> list = new ArrayList<Order>();
 		Uri url = Uri.parse("content://com.yuf.app.myprovider/orders");  
@@ -82,6 +96,7 @@ public class Order {
 	    while (cursor.moveToNext()&&number<5) {  
 		number++;
        	Order order = new Order();
+       	order._id= cursor.getInt(cursor.getColumnIndex("_id"));
        	order.userId = cursor.getInt(cursor.getColumnIndex("userId"));  
        	order.dishId = cursor.getInt(cursor.getColumnIndex("dishId"));  
        	order.orderPrice = cursor.getDouble(cursor.getColumnIndex("orderPrice"));  
