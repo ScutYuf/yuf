@@ -1,14 +1,14 @@
 package com.yuf.app.ui;
 
-import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONException;
-
-import android.R.integer;
+import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -17,51 +17,65 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-
+import android.widget.TextView;
+import android.widget.Toast;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.Request.Method;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.NetworkImageView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.yuf.app.db.Order;
+import com.yuf.app.MyApplication;
+import com.yuf.app.Entity.UserInfo;
 
 public class Tab2BougthActivity extends Activity {
 	private ImageView backImageView;
-	
+	private ImageLoader mImageLoader;
 	private PullToRefreshListView listView;
 	private MyListAdapter mAdapter;
-	private ArrayList<Order> ordersList;
+	private JSONArray jsonArray;
 	private Boolean isEnd;
-	
+	private int currentPage;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		isEnd=false;
+		jsonArray=new JSONArray();
 		mAdapter=new MyListAdapter();
 		setContentView(R.layout.tab2_bought);
 		
 		listView=(PullToRefreshListView)findViewById(R.id.tab2_bougth_listview);
+		listView.setAdapter(mAdapter);
+		listView.setMode(Mode.PULL_FROM_END);
 		listView.setOnRefreshListener(new OnRefreshListener<ListView>() {
-
-			@Override
+           @Override
 			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-				// TODO Auto-generated method stub
-				
+        	   String label = DateUtils.formatDateTime(getApplicationContext(), System.currentTimeMillis(),
+						DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
+				// Update the LastUpdatedLabel
+				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+				// Do work to refresh the list here.
+				jsonArray=new JSONArray();
+				currentPage=0;
+				isEnd=false;
+				getFocusNextPage();
 			}
-			
-		});
+});
 		listView.setOnLastItemVisibleListener(new OnLastItemVisibleListener() {
 
 			@Override
 			public void onLastItemVisible() {
-				// TODO Auto-generated method stub
-				
+				if (!isEnd) {
+					getFocusNextPage();
+				}
 			}
 		});
-			
-				
-				
-		listView.setAdapter(mAdapter);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -69,17 +83,18 @@ public class Tab2BougthActivity extends Activity {
 					int position, long id) {
 				Intent intent=new Intent(Main.mainActivity,
 				Tab0FoodActivity.class);
-				Bundle bundle = new Bundle();                           //创建Bundle对象   
-				bundle.putString("dishid",String.valueOf( ordersList.get(position-1).dishId));
-				bundle.putString("dishname",ordersList.get(position-1).orderName);
-				bundle.putBoolean("isSeeJust",true);
+				Bundle bundle = new Bundle();  
+				try {
+					//bundle.putString("dishid",jsonArray.getJSONObject(position-1).getString("dishid").toString());
+					//bundle.putString("dishname",jsonArray.getJSONObject(position-1).getString("dishname").toString());
+					//bundle.putBoolean("isSeeJust",true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}//创建Bundle对象   
 				intent.putExtras(bundle);                                //把Bundle塞入Intent里面  
 				startActivity(intent);
-				// TODO Auto-generated method stub
-				
 			}
 		});
-		
 		
 		backImageView=(ImageView)findViewById(R.id.tab2_bougth_back_imageView);
 		backImageView.setOnClickListener(new OnClickListener() {
@@ -91,59 +106,88 @@ public class Tab2BougthActivity extends Activity {
 				
 			}
 		});
-		
-		
 	}
+	private	void getFocusNextPage()
+	{
+	
+
+		JsonObjectRequest request=new JsonObjectRequest(Method.GET, String.format("http://110.84.129.130:8080/Yuf/relation/getFollowsInfo/%d/%d", String.valueOf(UserInfo.getInstance().userid),++currentPage), null,  new Response.Listener<JSONObject>()  
+        {  
+
+            @Override  
+            public void onResponse(JSONObject response)  
+            {  
+					try {
+						jsonArray=MyApplication.joinJSONArray(jsonArray, response.getJSONArray("followsData"));
+						if (response.getInt("currentPage")>=response.getInt("followsMaxPage")) {
+							
+							Toast.makeText(Tab2BougthActivity.this, "End of List!", Toast.LENGTH_SHORT).show();
+							isEnd=true;
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					listView.onRefreshComplete();
+					mAdapter.notifyDataSetChanged();
+                 
+        }}, new Response.ErrorListener()  
+        {  
+
+            @Override  
+            public void onErrorResponse(VolleyError error)  
+            {  
+                Log.e("TAG", error.getMessage(), error);  
+            }  
+        });
+		//将JsonObjectRequest 加入RequestQuene
+        MyApplication.requestQueue.add(request);
+        Log.d("zm","request start");
+        MyApplication.requestQueue.start();
+}
 	class MyListAdapter extends BaseAdapter{
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
-			return ordersList.size();
+			return jsonArray.length();
 		}
 
 		@Override
 		public Object getItem(int position) {
-			// TODO Auto-generated method stub
-			return ordersList.get(position);
+			try {
+				return jsonArray.getJSONObject(position);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return null;
 		}
 
 		@Override
 		public long getItemId(int position) {
-			// TODO Auto-generated method stub
 			return position;
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
 			if (convertView==null) {
 				convertView=Tab2BougthActivity.this.getLayoutInflater().inflate(R.layout.tab2_bougth_item,null);
-				
 			}
-			//设置已购买项信息
+			JSONObject jsonObject;
+			try {
+				jsonObject = jsonArray.getJSONObject(position);
+				TextView nameOfOrder=(TextView) convertView.findViewById(R.id.tab2_bought_item_name);
+				nameOfOrder.setText(jsonObject.getString("username"));
+				//TextView priceOfOrder=(TextView)convertView.findViewById(R.id.TextView01);
+			    //priceOfOrder.setText( jsonObject.getString("orderprice"));
+				//NetworkImageView orderImageView=(NetworkImageView)convertView.findViewById(R.id.tab2_bought_item_img);
+				//orderImageView.setDefaultImageResId(R.drawable.meat);
+				//orderImageView.setImageUrl(String.format("http://110.84.129.130:8080/Yuf%s", jsonObject.getString("dishpicurl")),mImageLoader);
+				//TextView statusOfOrder=(TextView) convertView.findViewById(R.id.status);
+				//statusOfOrder.setText(jsonObject.getString("orderstatus"));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 			return convertView;
 		}
-		
 	}
-	
-	class GetDataAsycTask extends AsyncTask<Integer, Integer, Integer>
-	{
 
-		@Override
-		protected Integer doInBackground(Integer... params) {
-			//从数据库中加载下一页
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Integer result) {
-			// TODO Auto-generated method stub
-			super.onPostExecute(result);
-			
-		}
-		
-		
-	}
 }

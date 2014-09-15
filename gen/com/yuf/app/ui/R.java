@@ -526,7 +526,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int RelativeLayout11=0x7f050048;
         public static final int RelativeLayout2=0x7f05003e;
         public static final int TextView01=0x7f050041;
-        public static final int TextView02=0x7f0500ff;
+        public static final int TextView02=0x7f050100;
         public static final int TextView03=0x7f050054;
         public static final int TextView04=0x7f050058;
         public static final int TextView05=0x7f0500b0;
@@ -539,7 +539,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int bottem=0x7f0500d8;
         public static final int bottom=0x7f05000c;
         public static final int button1=0x7f0500d6;
-        public static final int button2=0x7f0500c9;
+        public static final int button2=0x7f0500fc;
         public static final int circlePageIndicator1=0x7f05005c;
         public static final int circle_page_indicator=0x7f050084;
         public static final int collection_button=0x7f05008b;
@@ -589,7 +589,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int mainIcon=0x7f05002b;
         public static final int main_bottom=0x7f05002c;
         public static final int manualOnly=0x7f050004;
-        public static final int menu_settings=0x7f050100;
+        public static final int menu_settings=0x7f050101;
         public static final int more_imageView=0x7f050081;
         public static final int myfocus_account_text=0x7f050094;
         public static final int myfocus_head_img=0x7f050092;
@@ -617,6 +617,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int search_imageView=0x7f050033;
         public static final int share_TextView=0x7f050077;
         public static final int show_comment_textView=0x7f050075;
+        public static final int status=0x7f0500c9;
         public static final int tab0_comment_acitivity_listview=0x7f050065;
         public static final int tab0_comment_activity_back_imageview=0x7f050064;
         public static final int tab0_comment_item_content_textview=0x7f050069;
@@ -743,8 +744,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int tab3_mywork_listview=0x7f0500f8;
         public static final int tab3_nickname=0x7f050046;
         public static final int tab3_profile=0x7f050044;
-        public static final int tab3_setUserInfo_back_imageview=0x7f0500fc;
-        public static final int tab3_setuserinfo_profile=0x7f0500fd;
+        public static final int tab3_setUserInfo_back_imageview=0x7f0500fd;
+        public static final int tab3_setuserinfo_profile=0x7f0500fe;
         public static final int tableLayout1=0x7f0500aa;
         public static final int tableRow1=0x7f0500ab;
         public static final int tableRow2=0x7f0500ad;
@@ -753,7 +754,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int tabpager=0x7f050031;
         public static final int test_button_login=0x7f05001d;
         public static final int textView1=0x7f050017;
-        public static final int textView2=0x7f0500fe;
+        public static final int textView2=0x7f0500ff;
         public static final int textView3=0x7f050028;
         public static final int textView333=0x7f05001e;
         public static final int textView4=0x7f050029;
