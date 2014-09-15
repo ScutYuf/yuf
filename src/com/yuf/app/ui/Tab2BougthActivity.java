@@ -43,7 +43,7 @@ public class Tab2BougthActivity extends Activity {
 	private int currentPage;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+		//// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		isEnd=false;
 		jsonArray=new JSONArray();
