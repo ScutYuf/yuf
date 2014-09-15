@@ -57,7 +57,13 @@ public class Tab2WaitForPayActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		mImageLoader = new ImageLoader(MyApplication.requestQueue, new BitmapCache());
 		orderList=Order.readFromDb(); 
+		
+		
 		mAdapter = new MyListAdapter();
+		choosedStates=new ArrayList<Boolean>();
+		for (int i = 0; i < 1000; i++) {
+			choosedStates.add(false);
+		}
 		setContentView(R.layout.tab2_wait_pay);
 		listView=(PullToRefreshListView)findViewById(R.id.tab2_waitforpay_listView);
 		listView.setMode(Mode.PULL_FROM_END);
@@ -155,10 +161,10 @@ public class Tab2WaitForPayActivity extends Activity {
 				convertView=Tab2WaitForPayActivity.this.getLayoutInflater().inflate(R.layout.tab2_waitforpay_item,null);
 			}
 			
-			TextView ammountTextView=(TextView)findViewById(R.id.tab3_waitforpay_item_amount);
+			TextView ammountTextView=(TextView)convertView.findViewById(R.id.tab2_waitforpay_item_amount);
 			ammountTextView.setText(String.valueOf(order.orderAmount));
 			
-			ImageView plusImageView=(ImageView)findViewById(R.id.tab3_waitforpay_item_plus);
+			ImageView plusImageView=(ImageView)convertView.findViewById(R.id.tab2_waitforpay_item_plus);
 			plusImageView.setOnClickListener(new OnClickListener() {
 				
 				@Override
@@ -167,7 +173,7 @@ public class Tab2WaitForPayActivity extends Activity {
 					
 				}
 			});
-			ImageView minusImageView=(ImageView)findViewById(R.id.tab3_waitforpay_item_minus);
+			ImageView minusImageView=(ImageView)convertView.findViewById(R.id.tab2_waitforpay_item_minus);
 			minusImageView.setOnClickListener(new OnClickListener() {
 				
 				@Override
@@ -177,7 +183,7 @@ public class Tab2WaitForPayActivity extends Activity {
 				}
 			});
 			
-			CheckBox checkBox=(CheckBox) convertView.findViewById(R.id.tab2_waitforpay_item_chooosed);
+			CheckBox checkBox=(CheckBox)convertView.findViewById(R.id.tab2_waitforpay_item_chooosed);
 			checkBox.setSelected(choosedStates.get(position));
 			checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 				@Override
@@ -186,12 +192,10 @@ public class Tab2WaitForPayActivity extends Activity {
 				
 					if (isChecked) {
 						choosedStates.set(index, true);
-						choosedOrderMap.put(Integer.valueOf( order._id), order);
 						
 					}
 					else {
 						choosedStates.set(index, false);
-						choosedOrderMap.remove(Integer.valueOf( order._id));
 					}
 				}
 			});

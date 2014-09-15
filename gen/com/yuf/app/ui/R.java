@@ -699,11 +699,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int tab2_remind_back_ImageView=0x7f0500d4;
         public static final int tab2_waitforpay_back_imageView=0x7f0500d7;
         public static final int tab2_waitforpay_imageView=0x7f050039;
+        public static final int tab2_waitforpay_item_amount=0x7f0500e7;
         public static final int tab2_waitforpay_item_chooosed=0x7f0500e3;
         public static final int tab2_waitforpay_item_delete_btn=0x7f0500df;
         public static final int tab2_waitforpay_item_detail=0x7f0500e0;
         public static final int tab2_waitforpay_item_img=0x7f0500dd;
+        public static final int tab2_waitforpay_item_minus=0x7f0500e5;
         public static final int tab2_waitforpay_item_name=0x7f0500e2;
+        public static final int tab2_waitforpay_item_plus=0x7f0500e6;
         public static final int tab2_waitforpay_item_price=0x7f0500e1;
         public static final int tab2_waitforpay_item_time=0x7f0500de;
         public static final int tab2_waitforpay_listView=0x7f0500dc;
@@ -747,9 +750,6 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int tab3_profile=0x7f050044;
         public static final int tab3_setUserInfo_back_imageview=0x7f050101;
         public static final int tab3_setuserinfo_profile=0x7f050102;
-        public static final int tab3_waitforpay_item_amount=0x7f0500e7;
-        public static final int tab3_waitforpay_item_minus=0x7f0500e5;
-        public static final int tab3_waitforpay_item_plus=0x7f0500e6;
         public static final int tableLayout1=0x7f0500aa;
         public static final int tableRow1=0x7f0500ab;
         public static final int tableRow2=0x7f0500ad;

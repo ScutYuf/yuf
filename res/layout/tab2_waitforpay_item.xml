@@ -80,7 +80,7 @@
         android:textSize="12sp" />
 
     <ImageView
-        android:id="@+id/tab3_waitforpay_item_minus"
+        android:id="@+id/tab2_waitforpay_item_minus"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignBottom="@+id/tab2_waitforpay_item_delete_btn"
@@ -88,7 +88,7 @@
         android:src="#000" />
 
     <ImageView
-        android:id="@+id/tab3_waitforpay_item_plus"
+        android:id="@+id/tab2_waitforpay_item_plus"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignTop="@+id/tab2_waitforpay_item_delete_btn"
@@ -96,12 +96,12 @@
         android:src="#000" />
 
     <TextView
-        android:id="@+id/tab3_waitforpay_item_amount"
+        android:id="@+id/tab2_waitforpay_item_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/tab3_waitforpay_item_minus"
+        android:layout_alignBottom="@+id/tab2_waitforpay_item_minus"
         android:layout_marginLeft="15dp"
-        android:layout_toRightOf="@+id/tab3_waitforpay_item_minus"
+        android:layout_toRightOf="@+id/tab2_waitforpay_item_minus"
         android:text="0"
         android:textColor="#000" />
 
