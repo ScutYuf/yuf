@@ -3,6 +3,8 @@ package com.yuf.app.ui;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.json.JSONException;
 
@@ -18,6 +20,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -42,6 +47,11 @@ public class Tab2WaitForPayActivity extends Activity {
     private MyListAdapter mAdapter;  
 	private ImageLoader mImageLoader;
 	private String TAG="tab2waitforpay";
+	
+	private Map<Integer,Order>choosedOrderMap;
+	private ArrayList<Boolean>choosedStates;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -139,10 +149,53 @@ public class Tab2WaitForPayActivity extends Activity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			Log.d("mywork", "get");
+			final int index=position;
+			final Order order = orderList.get(position);
 			if (convertView==null) {
 				convertView=Tab2WaitForPayActivity.this.getLayoutInflater().inflate(R.layout.tab2_waitforpay_item,null);
 			}
-			Order order = orderList.get(position);
+			
+			TextView ammountTextView=(TextView)findViewById(R.id.tab3_waitforpay_item_amount);
+			ammountTextView.setText(String.valueOf(order.orderAmount));
+			
+			ImageView plusImageView=(ImageView)findViewById(R.id.tab3_waitforpay_item_plus);
+			plusImageView.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			ImageView minusImageView=(ImageView)findViewById(R.id.tab3_waitforpay_item_minus);
+			minusImageView.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			
+			CheckBox checkBox=(CheckBox) convertView.findViewById(R.id.tab2_waitforpay_item_chooosed);
+			checkBox.setSelected(choosedStates.get(position));
+			checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					// TODO Auto-generated method stub
+				
+					if (isChecked) {
+						choosedStates.set(index, true);
+						choosedOrderMap.put(Integer.valueOf( order._id), order);
+						
+					}
+					else {
+						choosedStates.set(index, false);
+						choosedOrderMap.remove(Integer.valueOf( order._id));
+					}
+				}
+			});
+			
 			NetworkImageView imageOrder = (NetworkImageView)convertView.findViewById(R.id.tab2_waitforpay_item_img);
 			imageOrder.setDefaultImageResId(R.drawable.no_pic);
 			imageOrder.setImageUrl("http://110.84.129.130:8080/Yuf"+order.orderImage, mImageLoader);
@@ -152,9 +205,8 @@ public class Tab2WaitForPayActivity extends Activity {
 			TextView nameOfOrder=(TextView)convertView.findViewById(R.id.tab2_waitforpay_item_name);
 			nameOfOrder.setText(order.orderName);
 			TextView priceOfOrder=(TextView)convertView.findViewById(R.id.tab2_waitforpay_item_price);
-			priceOfOrder.setText(String.valueOf( order.orderPrice)+"元");
+			priceOfOrder.setText("金额："+String.valueOf( order.orderPrice)+"元");
 			
-			final int index=position;
 			ImageView detailImageView=(ImageView)convertView.findViewById(R.id.tab2_waitforpay_item_detail);
 			detailImageView.setOnClickListener(new OnClickListener() {
 				@Override
