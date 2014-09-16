@@ -92,6 +92,7 @@ public class Tab2WaitForPayActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				onBackPressed();
+				Order.positionOfStart = -1;
 			}
 		});
 		
