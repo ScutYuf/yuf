@@ -8,7 +8,9 @@ import org.json.JSONObject;
 import android.R.integer;
 import android.R.interpolator;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -21,6 +23,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -147,6 +150,24 @@ public class Tab2AddressActivity extends Activity {
 			}	});
     }
 	private void payOrders() {
+		new AlertDialog.Builder(this).setTitle("列表框").setItems(
+			     new String[] { "货到付款", "在线支付" }, new DialogInterface.OnClickListener() {  
+			    	    @Override  
+			    	    public void onClick(DialogInterface dialog, int which) {  
+			    	        // TODO Auto-generated method stub  
+			    	        switch (which) {  
+			    	        case 0:  
+			    	        	payOnDelivery();
+			    	            break;  
+			    	        case 1:  
+			    	            break;  
+			    	        }  
+			    	    } } ).setNegativeButton(
+			     "取消", null).show();
+		
+		
+	}
+	protected void payOnDelivery() {
 		ArrayList<Order>orders=Order.readFromDb();
 		for (int i = 0; i < orders.size(); i++) {
 		JSONObject jsonObject=new JSONObject();
@@ -193,6 +214,8 @@ public class Tab2AddressActivity extends Activity {
 		MyApplication.requestQueue.add(jsonObjectRequest);
 		MyApplication.requestQueue.start();
 		}
+		
+		// TODO Auto-generated method stub
 		
 	}
 	protected void refreshListView() {
