@@ -95,7 +95,7 @@ public class Tab1SocietyForceFragment extends Fragment {
 		{
 		
 	
-			JsonObjectRequest request=new JsonObjectRequest(Method.GET, String.format("http://110.84.129.130:8080/Yuf/relation/getFollowsInfo/%d/%d", String.valueOf(UserInfo.getInstance().userid),++currentPage), null,  new Response.Listener<JSONObject>()  
+			JsonObjectRequest request=new JsonObjectRequest(Method.GET, String.format("http://110.84.129.130:8080/Yuf/relation/getFollowsInfo/%d/%d", Integer.valueOf(UserInfo.getInstance().userid),++currentPage), null,  new Response.Listener<JSONObject>()  
 	        {  
 	
 	            @Override  

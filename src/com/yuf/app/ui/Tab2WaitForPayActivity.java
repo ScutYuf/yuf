@@ -5,9 +5,6 @@ package com.yuf.app.ui;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.json.JSONException;
-
 import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
@@ -46,7 +43,7 @@ public class Tab2WaitForPayActivity extends Activity {
 	private ArrayList<Order> orderList;  
     private MyListAdapter mAdapter;  
 	private ImageLoader mImageLoader;
-	private String TAG="tab2waitforpay";
+	private String TAG="Tab2waitforpay";
 	
 	private Map<Integer,Order>choosedOrderMap;
 	private ArrayList<Boolean>choosedStates;
@@ -57,7 +54,6 @@ public class Tab2WaitForPayActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		mImageLoader = new ImageLoader(MyApplication.requestQueue, new BitmapCache());
 		orderList=Order.readFromDb(); 
-		
 		
 		mAdapter = new MyListAdapter();
 		choosedStates=new ArrayList<Boolean>();
@@ -87,7 +83,6 @@ public class Tab2WaitForPayActivity extends Activity {
 					if (orderList.size()<Order.numberOfOrders()) {
 						loadingNextPage();
 					}
-					
 			}	});
 		listView.setAdapter(mAdapter);
 		backImageView=(ImageView)findViewById(R.id.tab2_waitforpay_back_imageView);
@@ -98,6 +93,7 @@ public class Tab2WaitForPayActivity extends Activity {
 				onBackPressed();
 				// TODO Auto-generated method stub
 				Order.positionOfStart = -1;
+				Order.positionOfStartSO = -1;
 				Tab2WaitForPayActivity.this.finish();
 			}
 		});
@@ -109,6 +105,7 @@ public class Tab2WaitForPayActivity extends Activity {
 				Intent intent =new Intent(Tab2WaitForPayActivity.this,Tab2AddressActivity.class);
 				startActivity(intent);
 				Order.positionOfStart = -1;
+				Order.positionOfStartSO = -1;
 //				Tab2WaitForPayActivity.this.finish();
 			}
 		});
@@ -195,7 +192,7 @@ public class Tab2WaitForPayActivity extends Activity {
 						
 					}
 					else {
-						choosedStates.set(index, false);
+						choosedStates.set(index, false); 
 					}
 				}
 			});
@@ -234,7 +231,6 @@ public class Tab2WaitForPayActivity extends Activity {
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					deleteOrder(index);
-				
 				}
 			});
 			return convertView;

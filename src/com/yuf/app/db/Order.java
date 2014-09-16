@@ -1,12 +1,11 @@
 package com.yuf.app.db;
 
 import java.util.ArrayList;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.yuf.app.MyApplication;
 
+import android.R.integer;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -24,7 +23,9 @@ public class Order {
 	public static final String ORDERDISHID = "dishId";
 	public static final String ORDERIMAGE = "orderImage";
 	public static final String ORDERNAME = "orderName";
+	public static final String ISSELECT = "isSelect";
 	public  static  int positionOfStart =-1;//确定每一次数据库读取的起始位置
+	public  static  int positionOfStartSO =-1;//确定每一次数据库读取的起始位置
 	public int _id;
 	public int userId;
 	public int dishId;
@@ -34,6 +35,7 @@ public class Order {
 	public int orderAmount;
 	public String orderImage;
 	public String orderName;
+	public int isSelect;
 	public JSONObject toJsonObject() {
 		JSONObject object = new JSONObject();
 		try {
@@ -43,6 +45,7 @@ public class Order {
 			object.put("orderTime", orderTime);
 			object.put("orderPaymethod", orderPaymethod);
 			object.put("orderAmount",orderAmount);
+			object.put("isSelect",isSelect);
 			object.put("orderImage",orderImage);
 			object.put("orderName",orderName);
 		} catch (JSONException e) {
@@ -65,13 +68,26 @@ public class Order {
            values.put(Order.ORDERDISHID, dishId);  
            values.put(Order.ORDERIMAGE, orderImage); 
            values.put(Order.ORDERNAME, orderName);  
+           values.put(Order.ISSELECT, isSelect);  
            Uri result = contentResolver.insert(url, values); 
            if (ContentUris.parseId(result)>0) {  
-               Log.d("liow","添加成功！");        
+               Log.d("Order-writeToDb","添加成功！");        
            }  
 	}
-	
-	
+	//modify-isSelect
+	public void modifyDb(int a) {
+		ContentResolver contentResolver= MyApplication.myapplication.getContentResolver();  
+		Uri url1 = Uri.parse("content://com.yuf.app.myprovider/address/"+_id);  
+		ContentValues values = new ContentValues();
+		values.put(Order.ISSELECT,a);
+		int result = contentResolver.update(url1, values,null, null);
+	    if (result>0) {  
+	        Log.d("Order-modify_isSelect","修改成功！");        
+	    }  
+	}
+	public void modifyAmount(int a){
+		
+	}
 	
 public static void deleteFromDb(int i)
 {
@@ -81,9 +97,10 @@ public static void deleteFromDb(int i)
   
     int result = contentResolver.delete(url, null, null);
     if (result>0) {  
-        Log.d("liow","删除成功！");        
+        Log.d("Order-deleteFromDb","删除成功！");        
     }  
 }
+
 	public static ArrayList<Order> readFromDb() {
 		ArrayList<Order> list = new ArrayList<Order>();
 		Uri url = Uri.parse("content://com.yuf.app.myprovider/orders");  
@@ -112,11 +129,42 @@ public static void deleteFromDb(int i)
         cursor.close();  
 		return list;
 	}
+	public static ArrayList<Order> readSelectOrderFromDb() {
+		ArrayList<Order> list = new ArrayList<Order>();
+		Uri url = Uri.parse("content://com.yuf.app.myprovider/orders");  
+        Cursor cursor = MyApplication.myapplication.getContentResolver().query(url,  
+                  new String[] { "_id", "userId", "orderPrice","orderTime","orderPaymethod","orderAmount","isSelect","dishId","orderImage","orderName" }, null, null, "_id");  
+        
+      if(cursor!=null){
+    	cursor.moveToPosition(positionOfStartSO);
+    	int number =0;
+	    while (cursor.moveToNext()&&number<5) {  
+		Order order = new Order();
+		order._id= cursor.getInt(cursor.getColumnIndex("_id"));
+       	order.userId = cursor.getInt(cursor.getColumnIndex("userId"));  
+       	order.dishId = cursor.getInt(cursor.getColumnIndex("dishId"));  
+       	order.orderPrice = cursor.getDouble(cursor.getColumnIndex("orderPrice"));  
+       	order.orderTime = cursor.getString(cursor.getColumnIndex("orderTime"));  
+       	order.orderPaymethod = cursor.getString(cursor.getColumnIndex("orderPaymethod"));  
+       	order.orderAmount = cursor.getInt(cursor.getColumnIndex("orderAmount"));  
+       	order.isSelect = cursor.getInt(cursor.getColumnIndex("isSelect"));  
+       	order.orderImage = cursor.getString(cursor.getColumnIndex("orderImage"));  
+       	order.orderName = cursor.getString(cursor.getColumnIndex("orderName"));  
+		if(order.isSelect==1){
+			number++;
+			list.add(order); 
+			positionOfStartSO++;
+		}
+       }  
+       }
+        cursor.close();  
+		return list;
+	}
 	public static int numberOfOrders(){
 		Uri url = Uri.parse("content://com.yuf.app.myprovider/orders");  
         Cursor cursor = MyApplication.myapplication.getContentResolver().query(url,  
-                  new String[] { "_id", "userId", "orderPrice","orderTime","orderPaymethod","orderAmount","dishId","orderImage","orderName" }, null, null, "_id");  
+                  new String[] { "_id", "userId", "orderPrice","orderTime","orderPaymethod","orderAmount","isSelect","dishId","orderImage","orderName" }, null, null, "_id");  
         return cursor.getCount();	
 	}
-
 }
+
