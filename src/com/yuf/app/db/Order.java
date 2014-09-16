@@ -125,7 +125,7 @@ public static void deleteFromDb(int i)
 		ArrayList<Order> list = new ArrayList<Order>();
 		Uri url = Uri.parse("content://com.yuf.app.myprovider/orders");  
         Cursor cursor = MyApplication.myapplication.getContentResolver().query(url,  
-                  new String[] { "_id", "userId", "orderPrice","orderTime","orderPaymethod","orderAmount","dishId","orderImage","orderName" }, null, null, "_id");  
+                  new String[] { "_id", "userId", "orderPrice","orderTime","orderPaymethod","orderAmount","isSelect","dishId","orderImage","orderName" }, null, null, "_id");  
         
       if(cursor!=null){
     	cursor.moveToPosition(positionOfStart);
@@ -139,7 +139,8 @@ public static void deleteFromDb(int i)
        	order.orderPrice = cursor.getDouble(cursor.getColumnIndex("orderPrice"));  
        	order.orderTime = cursor.getString(cursor.getColumnIndex("orderTime"));  
        	order.orderPaymethod = cursor.getString(cursor.getColumnIndex("orderPaymethod"));  
-       	order.orderAmount = cursor.getInt(cursor.getColumnIndex("orderAmount"));  
+       	order.orderAmount = cursor.getInt(cursor.getColumnIndex("orderAmount")); 
+       	order.isSelect = cursor.getInt(cursor.getColumnIndex("isSelect"));  
        	order.orderImage = cursor.getString(cursor.getColumnIndex("orderImage"));  
        	order.orderName = cursor.getString(cursor.getColumnIndex("orderName"));  
        	list.add(order); 

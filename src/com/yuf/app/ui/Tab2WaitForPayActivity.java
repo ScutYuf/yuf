@@ -132,7 +132,9 @@ public class Tab2WaitForPayActivity extends Activity {
 		for(int i=0;i<list1.size();i++){
 			list0.add(list1.get(i));
 		}
+	
 		orderList=list0;
+		
 		DataBaseTask task=new DataBaseTask();
 		task.execute();
 	}
@@ -158,6 +160,7 @@ public class Tab2WaitForPayActivity extends Activity {
 			Log.d("mywork", "get");
 			final int index=position;
 			final Order order = orderList.get(position);
+			
 			if (convertView==null) {
 				convertView=Tab2WaitForPayActivity.this.getLayoutInflater().inflate(R.layout.tab2_waitforpay_item,null);
 			}
@@ -184,23 +187,43 @@ public class Tab2WaitForPayActivity extends Activity {
 				}
 			});
 			
-			CheckBox checkBox=(CheckBox)convertView.findViewById(R.id.tab2_waitforpay_item_chooosed);
+			
+			final CheckBox checkBox=(CheckBox)convertView.findViewById(R.id.tab2_waitforpay_item_chooosed);
 			checkBox.setChecked(order.isSelect==1);
-			checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-				@Override
-				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					// TODO Auto-generated method stub
-				
-					if (isChecked) {
-						order.modifyIsSelected(1);
-						order.isSelect = 1;
-					}
-					else {
-						order.modifyIsSelected(0);
-						order.isSelect  = 0;
-					}
+			
+		checkBox.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-gent
+				if (checkBox.isChecked()) {
+					order.isSelect = 1;
+					order.modifyIsSelected(1);
+					
 				}
-			});
+				else {
+					order.isSelect  = 0;
+					order.modifyIsSelected(0);
+				}
+			}
+		});
+			
+//			checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+//				@Override
+//				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//					// TODO Auto-generated method stub
+//				
+//					if (isChecked) {
+//						order.isSelect = 1;
+//						order.modifyIsSelected(1);
+//						
+//					}
+//					else {
+//						order.isSelect  = 0;
+//						order.modifyIsSelected(0);
+//					}
+//				}
+//			});
 			
 			NetworkImageView imageOrder = (NetworkImageView)convertView.findViewById(R.id.tab2_waitforpay_item_img);
 			imageOrder.setDefaultImageResId(R.drawable.no_pic);
