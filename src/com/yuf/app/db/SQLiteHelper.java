@@ -40,6 +40,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				Order.ORDERTIME+ " varchar,"+
 				Order.ORDERPAYMETHOD+ " varchar,"+
 				Order.ORDERAMOUNT+ " integer,"+
+				Order.ISSELECT+ " integer,"+
 				Order.ORDERIMAGE+ " varchar, "+
 				Order.ORDERNAME+ " varchar"+
 				")");
@@ -51,7 +52,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 				Address.ZONESTRING+ " varchar," + 
 				Address.DETAILSTRING+ " varchar,"+
 				Address.ISDEFAULT+ " integer"+
-				")");	
+				")");		
 	}
 	
 	/**

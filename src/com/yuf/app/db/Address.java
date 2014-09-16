@@ -74,7 +74,7 @@ public class Address {
         cursor.close();  
 		return list;
 	}
-	
+	//未使用
 	public static void setDefaultAddress(int i) {
 		
 		ContentResolver contentResolver1= MyApplication.myapplication.getContentResolver();  

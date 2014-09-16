@@ -21,7 +21,6 @@ public class MyProvider extends ContentProvider {
 	private static final int ADDRESSES = 4;
 	private static final int ADDRESS_ID=5;
 	private static final int ORDER_ID=6;
-	
 	static {
 		MATCHER.addURI("com.yuf.app.myprovider", "orders", ORDERS);
 		MATCHER.addURI("com.yuf.app.myprovider", "order", ORDER);
@@ -59,22 +58,18 @@ public class MyProvider extends ContentProvider {
 			}
             return db.query("orders", projection, where, selectionArgs, null,
 					null, sortOrder);
-		case ADDRESSES:
-			// 查询所有的数据
+		case ADDRESSES:// 查询所有的数据
 			return db.query("addresses", projection, selection, selectionArgs,
 					null, null, sortOrder);
 
-		case ADDRESS_ID:
-			// 查询某个ID的数据
-			// 通过ContentUris这个工具类解释出ID
+		case ADDRESS_ID:// 查询某个ID的数据 ，通过ContentUris这个工具类解释出ID
 			long address_id = ContentUris.parseId(uri);
 			String address_where = " _id=" + address_id;
 			if (!"".equals(selection) && selection != null) {
 				address_where = selection + " and " + address_where;
 
 			}
-
-			return db.query("addresses", projection, address_where, selectionArgs, null,
+            return db.query("addresses", projection, address_where, selectionArgs, null,
 					null, sortOrder);
 		default:
 
@@ -147,11 +142,10 @@ public class MyProvider extends ContentProvider {
 			long id2 = ContentUris.parseId(uri);
 			String where2 = "_id=" + id2;
 			if (selection != null && !"".equals(selection)) {
-				where = selection + " and " + where2;
+				where2 = selection + " and " + where2;
 			}
 			count = db.delete("addresses", where2, selectionArgs);
 			return count;
-
 		default:
 			throw new IllegalArgumentException("Unkwon Uri:" + uri.toString());
 		}
