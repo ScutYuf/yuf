@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -91,12 +92,9 @@ public class Tab2WaitForPayActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				onBackPressed();
-				// TODO Auto-generated method stub
-				Order.positionOfStart = -1;
-				Order.positionOfStartSO = -1;
-				Tab2WaitForPayActivity.this.finish();
 			}
 		});
+		
 		okButton=(Button)findViewById(R.id.tab2_waitforpay_ok_button1);
 		okButton.setOnClickListener(new OnClickListener() {
 			
@@ -104,11 +102,16 @@ public class Tab2WaitForPayActivity extends Activity {
 			public void onClick(View v) {
 				Intent intent =new Intent(Tab2WaitForPayActivity.this,Tab2AddressActivity.class);
 				startActivity(intent);
-				Order.positionOfStart = -1;
-				Order.positionOfStartSO = -1;
-//				Tab2WaitForPayActivity.this.finish();
+			    Order.positionOfStart = -1;
+				//Tab2WaitForPayActivity.this.finish();
 			}
 		});
+	}
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if(keyCode==KeyEvent.KEYCODE_BACK)
+			 Order.positionOfStart = -1;
+		return super.onKeyDown(keyCode, event);
 	}
 	private void refreshListView() {
 		Log.d(TAG, "Refresh!");
@@ -181,18 +184,19 @@ public class Tab2WaitForPayActivity extends Activity {
 			});
 			
 			CheckBox checkBox=(CheckBox)convertView.findViewById(R.id.tab2_waitforpay_item_chooosed);
-			checkBox.setSelected(choosedStates.get(position));
+			checkBox.setChecked(order.isSelect==1);
 			checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 					// TODO Auto-generated method stub
 				
 					if (isChecked) {
-						choosedStates.set(index, true);
-						
+						order.modifyIsSelected(1);
+						order.isSelect = 1;
 					}
 					else {
-						choosedStates.set(index, false); 
+						order.modifyIsSelected(0);
+						order.isSelect  = 0;
 					}
 				}
 			});

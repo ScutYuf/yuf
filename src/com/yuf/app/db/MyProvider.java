@@ -21,10 +21,13 @@ public class MyProvider extends ContentProvider {
 	private static final int ADDRESSES = 4;
 	private static final int ADDRESS_ID=5;
 	private static final int ORDER_ID=6;
+    private static final int ORDER_SELECTED = 7;     
 	static {
 		MATCHER.addURI("com.yuf.app.myprovider", "orders", ORDERS);
 		MATCHER.addURI("com.yuf.app.myprovider", "order", ORDER);
 		MATCHER.addURI("com.yuf.app.myprovider", "order/#", ORDER_ID);
+		MATCHER.addURI("com.yuf.app.myprovider", "isselected_order", ORDER_SELECTED);
+		
 		MATCHER.addURI("com.yuf.app.myprovider", "addresses", ADDRESSES);
 		MATCHER.addURI("com.yuf.app.myprovider", "address", ADDRESS);
 		MATCHER.addURI("com.yuf.app.myprovider", "address/#", ADDRESS_ID);
@@ -57,6 +60,15 @@ public class MyProvider extends ContentProvider {
 
 			}
             return db.query("orders", projection, where, selectionArgs, null,
+					null, sortOrder);
+            
+        case ORDER_SELECTED:
+        	String where0 = "isSelect=1";
+			if (!"".equals(selection) && selection != null) {
+				where0 = selection + " and " + where0;
+
+			}
+            return db.query("orders", projection, where0, selectionArgs, null,
 					null, sortOrder);
 		case ADDRESSES:// 查询所有的数据
 			return db.query("addresses", projection, selection, selectionArgs,
