@@ -1,10 +1,6 @@
 package com.yuf.app.ui;
 
-
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
@@ -19,13 +15,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -45,23 +38,42 @@ public class Tab2WaitForPayActivity extends Activity {
     private MyListAdapter mAdapter;  
 	private ImageLoader mImageLoader;
 	private String TAG="Tab2waitforpay";
-	
-	private Map<Integer,Order>choosedOrderMap;
-	private ArrayList<Boolean>choosedStates;
-	
-	
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.tab2_wait_pay);
+		backImageView=(ImageView)findViewById(R.id.tab2_waitforpay_back_imageView);
+		backImageView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				onBackPressed();
+				Order.positionOfStart = -1;
+				Order.modifyAllIsSelected();//返回时将所有Order修改为未选中状态
+			}
+		});
+		
+		okButton=(Button)findViewById(R.id.tab2_waitforpay_ok_button1);
+		okButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent =new Intent(Tab2WaitForPayActivity.this,Tab2AddressActivity.class);
+				startActivity(intent);
+			    Order.positionOfStart = -1;
+				//Tab2WaitForPayActivity.this.finish();
+			}
+		});
+	}
+	
+	@Override
+	protected void onResume() {
 		mImageLoader = new ImageLoader(MyApplication.requestQueue, new BitmapCache());
 		orderList=Order.readFromDb(); 
 		
 		mAdapter = new MyListAdapter();
-		choosedStates=new ArrayList<Boolean>();
-		for (int i = 0; i < 1000; i++) {
-			choosedStates.add(false);
-		}
-		setContentView(R.layout.tab2_wait_pay);
+		
 		listView=(PullToRefreshListView)findViewById(R.id.tab2_waitforpay_listView);
 		listView.setMode(Mode.PULL_FROM_END);
 		listView.setOnRefreshListener(new OnRefreshListener<ListView>() {
@@ -86,32 +98,15 @@ public class Tab2WaitForPayActivity extends Activity {
 					}
 			}	});
 		listView.setAdapter(mAdapter);
-		backImageView=(ImageView)findViewById(R.id.tab2_waitforpay_back_imageView);
-		backImageView.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				onBackPressed();
-				Order.positionOfStart = -1;
-			}
-		});
-		
-		okButton=(Button)findViewById(R.id.tab2_waitforpay_ok_button1);
-		okButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent intent =new Intent(Tab2WaitForPayActivity.this,Tab2AddressActivity.class);
-				startActivity(intent);
-			    Order.positionOfStart = -1;
-				//Tab2WaitForPayActivity.this.finish();
-			}
-		});
+		super.onResume();
 	}
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if(keyCode==KeyEvent.KEYCODE_BACK)
-			 Order.positionOfStart = -1;
+		if(keyCode==KeyEvent.KEYCODE_BACK){
+			Order.positionOfStart = -1;
+			Order.modifyAllIsSelected();//返回时将所有Order修改为未选中状态
+		}
 		return super.onKeyDown(keyCode, event);
 	}
 	private void refreshListView() {
@@ -163,27 +158,31 @@ public class Tab2WaitForPayActivity extends Activity {
 			
 			if (convertView==null) {
 				convertView=Tab2WaitForPayActivity.this.getLayoutInflater().inflate(R.layout.tab2_waitforpay_item,null);
-			}
-			
-			TextView ammountTextView=(TextView)convertView.findViewById(R.id.tab2_waitforpay_item_amount);
+			}		
+			final TextView ammountTextView;
+			ammountTextView=(TextView)convertView.findViewById(R.id.tab2_waitforpay_item_amount);
 			ammountTextView.setText(String.valueOf(order.orderAmount));
-			
+			//增加Order的份数
 			ImageView plusImageView=(ImageView)convertView.findViewById(R.id.tab2_waitforpay_item_plus);
 			plusImageView.setOnClickListener(new OnClickListener() {
-				
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					
+					order.orderAmount++;
+					order.modifyAmount(1);
+					ammountTextView.setText(order.orderAmount+"");
 				}
 			});
+			//减少Order的份数
 			ImageView minusImageView=(ImageView)convertView.findViewById(R.id.tab2_waitforpay_item_minus);
 			minusImageView.setOnClickListener(new OnClickListener() {
-				
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					
+					if(order.orderAmount>1){
+						v.setClickable(true);
+						order.orderAmount--;
+						order.modifyAmount(0);
+						ammountTextView.setText(order.orderAmount+"");
+					}else{v.setClickable(false);}
 				}
 			});
 			

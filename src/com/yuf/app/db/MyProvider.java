@@ -21,13 +21,16 @@ public class MyProvider extends ContentProvider {
 	private static final int ADDRESSES = 4;
 	private static final int ADDRESS_ID=5;
 	private static final int ORDER_ID=6;
-    private static final int ORDER_SELECTED = 7;     
+    private static final int ORDER_SELECTED = 7; 
+    private static final int ORDER_TOBEADDED = 8;
+    private static final int ORDER_TOBEADDEDD = 9;
 	static {
 		MATCHER.addURI("com.yuf.app.myprovider", "orders", ORDERS);
 		MATCHER.addURI("com.yuf.app.myprovider", "order", ORDER);
 		MATCHER.addURI("com.yuf.app.myprovider", "order/#", ORDER_ID);
 		MATCHER.addURI("com.yuf.app.myprovider", "isselected_order", ORDER_SELECTED);
-		
+		MATCHER.addURI("com.yuf.app.myprovider", "orderToBeAdded", ORDER_TOBEADDED);
+		MATCHER.addURI("com.yuf.app.myprovider", "order_adds", ORDER_TOBEADDEDD);
 		MATCHER.addURI("com.yuf.app.myprovider", "addresses", ADDRESSES);
 		MATCHER.addURI("com.yuf.app.myprovider", "address", ADDRESS);
 		MATCHER.addURI("com.yuf.app.myprovider", "address/#", ADDRESS_ID);
@@ -57,8 +60,7 @@ public class MyProvider extends ContentProvider {
 			String where = " _id=" + id;
 			if (!"".equals(selection) && selection != null) {
 				where = selection + " and " + where;
-
-			}
+            }
             return db.query("orders", projection, where, selectionArgs, null,
 					null, sortOrder);
             
@@ -70,7 +72,14 @@ public class MyProvider extends ContentProvider {
 			}
             return db.query("orders", projection, where0, selectionArgs, null,
 					null, sortOrder);
-		case ADDRESSES:// 查询所有的数据
+        case ORDER_TOBEADDED:
+        	String whereToBeAdded ="";
+			if (!"".equals(selection) && selection != null) {
+				whereToBeAdded = selection + whereToBeAdded;
+			}
+			return db.query("orders", projection, whereToBeAdded, selectionArgs, null,
+					null, sortOrder);
+        case ADDRESSES:// 查询所有的数据
 			return db.query("addresses", projection, selection, selectionArgs,
 					null, null, sortOrder);
 
@@ -184,7 +193,12 @@ public class MyProvider extends ContentProvider {
 			}
 			count = db.update("orders", values, where, selectionArgs);
 			break;
-		//
+	    case ORDER_TOBEADDEDD:
+	    	String whereToBeAdded ="";
+	        	if (!"".equals(selection) && selection != null) {
+	        		whereToBeAdded =selection+whereToBeAdded;
+				}count = db.update("orders", values, whereToBeAdded, selectionArgs);
+				break;
 		case ADDRESSES:
 			count = db.update("addresses", values, selection, selectionArgs);
 			break;

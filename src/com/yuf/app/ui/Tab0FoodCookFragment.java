@@ -3,13 +3,10 @@ package com.yuf.app.ui;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
-import javax.security.auth.PrivateCredentialPermission;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.R.integer;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -27,7 +24,6 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -43,9 +39,8 @@ import com.yuf.app.MyApplication;
 import com.yuf.app.Entity.UserInfo;
 import com.yuf.app.db.Order;
 import com.yuf.app.http.extend.BitmapCache;
+@SuppressLint("ValidFragment")
 public class Tab0FoodCookFragment extends Fragment{
-
-	
 	private TextView comment;
 	 private TextView showComment;
 	 private TextView collection;
@@ -161,9 +156,10 @@ public class Tab0FoodCookFragment extends Fragment{
 
 
 protected void addOrder() {
-		// TODO Auto-generated method stub
-		try {
-			Order order=new Order();
+	try {
+		
+	
+        	Order order=new Order();
 			order.dishId=dishInfoJsonObject.getInt("dishid");
 			order.orderAmount=1;
 			order.orderImage=dishInfoJsonObject.getString("dishpicurl");
@@ -173,14 +169,11 @@ protected void addOrder() {
 			order.orderTime=timeString();
 			order.userId=Integer.valueOf(UserInfo.getInstance().userid);
 			order.writeToDb();
+        
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-		
 	}
 
 
