@@ -118,10 +118,9 @@ if (isSeeJust) {
 		
 	}
 	
-
+//待删除
 	protected void addOrder() {
 		// TODO Auto-generated method stub
-		Order order=new Order();
 		
 	}
 

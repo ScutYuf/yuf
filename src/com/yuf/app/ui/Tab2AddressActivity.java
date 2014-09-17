@@ -168,13 +168,15 @@ public class Tab2AddressActivity extends Activity {
 		
 	}
 	protected void payOnDelivery() {
-		ArrayList<Order>orders=Order.readFromDb();
+		ArrayList<Order>orders=Order.readAllSelectOrderFromDb();
+		Log.d("ZM", orders.toString());
 		for (int i = 0; i < orders.size(); i++) {
+			Order.deleteFromDb(orders.get(i)._id);
 		JSONObject jsonObject=new JSONObject();
 		try {
 			jsonObject.put("userId", Integer.valueOf(UserInfo.getInstance().userid));
 			jsonObject.put("orderPaymethod", "货到付款");
-			jsonObject.put("orderAmount", 1);
+			jsonObject.put("orderAmount", orders.get(i).orderAmount);
 			jsonObject.put("dishId", orders.get(i).dishId);
 			jsonObject.put("orderPrice", orders.get(i).orderPrice);
 			jsonObject.put("orderTime", orders.get(i).orderTime);

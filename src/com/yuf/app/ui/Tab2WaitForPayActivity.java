@@ -42,11 +42,38 @@ public class Tab2WaitForPayActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.tab2_wait_pay);
+		backImageView=(ImageView)findViewById(R.id.tab2_waitforpay_back_imageView);
+		backImageView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				onBackPressed();
+				Order.positionOfStart = -1;
+				Order.modifyAllIsSelected();//返回时将所有Order修改为未选中状态
+			}
+		});
+		
+		okButton=(Button)findViewById(R.id.tab2_waitforpay_ok_button1);
+		okButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent =new Intent(Tab2WaitForPayActivity.this,Tab2AddressActivity.class);
+				startActivity(intent);
+			    Order.positionOfStart = -1;
+				//Tab2WaitForPayActivity.this.finish();
+			}
+		});
+	}
+	
+	@Override
+	protected void onResume() {
 		mImageLoader = new ImageLoader(MyApplication.requestQueue, new BitmapCache());
 		orderList=Order.readFromDb(); 
 		
 		mAdapter = new MyListAdapter();
-		setContentView(R.layout.tab2_wait_pay);
+		
 		listView=(PullToRefreshListView)findViewById(R.id.tab2_waitforpay_listView);
 		listView.setMode(Mode.PULL_FROM_END);
 		listView.setOnRefreshListener(new OnRefreshListener<ListView>() {
@@ -71,29 +98,9 @@ public class Tab2WaitForPayActivity extends Activity {
 					}
 			}	});
 		listView.setAdapter(mAdapter);
-		backImageView=(ImageView)findViewById(R.id.tab2_waitforpay_back_imageView);
-		backImageView.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				onBackPressed();
-				Order.positionOfStart = -1;
-				Order.modifyAllIsSelected();//返回时将所有Order修改为未选中状态
-			}
-		});
-		
-		okButton=(Button)findViewById(R.id.tab2_waitforpay_ok_button1);
-		okButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent intent =new Intent(Tab2WaitForPayActivity.this,Tab2AddressActivity.class);
-				startActivity(intent);
-			    Order.positionOfStart = -1;
-				//Tab2WaitForPayActivity.this.finish();
-			}
-		});
+		super.onResume();
 	}
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if(keyCode==KeyEvent.KEYCODE_BACK){
