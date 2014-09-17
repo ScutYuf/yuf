@@ -148,7 +148,7 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:background="@drawable/shape2"
-            android:text="评论（79）"
+            android:text="评论（）"
             android:textColor="#ffffff" />
 
         <Button
@@ -178,7 +178,7 @@
             android:layout_centerHorizontal="true"
             android:layout_weight="1"
             android:background="@drawable/shape"
-            android:text="收藏（259）"
+            android:text="收藏（）"
             android:textColor="#ffffff" />
 
         <TextView

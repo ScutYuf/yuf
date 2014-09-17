@@ -77,7 +77,7 @@
         android:src="@drawable/rightrow" />
 
     <TextView
-        android:id="@+id/TextView01"
+        android:id="@+id/tab2_bought_item_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textView1"
@@ -85,5 +85,13 @@
         android:text="28元"
         android:textSize="13sp"
         android:textColor="#F15A24" />
+
+    <TextView
+        android:id="@+id/tab2_bought_item_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignTop="@+id/status"
+        android:text="份数:" />
 
 </RelativeLayout>

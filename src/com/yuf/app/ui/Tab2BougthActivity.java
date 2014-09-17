@@ -1,6 +1,9 @@
 package com.yuf.app.ui;
 
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +35,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yuf.app.MyApplication;
 import com.yuf.app.Entity.UserInfo;
+import com.yuf.app.http.extend.BitmapCache;
 
 public class Tab2BougthActivity extends Activity {
 	private ImageView backImageView;
@@ -45,6 +49,7 @@ public class Tab2BougthActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		//// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		mImageLoader=new ImageLoader(MyApplication.requestQueue,new BitmapCache());
 		currentPage=0;
 		isEnd=false;
 		jsonArray=new JSONArray();
@@ -52,7 +57,7 @@ public class Tab2BougthActivity extends Activity {
 		setContentView(R.layout.tab2_bought);
 		listView=(PullToRefreshListView)findViewById(R.id.tab2_bougth_listview);
 		listView.setAdapter(mAdapter);
-		listView.setMode(Mode.PULL_FROM_END);
+		listView.setMode(Mode.PULL_FROM_START);
 		listView.setOnRefreshListener(new OnRefreshListener<ListView>() {
            @Override
 			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -81,13 +86,13 @@ public class Tab2BougthActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Intent intent=new Intent(Main.mainActivity,
+				Intent intent=new Intent(Tab2BougthActivity.this,
 				Tab0FoodActivity.class);
 				Bundle bundle = new Bundle();  
 				try {
-					//bundle.putString("dishid",jsonArray.getJSONObject(position-1).getString("dishid").toString());
-					//bundle.putString("dishname",jsonArray.getJSONObject(position-1).getString("dishname").toString());
-					//bundle.putBoolean("isSeeJust",true);
+					bundle.putString("dishid",jsonArray.getJSONObject(position-1).getString("dishid").toString());
+					bundle.putString("dishname",jsonArray.getJSONObject(position-1).getString("dishname").toString());
+					bundle.putBoolean("isSeeJust",false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}//创建Bundle对象   
@@ -121,11 +126,12 @@ public class Tab2BougthActivity extends Activity {
             public void onResponse(JSONObject response)  
             {  
 					try {
-						jsonArray=MyApplication.joinJSONArray(jsonArray, response.getJSONArray("followsData"));
-						if (response.getInt("currentPage")>=response.getInt("followsMaxPage")) {
+						jsonArray=MyApplication.joinJSONArray(jsonArray, response.getJSONArray("orderData"));
+						if (response.getInt("currentPage")>=response.getInt("orderMaxPage")) {
 							
 							Toast.makeText(Tab2BougthActivity.this, "End of List!", Toast.LENGTH_SHORT).show();
 							isEnd=true;
+							
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -178,19 +184,30 @@ public class Tab2BougthActivity extends Activity {
 			try {
 				jsonObject = jsonArray.getJSONObject(position);
 				TextView nameOfOrder=(TextView) convertView.findViewById(R.id.tab2_bought_item_name);
-				nameOfOrder.setText(jsonObject.getString("username"));
-				//TextView priceOfOrder=(TextView)convertView.findViewById(R.id.TextView01);
-			    //priceOfOrder.setText( jsonObject.getString("orderprice"));
-				//NetworkImageView orderImageView=(NetworkImageView)convertView.findViewById(R.id.tab2_bought_item_img);
-				//orderImageView.setDefaultImageResId(R.drawable.meat);
-				//orderImageView.setImageUrl(String.format("http://110.84.129.130:8080/Yuf%s", jsonObject.getString("dishpicurl")),mImageLoader);
-				//TextView statusOfOrder=(TextView) convertView.findViewById(R.id.status);
-				//statusOfOrder.setText(jsonObject.getString("orderstatus"));
+				nameOfOrder.setText(jsonObject.getString("dishname"));
+				TextView priceOfOrder=(TextView)convertView.findViewById(R.id.tab2_bought_item_price);
+			    priceOfOrder.setText( jsonObject.getString("orderprice"));
+				NetworkImageView orderImageView=(NetworkImageView)convertView.findViewById(R.id.tab2_bought_item_img);
+				orderImageView.setDefaultImageResId(R.drawable.meat);
+				orderImageView.setImageUrl(String.format("http://110.84.129.130:8080/Yuf%s", jsonObject.getString("dishpicurl")),mImageLoader);
+				TextView statusOfOrder=(TextView) convertView.findViewById(R.id.status);
+				statusOfOrder.setText(jsonObject.getString("orderstatus"));
+				TextView timeTextView=(TextView)convertView.findViewById(R.id.tab2_bought_item_time);
+				timeTextView.setText(timeString(jsonObject.getLong("ordertime")));
+				TextView amountTextView=(TextView)convertView.findViewById(R.id.tab2_bought_item_amount);
+				amountTextView.setText("份数："+jsonObject.getString("orderamount"));
+			
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 			return convertView;
 		}
 	}
-
+	private String timeString(long i) {
+		// TODO Auto-generated method stub
+		long currentTime = i;
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = new Date(currentTime);
+		return formatter.format(date);
+	}
 }
