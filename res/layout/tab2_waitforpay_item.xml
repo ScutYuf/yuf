@@ -85,6 +85,7 @@
         android:layout_height="30dp"
         android:layout_alignBottom="@+id/tab2_waitforpay_item_delete_btn"
         android:layout_alignLeft="@+id/tab2_waitforpay_item_price"
+        android:clickable="true"
         android:src="#000" />
 
     <ImageView
@@ -93,6 +94,7 @@
         android:layout_height="30dp"
         android:layout_alignTop="@+id/tab2_waitforpay_item_delete_btn"
         android:layout_toRightOf="@+id/tab2_waitforpay_item_price"
+        android:onClick="onClick"
         android:src="#000" />
 
     <TextView
