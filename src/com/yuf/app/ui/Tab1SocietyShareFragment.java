@@ -90,7 +90,7 @@ public class Tab1SocietyShareFragment extends Fragment {
 					
 			}	});
 
-		listView.setMode(Mode.BOTH);
+		listView.setMode(Mode.PULL_FROM_START);
 		mAdaAdapter=new MylistAdapter();
 		listView.setAdapter(mAdaAdapter);
 		listView.setOnItemClickListener(new OnItemClickListener() {
@@ -128,7 +128,7 @@ public class Tab1SocietyShareFragment extends Fragment {
 		private void refreshListView() {
 			// TODO Auto-generated method stub
 			isEnd=false;
-			listView.setMode(Mode.BOTH);
+			listView.setMode(Mode.PULL_FROM_START);
 			jsonArray=new JSONArray();
 			currentPage=0;
 			getSharePage(++currentPage);

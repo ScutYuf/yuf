@@ -83,7 +83,7 @@
         >
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tab3_setuserinfo_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

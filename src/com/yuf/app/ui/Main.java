@@ -38,6 +38,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
@@ -46,6 +47,7 @@ import com.yuf.app.Entity.CategorysEntity;
 import com.yuf.app.Entity.UserInfo;
 import com.yuf.app.adapter.MiddlePageAdapter;
 import com.yuf.app.adapter.OutsidePagerAdapter;
+import com.yuf.app.http.extend.BitmapCache;
 import com.yuf.app.ui.indicator.TitlePageIndicator;
 
 public class Main extends FragmentActivity {
@@ -55,11 +57,7 @@ public class Main extends FragmentActivity {
 	private ViewPager mTabPager;
 	private ImageView mTab0, mTab1, mTab2, mTab3;
 	private int currIndex = 0;
-	private View layout;
-	private boolean menu_display = false;
-	private PopupWindow menuWindow;
-	private LayoutInflater inflater;
-	private RequestQueue mQueue;
+	private ImageLoader mImageLoader;
 	
 	//四个tab 的view
 	View view0;
@@ -96,6 +94,18 @@ public class Main extends FragmentActivity {
 	public static FragmentActivity mainActivity;
 	
 	@Override
+	protected void onResumeFragments() {
+		// TODO Auto-generated method stub
+		super.onResumeFragments();
+		getUserInfo();
+		setTab3UserInfo();
+	}
+
+
+
+
+
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
@@ -107,9 +117,9 @@ public class Main extends FragmentActivity {
 		getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 	
+		//图片加载器
+		mImageLoader=new ImageLoader(MyApplication.requestQueue,new BitmapCache());
 		
-		
-		mQueue=Volley.newRequestQueue(mainActivity);
 		
 		mTabPager = (ViewPager) findViewById(R.id.tabpager);
 		mTabPager.setOnPageChangeListener(new MyOnPageChangeListener());
@@ -150,7 +160,7 @@ public class Main extends FragmentActivity {
 		initTab1();
 		initTab2();
 		initTab3();
-		getUserInfo();
+		
 		
 	}// end the onCreate method
 
@@ -418,6 +428,7 @@ public void onClickLogout(View view) {
 	
 	private long frist_back_time=0;
 	
+	
 	 
 	 //双返回键退出
 	// 此部分为了实现按两下返回退出
@@ -522,6 +533,9 @@ private void setTab3UserInfo() {
 	tab3levelnametTextView.setText(UserInfo.getInstance().getLevelname());
 	tab3nicknameTextView.setText(UserInfo.getInstance().getUsername());
 	tab3userfollowsTextView.setText("我的关注："+String.valueOf(UserInfo.getInstance().getUserfollows()));
+	tab3profileImageView.setDefaultImageResId(R.drawable.no_pic);
+	tab3profileImageView.setImageUrl("http://110.84.129.130:8080/Yuf"+UserInfo.getInstance().userpic, mImageLoader);
+	
 }
 
 	 private void getUserInfo()
@@ -539,7 +553,13 @@ private void setTab3UserInfo() {
 	             
 	             UserInfo tmpInfo=UserInfo.getInstance();
 	         
-
+	             try {
+						tmpInfo.setLeveldiscout(response.getDouble("useravatarurl"));
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	             
 					try {
 						tmpInfo.setLeveldiscout(response.getDouble("leveldiscount"));
 					} catch (JSONException e) {

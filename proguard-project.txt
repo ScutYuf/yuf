@@ -18,3 +18,9 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+#-ignorewarnings 
+-libraryjars libs/jackson-all-1.9.2.jar
+-dontwarn org.codehaus.** 
+-keep class org.codehaus.**{*;}
+-dontwarn android.test.**
+-keep class android.test.**

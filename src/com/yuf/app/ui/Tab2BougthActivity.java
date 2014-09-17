@@ -45,11 +45,11 @@ public class Tab2BougthActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		//// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		currentPage=0;
 		isEnd=false;
 		jsonArray=new JSONArray();
 		mAdapter=new MyListAdapter();
 		setContentView(R.layout.tab2_bought);
-		
 		listView=(PullToRefreshListView)findViewById(R.id.tab2_bougth_listview);
 		listView.setAdapter(mAdapter);
 		listView.setMode(Mode.PULL_FROM_END);
@@ -64,7 +64,7 @@ public class Tab2BougthActivity extends Activity {
 				jsonArray=new JSONArray();
 				currentPage=0;
 				isEnd=false;
-				getFocusNextPage();
+				getBougthNextPage();
 			}
 });
 		listView.setOnLastItemVisibleListener(new OnLastItemVisibleListener() {
@@ -72,7 +72,7 @@ public class Tab2BougthActivity extends Activity {
 			@Override
 			public void onLastItemVisible() {
 				if (!isEnd) {
-					getFocusNextPage();
+					getBougthNextPage();
 				}
 			}
 		});
@@ -96,6 +96,8 @@ public class Tab2BougthActivity extends Activity {
 			}
 		});
 		
+		getBougthNextPage();
+		
 		backImageView=(ImageView)findViewById(R.id.tab2_bougth_back_imageView);
 		backImageView.setOnClickListener(new OnClickListener() {
 			
@@ -106,12 +108,13 @@ public class Tab2BougthActivity extends Activity {
 				
 			}
 		});
+		
 	}
-	private	void getFocusNextPage()
+	private	void getBougthNextPage()
 	{
 	
-
-		JsonObjectRequest request=new JsonObjectRequest(Method.GET, String.format("http://110.84.129.130:8080/Yuf/relation/getFollowsInfo/%d/%d", Integer.valueOf(UserInfo.getInstance().userid),++currentPage), null,  new Response.Listener<JSONObject>()  
+ 
+		JsonObjectRequest request=new JsonObjectRequest(Method.GET, String.format("http://110.84.129.130:8080/Yuf/order/getOrderInfo/%s/%d", UserInfo.getInstance().userid,++currentPage), null,  new Response.Listener<JSONObject>()  
         {  
 
             @Override  

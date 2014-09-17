@@ -195,7 +195,7 @@ public class Tab0MyRecipeFragment extends Fragment {
 		JSONObject jObject = mdataArray.getJSONObject(0);
 		difficultyTextView.setText(String.valueOf(jObject.getDouble("dishdifficulty")));
 		doseTextView.setText(String.valueOf(jObject.getInt("dishamount")));
-//		skillTextView.setText(jObject.getString(""));
+		skillTextView.setText(jObject.getString("dishcookmethod"));
 		timeTextView.setText(jObject.getString("dishcooktime"));
 		commentbuttoButton.setText(String.format("评论(%s)",String.valueOf(jObject.getInt("dishcommentnum"))));
 		collectionButton.setText(String.format("收藏(%s)",String.valueOf(jObject.getInt("dishcollectionnum"))));
