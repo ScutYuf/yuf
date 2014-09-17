@@ -46,6 +46,7 @@ import android.widget.Toast;
 
 
 public class Tab1SocietyShareFragment extends Fragment {
+	//
 	private PullToRefreshListView listView;
 	private ImageLoader mImageLoader;
 	private JSONArray jsonArray;
