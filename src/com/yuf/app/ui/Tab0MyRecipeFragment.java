@@ -82,6 +82,8 @@ public class Tab0MyRecipeFragment extends Fragment {
 		doseTextView=(TextView)view.findViewById(R.id.tab0_recipe_fragment_dishamount_textview);
 		timeTextView=(TextView)view.findViewById(R.id.tab0_recipe_fragment_dishcooktime_textview);
 		nameTextView=(TextView)view.findViewById(R.id.tab0_recipe_fragment_foodname_textview);
+		skillTextView=(TextView)view.findViewById(R.id.tab0_recipe_fragment_skill_textview);
+		
 		commentbuttoButton=(Button)view.findViewById(R.id.comment_button);
 		commentbuttoButton.setOnClickListener(new OnClickListener() {
 			
@@ -268,7 +270,7 @@ public class Tab0MyRecipeFragment extends Fragment {
 				jObject = mdataArray.getJSONObject(arg0);
 				difficultyTextView.setText(String.valueOf(jObject.getDouble("dishdifficulty")));
 				doseTextView.setText(String.valueOf(jObject.getInt("dishamount")));
-//				skillTextView.setText(jObject.getString(""));
+				skillTextView.setText(jObject.getString("dishcookmethod"));
 				timeTextView.setText(jObject.getString("dishcooktime"));
 				commentbuttoButton.setText(String.format("评论(%s)", String.valueOf(jObject.getInt("dishcommentnum"))));
 				collectionButton.setText(String.format("收藏(%s)",String.valueOf(jObject.getInt("dishcollectionnum"))));
