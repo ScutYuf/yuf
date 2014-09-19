@@ -89,6 +89,7 @@ public class Main extends FragmentActivity {
 	private TextView tab3accountTextView;
 	private TextView tab3levelnametTextView;
 	private TextView tab3userfollowsTextView;
+	private TextView tab3usercollectionTextView;
 	
 	
 	public static FragmentActivity mainActivity;
@@ -229,7 +230,7 @@ public void onClickLogout(View view) {
 	tab3levelnametTextView=(TextView)view3.findViewById(R.id.tab3_levelname);
 	tab3nicknameTextView=(TextView)view3.findViewById(R.id.tab3_nickname);
 	tab3userfollowsTextView=(TextView)view3.findViewById(R.id.tab3_myfocus_textview);
-	
+	tab3usercollectionTextView=(TextView)view3.findViewById(R.id.tab3_mycollection_textview);
 	// TODO Auto-generated method stub
 	
 }
@@ -532,9 +533,10 @@ private void setTab3UserInfo() {
 	tab3accountTextView.setText(UserInfo.getInstance().getUseraccount());
 	tab3levelnametTextView.setText(UserInfo.getInstance().getLevelname());
 	tab3nicknameTextView.setText(UserInfo.getInstance().getUsername());
-	tab3userfollowsTextView.setText("我的关注："+String.valueOf(UserInfo.getInstance().getUserfollows()));
+	tab3userfollowsTextView.setText("我的关注："+String.valueOf(UserInfo.getInstance().userfollows));
 	tab3profileImageView.setDefaultImageResId(R.drawable.no_pic);
 	tab3profileImageView.setImageUrl("http://110.84.129.130:8080/Yuf"+UserInfo.getInstance().userpic, mImageLoader);
+	tab3usercollectionTextView.setText("我的收藏："+String.valueOf(UserInfo.getInstance().userfollows));
 	
 }
 

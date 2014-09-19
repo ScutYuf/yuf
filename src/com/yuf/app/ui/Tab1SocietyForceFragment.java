@@ -24,6 +24,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yuf.app.MyApplication;
 import com.yuf.app.Entity.UserInfo;
+import com.yuf.app.http.extend.BitmapCache;
 
 
 import android.R.string;
@@ -40,6 +41,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -59,11 +62,12 @@ public class Tab1SocietyForceFragment extends Fragment {
 			Bundle savedInstanceState) {
 		
 		// TODO Auto-generated method stub
+		mImageLoader=new ImageLoader(MyApplication.requestQueue,new BitmapCache());
 		View view=inflater.inflate(R.layout.tab1_myfocus,container,false);
 		mAdaAdapter=new MylistAdapter();
 		jsonArray=new JSONArray();
 		listView=(PullToRefreshListView)view.findViewById(R.id.tab1_myfocus_listview);
-		listView.setMode(Mode.BOTH);
+		listView.setMode(Mode.PULL_FROM_START);
 		listView.setOnRefreshListener(new OnRefreshListener<ListView>() {
 			@Override
 			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -75,7 +79,6 @@ public class Tab1SocietyForceFragment extends Fragment {
 				jsonArray=new JSONArray();
 				currentPage=0;
 				isEnd=false;
-				listView.setMode(Mode.BOTH);
 				getFocusNextPage();
 			
 			}
@@ -88,6 +91,29 @@ public class Tab1SocietyForceFragment extends Fragment {
 			}
 			
 	}	});
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				
+				Intent intent=new Intent(Tab1SocietyForceFragment.this.getActivity(),
+						Tab3MyWorkActivity.class);
+				Bundle bundle = new Bundle();   
+				try {
+					bundle.putInt("userId", jsonArray.getJSONObject(position-1).getInt("userid"));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				intent.putExtras(bundle);
+				startActivity(intent);
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		listView.setAdapter(mAdaAdapter);
+		getFocusNextPage();
 		return  view;
 	}
 
@@ -105,9 +131,6 @@ public class Tab1SocietyForceFragment extends Fragment {
 							
 							
 							jsonArray=MyApplication.joinJSONArray(jsonArray, response.getJSONArray("followsData"));
-							
-							Log.d("tab1share", "resopn"+String.valueOf(jsonArray.length()));
-							
 							if (response.getInt("currentPage")>=response.getInt("followsMaxPage")) {
 								listView.setMode(Mode.PULL_FROM_START);
 								Toast.makeText(getActivity(), "End of List!", Toast.LENGTH_SHORT).show();

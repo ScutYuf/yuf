@@ -76,7 +76,7 @@ private String picName;
 		profileImageView=(NetworkImageView)findViewById(R.id.tab3_setuserinfo_profile);
 		profileImageView.setDefaultImageResId(R.drawable.no_pic);
 		profileImageView.setErrorImageResId(R.drawable.no_pic);
-		profileImageView.setImageUrl("http://www.baidu.com", mImageLoader);
+		profileImageView.setImageUrl("http://110.84.129.130:8080/Yuf"+UserInfo.getInstance().userpic, mImageLoader);
 		backImageView=(ImageView)findViewById(R.id.tab3_setUserInfo_back_imageview);
 		backImageView.setOnClickListener(new OnClickListener() {
 			@Override

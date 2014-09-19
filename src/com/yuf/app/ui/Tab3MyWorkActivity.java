@@ -2,77 +2,76 @@ package com.yuf.app.ui;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.zip.Inflater;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.format.DateUtils;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.android.volley.Request.Method;
-import com.android.volley.Response;
-import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
-import com.handmark.pulltorefresh.library.extras.SoundPullEventListener;
-
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yuf.app.MyApplication;
 import com.yuf.app.Entity.UserInfo;
 import com.yuf.app.http.extend.BitmapCache;
 
-import android.R.bool;
-import android.R.integer;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
-import android.database.DataSetObserver;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.text.format.DateUtils;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.Adapter;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
-
 public class Tab3MyWorkActivity extends Activity {
 	private ImageView backImageView;
 	private PullToRefreshListView listView; 
-//
 	private ImageView addImageView;
 	private ImageLoader mImageLoader;
 	private JSONArray mjsonArray;
 	private String TAG="Tab3MyWorkActivity";
 	private MyListAdapter madaAdapter;
 	private Boolean isEnd=false;
-	private Boolean isLoading=false;
 	private int currentPage=0;
+	private int userId;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
+		
+	super.onCreate(savedInstanceState);
 	setContentView(R.layout.tab3_mywork);
+	addImageView=(ImageView)findViewById(R.id.tab3_mywork_add_imageview);
+	addImageView.setOnClickListener(new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			Intent intent=new Intent(Tab3MyWorkActivity.this,Tab3AddWorkActivity.class);
+			startActivity(intent);
+			// TODO Auto-generated method stub
+			
+		}
+	});
+	
+	Intent intent=getIntent();
+	userId=Integer.valueOf(UserInfo.getInstance().userid);
+	if (intent.getExtras()!=null) {
+		userId=intent.getExtras().getInt("userId");
+		addImageView.setVisibility(View.GONE);
+	}
 	mjsonArray=new JSONArray();
 	Log.d("mywork", mjsonArray.toString());
 	mImageLoader = new ImageLoader(MyApplication.requestQueue, new BitmapCache()); 
@@ -87,7 +86,9 @@ public class Tab3MyWorkActivity extends Activity {
 			refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 
 			// Do work to refresh the list here.
-			refreshListView();
+			mjsonArray=new JSONArray();
+			currentPage=0;
+			getNextPage();
 
 			
 		}
@@ -96,15 +97,20 @@ public class Tab3MyWorkActivity extends Activity {
 
 		@Override
 		public void onLastItemVisible() {
+		if (!isEnd) {
+			
+			getNextPage();
+			
+		}
+
 		
-				Toast.makeText(Tab3MyWorkActivity.this, "End of List!", Toast.LENGTH_SHORT).show();
-			getDate(++currentPage);
 				
 		}
 	});
 	madaAdapter=new MyListAdapter();
 	listView.setAdapter(madaAdapter);
-	listView.setMode(Mode.BOTH);
+	listView.setMode(Mode.PULL_FROM_START);
+	getNextPage();
 
 	
 	backImageView=(ImageView)findViewById(R.id.tab3_mywork_back_imageview);
@@ -119,61 +125,35 @@ public class Tab3MyWorkActivity extends Activity {
 	});
 	
 	
-	addImageView=(ImageView)findViewById(R.id.tab3_mywork_add_imageview);
-	addImageView.setOnClickListener(new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			Intent intent=new Intent(Tab3MyWorkActivity.this,Tab3AddWorkActivity.class);
-			startActivity(intent);
-			// TODO Auto-generated method stub
-			
-		}
-	});
 	
-	refreshListView();
+	
 }
 	
 	
 
 		
 		
-		void getDate(int _pageindex)
+		void getNextPage()
 		{
-		
-		JsonObjectRequest request=new JsonObjectRequest(Method.GET,String.format("http://110.84.129.130:8080/Yuf/post/getPost/%s/%d", UserInfo.getInstance().getUserid(),_pageindex), null, new com.android.volley.Response.Listener<JSONObject>() {
-
+		JsonObjectRequest request=new JsonObjectRequest(Method.GET,String.format("http://110.84.129.130:8080/Yuf/post/getPost/%d/%d", userId,++currentPage), null, new com.android.volley.Response.Listener<JSONObject>() {
 			@Override
 			public void onResponse(JSONObject response) {
 				Log.d(TAG, response.toString());
 				JSONArray jsonArray;
 				try {
+					if (response.getInt("currentPage")>=response.getInt("postMaxPage")) {
+						Toast.makeText(Tab3MyWorkActivity.this, "end of list", Toast.LENGTH_SHORT).show();
+					}
 					jsonArray = response.getJSONArray("postData");
 					mjsonArray=MyApplication.joinJSONArray(mjsonArray, jsonArray);
-					madaAdapter.notifyDataSetChanged();
-					Log.d("mywork", mjsonArray.toString());
-					Log.d("mywork",String.valueOf( mjsonArray.length()));
+					
 				} catch (JSONException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
-				
-				
-				try {
-					if (response.getInt("currentPage")>=response.getInt("postMaxPage")) {
-						listView.setMode(Mode.PULL_FROM_START);
-					}
-					
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				// Call onRefreshComplete when the list has been refreshed.
-				
 				// TODO Auto-generated method stub
 				listView.onRefreshComplete();
+				madaAdapter.notifyDataSetChanged();
 				
 				
 			}
@@ -260,6 +240,15 @@ public class Tab3MyWorkActivity extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				TextView commentnumTextView=(TextView) convertView.findViewById(R.id.tab3_mywork_item_commentnum);
+				try {
+					commentnumTextView.setText(String.format("评论（%d）",mjsonArray.getJSONObject(position).getInt("postcommentnum")));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 				// TODO Auto-generated method stub
 				return convertView;
 			}
@@ -269,11 +258,5 @@ public class Tab3MyWorkActivity extends Activity {
 			
 			
 		}
-		private void refreshListView()
-		{
-			currentPage=0;
-			mjsonArray=new JSONArray();
-			getDate(++currentPage);
-			listView.setMode(Mode.BOTH);
-		}
+	
 }

@@ -7,6 +7,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.android.volley.Response;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.ImageLoader;
@@ -15,6 +17,7 @@ import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.yuf.app.MyApplication;
+import com.yuf.app.Entity.UserInfo;
 import com.yuf.app.http.extend.BitmapCache;
 import com.yuf.app.ui.R;
 
@@ -115,6 +118,15 @@ public class Tab1ShareDetailActivity extends Activity {
 		commentBtnTextView=(TextView)findViewById(R.id.tab0_share_detail_comment_textView);
 		shareBtnTextView=(TextView)findViewById(R.id.tab0_share_detail_share_TextView);
 		addFocuseImageView=(ImageView)findViewById(R.id.tab1_share_detail_addfocus_imageView);
+		addFocuseImageView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				addFocuseRelationShip();
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		relativeLayout=(RelativeLayout)findViewById(R.id.tab1_share_detail_relativeLayout);
 		Intent intent=getIntent();
 	Bundle bundle=intent.getExtras();
@@ -132,6 +144,49 @@ public class Tab1ShareDetailActivity extends Activity {
 		
 		
 		getShareDetail();
+	}
+	protected void addFocuseRelationShip() {
+		JSONObject jsonObject=new JSONObject();
+		try {
+			jsonObject.put("userId", Integer.valueOf(UserInfo.getInstance().userid));
+			jsonObject.put("sessionId", UserInfo.getInstance().sessionid);
+			jsonObject.put("friendId", userid);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		JsonObjectRequest request=new JsonObjectRequest(Method.POST, "http://110.84.129.130:8080/Yuf/relation/addRelation", jsonObject, new Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject response) {
+				// TODO Auto-generated method stub
+				try {
+					if (response.getInt("code")==0) {
+						Toast.makeText(Tab1ShareDetailActivity.this, "关注成功", Toast.LENGTH_SHORT).show();
+					}
+					else {
+						Toast.makeText(Tab1ShareDetailActivity.this,response.getString("msg"), Toast.LENGTH_SHORT).show();
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}, new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		// TODO Auto-generated method stub
+		MyApplication.requestQueue.add(request);
+		MyApplication.requestQueue.start();
 	}
 	private void getShareDetail()
 	{

@@ -61,29 +61,17 @@
         android:textSize="13sp"
         />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="85dp"
-        android:layout_height="30dp"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_toLeftOf="@+id/button2"
-        android:layout_marginRight="10dp"
-        android:text="评论（50）"
-        android:textSize="13sp"
-        android:textColor="#fff"
-        android:background="#F7931E" />
-
-    <Button
-        android:id="@+id/button2"
+    <TextView
+        android:id="@+id/tab3_mywork_item_commentnum"
         android:layout_width="85dp"
         android:layout_height="30dp"
         android:layout_alignBottom="@+id/tab3_mywork_item_img"
         android:layout_alignRight="@+id/imageView1"
-        android:layout_marginBottom="5dp"
-        android:text="收藏（20）"
-        android:textSize="13sp"
-        android:background="#07B498"
+        android:layout_marginRight="10dp"
+        android:background="#F7931E"
+        android:gravity="center"
+        android:text="评论（50）"
         android:textColor="#fff"
-        android:layout_marginRight="11dp" />
+        android:textSize="13sp" />
 
 </RelativeLayout>

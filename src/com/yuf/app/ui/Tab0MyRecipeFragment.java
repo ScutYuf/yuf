@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
+import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -37,7 +38,7 @@ import com.yuf.app.adapter.OutsidePagerAdapter;
 import com.yuf.app.http.extend.BitmapCache;
 import com.yuf.app.mywidget.FoodViewPage;
 import com.yuf.app.ui.indicator.CirclePageIndicator;
-//import com.yuf.app.mywidget.FoodViewPage;
+import com.android.volley.Response.ErrorListener;
 
 @SuppressLint("ValidFragment")
 public class Tab0MyRecipeFragment extends Fragment {
@@ -99,10 +100,10 @@ public class Tab0MyRecipeFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Toast toast = Toast.makeText(getActivity(),
-					     "收藏成功", Toast.LENGTH_SHORT);
-					   toast.setGravity(Gravity.CENTER, 0, 0);
-					   toast.show();
+				
+				addCollectionRelationShip();
+				
+				
 
 			}
 		});
@@ -147,6 +148,56 @@ public class Tab0MyRecipeFragment extends Fragment {
 		return  view;
 	}
 	
+	protected void addCollectionRelationShip() {
+		// TODO Auto-generated method stub
+		JSONObject jsonObject=new JSONObject();
+		try {
+			jsonObject.put("userId",Long.valueOf( UserInfo.getInstance().userid));
+			jsonObject.put("sessionId", UserInfo.getInstance().sessionid);
+			jsonObject.put("dishId", mdataArray.getJSONObject(currentPageIndex).getLong("dishid"));
+			
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		JsonObjectRequest request=new JsonObjectRequest(Method.POST, "http://110.84.129.130:8080/Yuf/collection/addCollection", jsonObject, new Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject response) {
+				// TODO Auto-generated method stub
+				try {
+					if (response.getInt("code")==0) {
+						Toast toast = Toast.makeText(Tab0MyRecipeFragment.this.getActivity(),
+							     "收藏成功", Toast.LENGTH_SHORT);
+							   toast.setGravity(Gravity.CENTER, 0, 0);
+							   toast.show();
+					}
+					else {
+						Toast toast = Toast.makeText(Tab0MyRecipeFragment.this.getActivity(),
+							     response.getString("msg"), Toast.LENGTH_SHORT);
+							   toast.setGravity(Gravity.CENTER, 0, 0);
+							   toast.show();
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		},new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		MyApplication.requestQueue.add(request);
+		MyApplication.requestQueue.start();
+	}
 	protected void showDialg() {
 
 		//显示评论对话框
