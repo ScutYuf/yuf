@@ -42,7 +42,7 @@
              >
 
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/tab1_addshare"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/tab2_waitforpay_imageView"
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/imageView1"
+                android:layout_toRightOf="@+id/tab1_addshare"
                 android:layout_marginLeft="3dp"
                 android:text="待 付 款"
                 android:textColor="#000000"

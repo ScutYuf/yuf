@@ -120,6 +120,8 @@ public class Tab0MyRecipeFragment extends Fragment {
 				try {
 					bundle.putString("dishid",mdataArray.getJSONObject(currentPageIndex).getString("dishid") );
 					bundle.putString("dishname",mdataArray.getJSONObject(currentPageIndex).getString("dishname") );
+					bundle.putDouble("dishprice",mdataArray.getJSONObject(currentPageIndex).getDouble("dishprice") );
+				
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -248,11 +250,11 @@ public class Tab0MyRecipeFragment extends Fragment {
 		JSONObject jObject = mdataArray.getJSONObject(0);
 		difficultyTextView.setText(String.valueOf(jObject.getDouble("dishdifficulty")));
 		doseTextView.setText(String.valueOf(jObject.getInt("dishamount")));
-		skillTextView.setText(jObject.getString("dishcookmethod"));
 		timeTextView.setText(jObject.getString("dishcooktime"));
 		commentbuttoButton.setText(String.format("评论(%s)",String.valueOf(jObject.getInt("dishcommentnum"))));
 		collectionButton.setText(String.format("收藏(%s)",String.valueOf(jObject.getInt("dishcollectionnum"))));
 		nameTextView.setText(jObject.getString("dishname"));
+		skillTextView.setText(jObject.getString("dishcookmethod"));
 	}
 	private void commentDish(String commentContent) {
 			JSONObject jsonObject=new JSONObject();

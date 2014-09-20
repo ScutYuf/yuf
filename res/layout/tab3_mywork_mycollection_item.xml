@@ -44,7 +44,7 @@
         android:textColor="#3f342d" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/tab1_addshare"
         android:layout_width="30dp"
         android:layout_height="25dp"
         android:layout_alignBottom="@+id/tab3_mywork_item_name"
@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tab3_mywork_item_name"
-        android:layout_below="@+id/imageView1"
+        android:layout_below="@+id/tab1_addshare"
         android:text="xxxxxxxxxxxxxxxxxxxxx"
         android:textSize="13sp"
         />
@@ -66,7 +66,7 @@
         android:layout_width="85dp"
         android:layout_height="30dp"
         android:layout_alignBottom="@+id/tab3_mywork_item_img"
-        android:layout_alignRight="@+id/imageView1"
+        android:layout_alignRight="@+id/tab1_addshare"
         android:layout_marginRight="10dp"
         android:background="#F7931E"
         android:gravity="center"

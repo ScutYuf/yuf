@@ -80,6 +80,8 @@ public class Main extends FragmentActivity {
 	private ViewPager tab1Viewpage;
 	private ArrayList<Fragment> tab1fragments;
 	private ArrayList<CategorysEntity> tab1categorysEntities;
+	private ImageView addImageView;
+	
 	//tab2
 
 
@@ -248,6 +250,16 @@ public void onClickLogout(View view) {
 
 	private void initTab1() {
 		// TODO Auto-generated method stub
+		addImageView=(ImageView) view1.findViewById(R.id.tab1_addshare);
+		addImageView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent=new Intent(Main.this,Tab3AddWorkActivity.class);
+				startActivity(intent);	
+			}
+		});
 		addTab1ViewpageFragment();
 	}
 

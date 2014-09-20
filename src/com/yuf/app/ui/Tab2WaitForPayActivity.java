@@ -38,11 +38,18 @@ public class Tab2WaitForPayActivity extends Activity {
     private MyListAdapter mAdapter;  
 	private ImageLoader mImageLoader;
 	private String TAG="Tab2waitforpay";
-		
+	private TextView price;
+	private double sumprice=0;
+	private void refreshPrice() {
+		price.setText(""+sumprice);
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tab2_wait_pay);
+		price=(TextView)findViewById(R.id.tab2_waitforpray_prize_textview);
+		refreshPrice();
+		
 		backImageView=(ImageView)findViewById(R.id.tab2_waitforpay_back_imageView);
 		backImageView.setOnClickListener(new OnClickListener() {
 			
@@ -162,29 +169,6 @@ public class Tab2WaitForPayActivity extends Activity {
 			final TextView ammountTextView;
 			ammountTextView=(TextView)convertView.findViewById(R.id.tab2_waitforpay_item_amount);
 			ammountTextView.setText(String.valueOf(order.orderAmount));
-			//增加Order的份数
-			ImageView plusImageView=(ImageView)convertView.findViewById(R.id.tab2_waitforpay_item_plus);
-			plusImageView.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					order.orderAmount++;
-					order.modifyAmount(1);
-					ammountTextView.setText(order.orderAmount+"");
-				}
-			});
-			//减少Order的份数
-			ImageView minusImageView=(ImageView)convertView.findViewById(R.id.tab2_waitforpay_item_minus);
-			minusImageView.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					if(order.orderAmount>1){
-						v.setClickable(true);
-						order.orderAmount--;
-						order.modifyAmount(0);
-						ammountTextView.setText(order.orderAmount+"");
-					}else{v.setClickable(false);}
-				}
-			});
 			
 			
 			final CheckBox checkBox=(CheckBox)convertView.findViewById(R.id.tab2_waitforpay_item_chooosed);
@@ -196,34 +180,65 @@ public class Tab2WaitForPayActivity extends Activity {
 			public void onClick(View arg0) {
 				// TODO Auto-gent
 				if (checkBox.isChecked()) {
+					
+					sumprice+=order.orderAmount*order.orderPrice;
+					refreshPrice();
 					order.isSelect = 1;
 					order.modifyIsSelected(1);
 					
 				}
 				else {
+					sumprice-=order.orderAmount*order.orderPrice;
+					refreshPrice();
 					order.isSelect  = 0;
 					order.modifyIsSelected(0);
 				}
 			}
 		});
+		//增加Order的份数
+		ImageView plusImageView=(ImageView)convertView.findViewById(R.id.tab2_waitforpay_item_plus);
+		plusImageView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				order.orderAmount++;
+				order.modifyAmount(1);
+				ammountTextView.setText(order.orderAmount+"");
+				if (checkBox.isChecked()) {
+					
+					sumprice+=order.orderPrice;
+					refreshPrice();
+					
+				}
+				
+				
+			}
+		});
+		//减少Order的份数
+		ImageView minusImageView=(ImageView)convertView.findViewById(R.id.tab2_waitforpay_item_minus);
+		minusImageView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(order.orderAmount>1){
+					v.setClickable(true);
+					order.orderAmount--;
+					order.modifyAmount(0);
+					ammountTextView.setText(order.orderAmount+"");
+					if (checkBox.isChecked()) {
+						
+						sumprice-=order.orderPrice;
+						refreshPrice();
+						
+					}
+					
+				}else{v.setClickable(false);}
+			}
+		});
 			
-//			checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-//				@Override
-//				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//					// TODO Auto-generated method stub
-//				
-//					if (isChecked) {
-//						order.isSelect = 1;
-//						order.modifyIsSelected(1);
-//						
-//					}
-//					else {
-//						order.isSelect  = 0;
-//						order.modifyIsSelected(0);
-//					}
-//				}
-//			});
 			
+		
+		
+		
+		
 			NetworkImageView imageOrder = (NetworkImageView)convertView.findViewById(R.id.tab2_waitforpay_item_img);
 			imageOrder.setDefaultImageResId(R.drawable.no_pic);
 			imageOrder.setImageUrl("http://110.84.129.130:8080/Yuf"+order.orderImage, mImageLoader);
