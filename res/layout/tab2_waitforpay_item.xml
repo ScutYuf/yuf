@@ -53,30 +53,12 @@
         android:textColor="#F15A24"
         android:textSize="13sp" />
 
-    <TextView
-        android:id="@+id/tab2_waitforpay_item_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/tab2_waitforpay_item_img"
-        android:layout_toRightOf="@+id/tab2_waitforpay_item_time"
-        android:text="红烧牛肉"
-        android:textColor="#3f342d"
-        android:textSize="20sp" />
-
     <CheckBox
         android:id="@+id/tab2_waitforpay_item_chooosed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true" />
-
-    <TextView
-        android:id="@+id/tab2_waitforpay_item_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:text="2014年7月1日10点00分"
-        android:textSize="12sp" />
 
     <ImageView
         android:id="@+id/tab2_waitforpay_item_minus"
@@ -85,16 +67,7 @@
         android:layout_alignBottom="@+id/tab2_waitforpay_item_delete_btn"
         android:layout_alignLeft="@+id/tab2_waitforpay_item_price"
         android:clickable="true"
-        android:src="#000" />
-
-    <ImageView
-        android:id="@+id/tab2_waitforpay_item_plus"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignTop="@+id/tab2_waitforpay_item_delete_btn"
-        android:layout_toRightOf="@+id/tab2_waitforpay_item_price"
-        android:onClick="onClick"
-        android:src="#000" />
+        android:src="@drawable/no" />
 
     <TextView
         android:id="@+id/tab2_waitforpay_item_amount"
@@ -105,5 +78,33 @@
         android:layout_toRightOf="@+id/tab2_waitforpay_item_minus"
         android:text="0"
         android:textColor="#000" />
+
+    <TextView
+        android:id="@+id/tab2_waitforpay_item_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/tab2_waitforpay_item_chooosed"
+        android:text="2014年7月1日10点00分"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tab2_waitforpay_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tab2_waitforpay_item_img"
+        android:layout_toRightOf="@+id/tab2_waitforpay_item_img"
+        android:text="红烧牛肉"
+        android:textColor="#3f342d"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/tab2_waitforpay_item_plus"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/tab2_waitforpay_item_amount"
+        android:layout_toRightOf="@+id/tab2_waitforpay_item_price"
+        android:onClick="onClick"
+        android:src="@drawable/add" />
 
 </RelativeLayout>

@@ -195,6 +195,22 @@ public class Tab2WaitForPayActivity extends Activity {
 				}
 			}
 		});
+		Button deletBtn=(Button)convertView.findViewById(R.id.tab2_waitforpay_item_delete_btn);
+		deletBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				deleteOrder(index);
+				if (checkBox.isChecked()) {
+					
+					sumprice-=order.orderPrice*order.orderAmount;
+					refreshPrice();
+					
+				}
+			}
+		});
+		
 		//增加Order的份数
 		ImageView plusImageView=(ImageView)convertView.findViewById(R.id.tab2_waitforpay_item_plus);
 		plusImageView.setOnClickListener(new OnClickListener() {
@@ -266,15 +282,7 @@ public class Tab2WaitForPayActivity extends Activity {
 					// TODO Auto-generated method stub
 				}
 			});
-			Button deletBtn=(Button)convertView.findViewById(R.id.tab2_waitforpay_item_delete_btn);
-			deletBtn.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					deleteOrder(index);
-				}
-			});
+			
 			return convertView;
 		}
 		

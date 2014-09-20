@@ -25,6 +25,8 @@ import android.R.integer;
 import android.R.string;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
@@ -37,6 +39,8 @@ import android.view.View.OnTouchListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Animation.AnimationListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -82,6 +86,7 @@ public class Tab1ShareDetailActivity extends Activity {
 	private String postcontent;
 	private ImageLoader mImageLoader;
 	private ScrollView mScrollView;
+	protected Dialog dlg;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -116,6 +121,16 @@ public class Tab1ShareDetailActivity extends Activity {
 		foodNeworkImageView=(NetworkImageView)findViewById(R.id.tab0_share_detail_food_imageView);
 		shareContentTextView=(TextView)findViewById(R.id.tab0_share_detail_sharecontent_textview);
 		commentBtnTextView=(TextView)findViewById(R.id.tab0_share_detail_comment_textView);
+		
+		commentBtnTextView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				showDialg();
+				// TODO Auto-generated method stub
+			
+			}
+		});
 		shareBtnTextView=(TextView)findViewById(R.id.tab0_share_detail_share_TextView);
 		addFocuseImageView=(ImageView)findViewById(R.id.tab1_share_detail_addfocus_imageView);
 		addFocuseImageView.setOnClickListener(new OnClickListener() {
@@ -266,13 +281,14 @@ public class Tab1ShareDetailActivity extends Activity {
 		JSONObject jsonObject=new JSONObject();
 		try {
 			jsonObject.put("userId", userid);
-			jsonObject.put("dishId", postId);
-			jsonObject.put("dishcommentContent", commentContent);
+			jsonObject.put("postId", postId);
+			jsonObject.put("sessionId", UserInfo.getInstance().sessionid);
+			jsonObject.put("commentContent", commentContent);
 		} catch (JSONException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		JsonObjectRequest request=new JsonObjectRequest(Method.POST,"http://110.84.129.130:8080/Yuf/dishcomment/postDishcomment/", jsonObject, new Response.Listener<JSONObject>()  
+		JsonObjectRequest request=new JsonObjectRequest(Method.POST,"http://110.84.129.130:8080/Yuf/comment/newComment", jsonObject, new Response.Listener<JSONObject>()  
 		        {  
 
             @Override  
@@ -283,6 +299,10 @@ public class Tab1ShareDetailActivity extends Activity {
 						Toast toast=Toast.makeText(getApplicationContext(), "评论成功", Toast.LENGTH_SHORT);
 						toast.show();
 						
+					}
+					else {
+						Toast toast=Toast.makeText(getApplicationContext(), response.getString("msg"), Toast.LENGTH_SHORT);
+						toast.show();
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -448,5 +468,42 @@ shareBtnTextView.setClickable(true);
 
 		
 	}
-	
+	protected void showDialg() {
+
+		//显示评论对话框
+		
+		LayoutInflater factory = LayoutInflater.from(this);
+		final View textEntryView = factory.inflate(R.layout.dialog, null);
+		final EditText editText=(EditText)textEntryView.findViewById(R.id.comment_comment_editText);
+		Button commentButton =(Button)textEntryView.findViewById(R.id.comment_dialog_comment_button);
+		commentButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				commentDish(editText.getText().toString());
+				dlg.dismiss();
+			}
+		});
+		Button cancleButton=(Button)textEntryView.findViewById(R.id.comment_dialog_cancle_buttoon);
+       cancleButton.setOnClickListener(new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+		
+			dlg.dismiss();
+		}
+	});
+		dlg = new AlertDialog.Builder(this)
+        .setView(textEntryView)
+        .create();
+        dlg.show();
+		
+		
+		// TODO Auto-generated method stub
+		
+	// TODO Auto-generated method stub
+		
+	}
 }
