@@ -67,7 +67,7 @@
         android:layout_alignBottom="@+id/tab2_waitforpay_item_delete_btn"
         android:layout_alignLeft="@+id/tab2_waitforpay_item_price"
         android:clickable="true"
-        android:src="@drawable/no" />
+        android:src="@drawable/no_care" />
 
     <TextView
         android:id="@+id/tab2_waitforpay_item_amount"
@@ -105,6 +105,6 @@
         android:layout_alignBottom="@+id/tab2_waitforpay_item_amount"
         android:layout_toRightOf="@+id/tab2_waitforpay_item_price"
         android:onClick="onClick"
-        android:src="@drawable/add" />
+        android:src="@drawable/add_care" />
 
 </RelativeLayout>
