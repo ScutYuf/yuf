@@ -27,12 +27,15 @@ import com.yuf.app.Entity.UserInfo;
 import com.yuf.app.http.extend.BitmapCache;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -89,7 +92,30 @@ public class Tab3MyCollectionActivity extends Activity {
 		}
 	});
 	listView.setAdapter(mAdaAdapter);
-	
+	listView.setOnItemClickListener(new OnItemClickListener() {
+
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+			
+			Intent intent=new Intent(Main.mainActivity,
+					Tab0FoodActivity.class);
+			Bundle bundle = new Bundle();                           //创建Bundle对象   
+			try {
+				JSONObject jsonObject=jsonArray.getJSONObject(position-1);
+				bundle.putString("dishid",jsonObject.getString("dishid") );
+				bundle.putString("dishname",jsonObject.getString("dishname") );
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}     //装入数据   
+			intent.putExtras(bundle);                                //把Bundle塞入Intent里面  
+			startActivity(intent);
+			
+			// TODO Auto-generated method stub
+			
+		}
+	});
 	backImageView=(ImageView)findViewById(R.id.tab3_mycollection_back_imageview);
 	backImageView.setOnClickListener(new OnClickListener() {
 		
@@ -100,25 +126,22 @@ public class Tab3MyCollectionActivity extends Activity {
 			
 		}
 	});
+	getNextPage();
 }
 	private	void getNextPage()
 		{
 		
 	
-			JsonObjectRequest request=new JsonObjectRequest(Method.GET, String.format("http://110.84.129.130:8080/Yuf/relation/getFollowsInfo/%d/%d", String.valueOf(UserInfo.getInstance().userid),++currentPage), null,  new Response.Listener<JSONObject>()  
+			JsonObjectRequest request=new JsonObjectRequest(Method.GET, String.format("http://110.84.129.130:8080/Yuf/collection/getCollection/%s/%s/%d", String.valueOf(UserInfo.getInstance().userid),UserInfo.getInstance().sessionid,++currentPage), null,  new Response.Listener<JSONObject>()  
 	        {  
 	
 	            @Override  
 	            public void onResponse(JSONObject response)  
 	            {  
 						try {
-							
-							
-							jsonArray=MyApplication.joinJSONArray(jsonArray, response.getJSONArray("followsData"));
-							
+							jsonArray=MyApplication.joinJSONArray(jsonArray, response.getJSONArray("collection"));
 							Log.d("tab1share", "resopn"+String.valueOf(jsonArray.length()));
-							
-							if (response.getInt("currentPage")>=response.getInt("followsMaxPage")) {
+							if (response.getInt("currentPageNum")>=response.getInt("maxPageNum")) {
 								listView.setMode(Mode.PULL_FROM_START);
 								Toast.makeText(Tab3MyCollectionActivity.this, "End of List!", Toast.LENGTH_SHORT).show();
 								isEnd=true;
@@ -180,35 +203,25 @@ public class Tab3MyCollectionActivity extends Activity {
 			// TODO Auto-generated method stub
 			Log.d("mywork", "get");
 			if (convertView==null) {
-				convertView=getLayoutInflater().inflate(R.layout.tab1_share_list_item,null);
+				convertView=getLayoutInflater().inflate(R.layout.tab3_mywork_mycollection_item,null);
 				
 			}
 			NetworkImageView imageView=(NetworkImageView)convertView.findViewById(R.id.tab3_mywork_item_img);
 			try {
-				imageView.setImageUrl("http://110.84.129.130:8080/Yuf"+jsonArray.getJSONObject(position).getString("postpicurl"),mImageLoader);
+				imageView.setImageUrl("http://110.84.129.130:8080/Yuf"+jsonArray.getJSONObject(position).getString("dishpicurl"),mImageLoader);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			TextView posttitle=(TextView)convertView.findViewById(R.id.tab3_mywork_item_name);
 			try {
-				posttitle.setText(jsonArray.getJSONObject(position).getString("posttitle"));
+				posttitle.setText(jsonArray.getJSONObject(position).getString("dishname"));
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			TextView posttime=(TextView)convertView.findViewById(R.id.tab3_mywork_item_time);
-			try {
-				long currentTime=jsonArray.getJSONObject(position).getLong("posttime");
-			
-				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				Date date = new Date(currentTime);
-				posttime.setText(formatter.format(date));
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+			posttime.setText("");
 			
 			// TODO Auto-generated method stub
 			return convertView;

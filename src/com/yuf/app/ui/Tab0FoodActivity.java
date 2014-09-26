@@ -47,6 +47,8 @@ private ImageView backImageView;
 private JSONObject jsonObject;
 private ImageView goPayImageView;
 private boolean isSeeJust;
+private TextView priceTextView;
+
 	class MyPageChangeListener implements OnPageChangeListener {
 	    @Override
 	    public void onPageScrollStateChanged(int arg0) {
@@ -64,14 +66,11 @@ private boolean isSeeJust;
 	       
 	    }
 	}
-	private TabHost myTabhost;
 	private ArrayList<Fragment> fragments;
 	private ArrayList<CategorysEntity> fooddetailcategorysEntities;
 	private TitlePageIndicator fooddetailIndicator;
 	private ViewPager Viewpage;
 	private MiddlePageAdapter mInsidePageAdapter;
-	private ImageView moreImageView;
-	private PopupWindow mPopupWindow; 
 	private TextView foodnameTextView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +80,7 @@ private boolean isSeeJust;
 		isSeeJust=getIntent().getExtras().getBoolean("isSeeJust",false);
 		
 		setContentView(R.layout.tab0_recipe_detail);
+		
 		
 		goPayImageView=(ImageView)findViewById(R.id.tab0_recipe_detail_gopay_image);
 		goPayImageView.setOnClickListener(new OnClickListener() {
@@ -101,6 +101,11 @@ if (isSeeJust) {
 		}
 		foodnameTextView=(TextView)findViewById(R.id.tab0_detail_foodname);
 		foodnameTextView.setText(getIntent().getExtras().getString("dishname"));
+		
+		
+		priceTextView=(TextView)findViewById(R.id.tab1_share_item_titile_textview);
+		priceTextView.setText(""+getIntent().getExtras().getDouble("dishprice"));
+		
 		backImageView=(ImageView)findViewById(R.id.tab0_detail_back_imageView);
 		backImageView.setOnClickListener(new OnClickListener() {
 			

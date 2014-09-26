@@ -7,6 +7,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.android.volley.Response;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
 import com.android.volley.toolbox.ImageLoader;
@@ -15,6 +17,7 @@ import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.yuf.app.MyApplication;
+import com.yuf.app.Entity.UserInfo;
 import com.yuf.app.http.extend.BitmapCache;
 import com.yuf.app.ui.R;
 
@@ -22,6 +25,8 @@ import android.R.integer;
 import android.R.string;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
@@ -34,6 +39,8 @@ import android.view.View.OnTouchListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Animation.AnimationListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -79,6 +86,7 @@ public class Tab1ShareDetailActivity extends Activity {
 	private String postcontent;
 	private ImageLoader mImageLoader;
 	private ScrollView mScrollView;
+	protected Dialog dlg;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -113,8 +121,27 @@ public class Tab1ShareDetailActivity extends Activity {
 		foodNeworkImageView=(NetworkImageView)findViewById(R.id.tab0_share_detail_food_imageView);
 		shareContentTextView=(TextView)findViewById(R.id.tab0_share_detail_sharecontent_textview);
 		commentBtnTextView=(TextView)findViewById(R.id.tab0_share_detail_comment_textView);
+		
+		commentBtnTextView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				showDialg();
+				// TODO Auto-generated method stub
+			
+			}
+		});
 		shareBtnTextView=(TextView)findViewById(R.id.tab0_share_detail_share_TextView);
 		addFocuseImageView=(ImageView)findViewById(R.id.tab1_share_detail_addfocus_imageView);
+		addFocuseImageView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				addFocuseRelationShip();
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		relativeLayout=(RelativeLayout)findViewById(R.id.tab1_share_detail_relativeLayout);
 		Intent intent=getIntent();
 	Bundle bundle=intent.getExtras();
@@ -133,10 +160,53 @@ public class Tab1ShareDetailActivity extends Activity {
 		
 		getShareDetail();
 	}
+	protected void addFocuseRelationShip() {
+		JSONObject jsonObject=new JSONObject();
+		try {
+			jsonObject.put("userId", Integer.valueOf(UserInfo.getInstance().userid));
+			jsonObject.put("sessionId", UserInfo.getInstance().sessionid);
+			jsonObject.put("friendId", userid);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		JsonObjectRequest request=new JsonObjectRequest(Method.POST, "http://110.84.129.130:8080/Yuf/relation/addRelation", jsonObject, new Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject response) {
+				// TODO Auto-generated method stub
+				try {
+					if (response.getInt("code")==0) {
+						Toast.makeText(Tab1ShareDetailActivity.this, "关注成功", Toast.LENGTH_SHORT).show();
+					}
+					else {
+						Toast.makeText(Tab1ShareDetailActivity.this,response.getString("msg"), Toast.LENGTH_SHORT).show();
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}, new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		// TODO Auto-generated method stub
+		MyApplication.requestQueue.add(request);
+		MyApplication.requestQueue.start();
+	}
 	private void getShareDetail()
 	{
 		JsonObjectRequest request;
-			request = new JsonObjectRequest(Method.GET, String.format("http://110.84.129.130:8080/Yuf/dishcomment/getDishcomment/%d/%d",postId,++currentPage), null,  new Response.Listener<JSONObject>()  
+			request = new JsonObjectRequest(Method.GET, String.format("http://110.84.129.130:8080/Yuf/comment/getComment/%d/%d",postId,++currentPage), null,  new Response.Listener<JSONObject>()  
 			        {  
 
 			            @Override  
@@ -145,9 +215,9 @@ public class Tab1ShareDetailActivity extends Activity {
 			        
 								
 								try {
-									MyApplication.joinJSONArray(dishCommentInfoArray, response.getJSONArray("dishcomment"));
+									MyApplication.joinJSONArray(dishCommentInfoArray, response.getJSONArray("commentData"));
 	
-									if (response.getInt("currentPageNum")<response.getInt("maxpagenum")) {
+									if (response.getInt("currentPage")<response.getInt("commentsMaxPage")) {
 										currentPage++;
 										getShareDetail();
 									}
@@ -188,13 +258,13 @@ public class Tab1ShareDetailActivity extends Activity {
 			TextView contentTextView=(TextView)linearLayout.findViewById(R.id.tab1_share_detail_item_comment_content);
 			try {
 				JSONObject jsonObject=dishCommentInfoArray.getJSONObject(i);
-				nameTextView.setText(jsonObject.getString("username"));
+//				nameTextView.setText(jsonObject.getString("username"));
 				long currentTime;
-				currentTime = jsonObject.getLong("posttime");
+				currentTime = jsonObject.getLong("commenttime");
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				Date date = new Date(currentTime);
 				timeTextView.setText(formatter.format(date));
-				contentTextView.setText(jsonObject.getString("postcontent"));
+				contentTextView.setText(jsonObject.getString("commentcontent"));
 				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -210,14 +280,15 @@ public class Tab1ShareDetailActivity extends Activity {
 	private void commentDish(String commentContent) {
 		JSONObject jsonObject=new JSONObject();
 		try {
-			jsonObject.put("userId", userid);
-			jsonObject.put("dishId", postId);
-			jsonObject.put("dishcommentContent", commentContent);
+			jsonObject.put("userId", Integer.valueOf(UserInfo.getInstance().userid));
+			jsonObject.put("postId", postId);
+			jsonObject.put("sessionId", UserInfo.getInstance().sessionid);
+			jsonObject.put("commentContent", commentContent);
 		} catch (JSONException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		JsonObjectRequest request=new JsonObjectRequest(Method.POST,"http://110.84.129.130:8080/Yuf/dishcomment/postDishcomment/", jsonObject, new Response.Listener<JSONObject>()  
+		JsonObjectRequest request=new JsonObjectRequest(Method.POST,"http://110.84.129.130:8080/Yuf/comment/newComment", jsonObject, new Response.Listener<JSONObject>()  
 		        {  
 
             @Override  
@@ -228,6 +299,10 @@ public class Tab1ShareDetailActivity extends Activity {
 						Toast toast=Toast.makeText(getApplicationContext(), "评论成功", Toast.LENGTH_SHORT);
 						toast.show();
 						
+					}
+					else {
+						Toast toast=Toast.makeText(getApplicationContext(), response.getString("msg"), Toast.LENGTH_SHORT);
+						toast.show();
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -393,5 +468,42 @@ shareBtnTextView.setClickable(true);
 
 		
 	}
-	
+	protected void showDialg() {
+
+		//显示评论对话框
+		
+		LayoutInflater factory = LayoutInflater.from(this);
+		final View textEntryView = factory.inflate(R.layout.dialog, null);
+		final EditText editText=(EditText)textEntryView.findViewById(R.id.comment_comment_editText);
+		Button commentButton =(Button)textEntryView.findViewById(R.id.comment_dialog_comment_button);
+		commentButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				commentDish(editText.getText().toString());
+				dlg.dismiss();
+			}
+		});
+		Button cancleButton=(Button)textEntryView.findViewById(R.id.comment_dialog_cancle_buttoon);
+       cancleButton.setOnClickListener(new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+		
+			dlg.dismiss();
+		}
+	});
+		dlg = new AlertDialog.Builder(this)
+        .setView(textEntryView)
+        .create();
+        dlg.show();
+		
+		
+		// TODO Auto-generated method stub
+		
+	// TODO Auto-generated method stub
+		
+	}
 }

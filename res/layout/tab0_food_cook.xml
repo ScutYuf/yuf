@@ -175,28 +175,6 @@
     </ScrollView>
 
     <TextView
-        android:id="@+id/comment_textView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="290dp"
-        android:background="@drawable/say"
-        android:gravity="center"
-        android:text="评论"
-        android:textColor="#ffffff"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/show_comment_textView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="350dp"
-        android:background="@drawable/say"
-        android:gravity="center"
-        android:text="查看\n评论"
-        android:textColor="#ffffff"
-        android:textSize="14sp" />
-
-    <TextView
         android:id="@+id/collection_textView"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -212,11 +190,37 @@
         android:id="@+id/share_TextView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignBottom="@+id/show_comment_textView"
+        android:layout_alignTop="@+id/show_comment_textView"
         android:layout_alignParentRight="true"
         android:background="@drawable/say"
         android:gravity="center"
         android:text="分享"
+        android:textColor="#ffffff"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/comment_textView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/share_TextView"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="27dp"
+        android:background="@drawable/say"
+        android:gravity="center"
+        android:text="评论"
+        android:textColor="#ffffff"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/show_comment_textView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="128dp"
+        android:background="@drawable/say"
+        android:gravity="center"
+        android:text="查看\n评论"
         android:textColor="#ffffff"
         android:textSize="14sp" />
 

@@ -2,6 +2,7 @@ package com.yuf.app.Entity;
 
 import com.yuf.app.MyApplication;
 
+import android.R.string;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -38,6 +39,14 @@ public class UserInfo {
 	public String levelname;
 	public  String sessionid;
 	public  String userid;
+	public String userpic;
+	
+public String getUserpic() {
+		return userpic;
+	}
+	public void setUserpic(String userpic) {
+		this.userpic = userpic;
+	}
 private static void initUserInfoWithSharePerfernces()
 {
 	
@@ -51,6 +60,7 @@ private static void initUserInfoWithSharePerfernces()
 		instance.levelname=sharedPreferences.getString("levelname", "");
 		instance.sessionid=sharedPreferences.getString("sessionid", "");
 		instance.userid=sharedPreferences.getString("userid", "");
+		instance.userpic=sharedPreferences.getString("userpic", "");
 	}
 }
 	public String getSessionid() {

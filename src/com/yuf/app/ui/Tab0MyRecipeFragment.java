@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
+import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -37,7 +38,7 @@ import com.yuf.app.adapter.OutsidePagerAdapter;
 import com.yuf.app.http.extend.BitmapCache;
 import com.yuf.app.mywidget.FoodViewPage;
 import com.yuf.app.ui.indicator.CirclePageIndicator;
-//import com.yuf.app.mywidget.FoodViewPage;
+import com.android.volley.Response.ErrorListener;
 
 @SuppressLint("ValidFragment")
 public class Tab0MyRecipeFragment extends Fragment {
@@ -82,6 +83,8 @@ public class Tab0MyRecipeFragment extends Fragment {
 		doseTextView=(TextView)view.findViewById(R.id.tab0_recipe_fragment_dishamount_textview);
 		timeTextView=(TextView)view.findViewById(R.id.tab0_recipe_fragment_dishcooktime_textview);
 		nameTextView=(TextView)view.findViewById(R.id.tab0_recipe_fragment_foodname_textview);
+		skillTextView=(TextView)view.findViewById(R.id.tab0_recipe_fragment_skill_textview);
+		
 		commentbuttoButton=(Button)view.findViewById(R.id.comment_button);
 		commentbuttoButton.setOnClickListener(new OnClickListener() {
 			
@@ -97,10 +100,10 @@ public class Tab0MyRecipeFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Toast toast = Toast.makeText(getActivity(),
-					     "收藏成功", Toast.LENGTH_SHORT);
-					   toast.setGravity(Gravity.CENTER, 0, 0);
-					   toast.show();
+				
+				addCollectionRelationShip();
+				
+				
 
 			}
 		});
@@ -117,6 +120,8 @@ public class Tab0MyRecipeFragment extends Fragment {
 				try {
 					bundle.putString("dishid",mdataArray.getJSONObject(currentPageIndex).getString("dishid") );
 					bundle.putString("dishname",mdataArray.getJSONObject(currentPageIndex).getString("dishname") );
+					bundle.putDouble("dishprice",mdataArray.getJSONObject(currentPageIndex).getDouble("dishprice") );
+				
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -145,6 +150,56 @@ public class Tab0MyRecipeFragment extends Fragment {
 		return  view;
 	}
 	
+	protected void addCollectionRelationShip() {
+		// TODO Auto-generated method stub
+		JSONObject jsonObject=new JSONObject();
+		try {
+			jsonObject.put("userId",Long.valueOf( UserInfo.getInstance().userid));
+			jsonObject.put("sessionId", UserInfo.getInstance().sessionid);
+			jsonObject.put("dishId", mdataArray.getJSONObject(currentPageIndex).getLong("dishid"));
+			
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		JsonObjectRequest request=new JsonObjectRequest(Method.POST, "http://110.84.129.130:8080/Yuf/collection/addCollection", jsonObject, new Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject response) {
+				// TODO Auto-generated method stub
+				try {
+					if (response.getInt("code")==0) {
+						Toast toast = Toast.makeText(Tab0MyRecipeFragment.this.getActivity(),
+							     "收藏成功", Toast.LENGTH_SHORT);
+							   toast.setGravity(Gravity.CENTER, 0, 0);
+							   toast.show();
+					}
+					else {
+						Toast toast = Toast.makeText(Tab0MyRecipeFragment.this.getActivity(),
+							     response.getString("msg"), Toast.LENGTH_SHORT);
+							   toast.setGravity(Gravity.CENTER, 0, 0);
+							   toast.show();
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		},new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		MyApplication.requestQueue.add(request);
+		MyApplication.requestQueue.start();
+	}
 	protected void showDialg() {
 
 		//显示评论对话框
@@ -195,11 +250,11 @@ public class Tab0MyRecipeFragment extends Fragment {
 		JSONObject jObject = mdataArray.getJSONObject(0);
 		difficultyTextView.setText(String.valueOf(jObject.getDouble("dishdifficulty")));
 		doseTextView.setText(String.valueOf(jObject.getInt("dishamount")));
-//		skillTextView.setText(jObject.getString(""));
 		timeTextView.setText(jObject.getString("dishcooktime"));
 		commentbuttoButton.setText(String.format("评论(%s)",String.valueOf(jObject.getInt("dishcommentnum"))));
 		collectionButton.setText(String.format("收藏(%s)",String.valueOf(jObject.getInt("dishcollectionnum"))));
 		nameTextView.setText(jObject.getString("dishname"));
+		skillTextView.setText(jObject.getString("dishcookmethod"));
 	}
 	private void commentDish(String commentContent) {
 			JSONObject jsonObject=new JSONObject();
@@ -268,11 +323,11 @@ public class Tab0MyRecipeFragment extends Fragment {
 				jObject = mdataArray.getJSONObject(arg0);
 				difficultyTextView.setText(String.valueOf(jObject.getDouble("dishdifficulty")));
 				doseTextView.setText(String.valueOf(jObject.getInt("dishamount")));
-//				skillTextView.setText(jObject.getString(""));
 				timeTextView.setText(jObject.getString("dishcooktime"));
 				commentbuttoButton.setText(String.format("评论(%s)", String.valueOf(jObject.getInt("dishcommentnum"))));
 				collectionButton.setText(String.format("收藏(%s)",String.valueOf(jObject.getInt("dishcollectionnum"))));
 				nameTextView.setText(jObject.getString("dishname"));
+				skillTextView.setText(jObject.getString("dishcookmethod"));
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

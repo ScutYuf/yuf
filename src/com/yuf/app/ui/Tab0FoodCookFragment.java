@@ -169,6 +169,7 @@ protected void addOrder() {
 			order.orderTime=timeString();
 			order.userId=Integer.valueOf(UserInfo.getInstance().userid);
 			order.writeToDb();
+			Toast.makeText(getActivity(), "加入购物车成功", Toast.LENGTH_SHORT).show();
         
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

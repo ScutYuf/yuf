@@ -83,7 +83,7 @@
         >
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tab3_setuserinfo_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -92,7 +92,7 @@
             android:textColor="#F15A24" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tab2_bought_item_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"

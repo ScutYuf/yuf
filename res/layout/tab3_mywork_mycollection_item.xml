@@ -44,7 +44,7 @@
         android:textColor="#3f342d" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/tab1_addshare"
         android:layout_width="30dp"
         android:layout_height="25dp"
         android:layout_alignBottom="@+id/tab3_mywork_item_name"
@@ -56,34 +56,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tab3_mywork_item_name"
-        android:layout_below="@+id/imageView1"
+        android:layout_below="@+id/tab1_addshare"
         android:text="xxxxxxxxxxxxxxxxxxxxx"
         android:textSize="13sp"
         />
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="85dp"
-        android:layout_height="30dp"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_toLeftOf="@+id/button2"
-        android:layout_marginRight="10dp"
-        android:text="评论（50）"
-        android:textSize="13sp"
-        android:textColor="#fff"
-        android:background="#F7931E" />
-
-    <Button
-        android:id="@+id/button2"
+    <TextView
+        android:id="@+id/tab3_mywork_item_commentnum"
         android:layout_width="85dp"
         android:layout_height="30dp"
         android:layout_alignBottom="@+id/tab3_mywork_item_img"
-        android:layout_alignRight="@+id/imageView1"
-        android:layout_marginBottom="5dp"
-        android:text="收藏（20）"
-        android:textSize="13sp"
-        android:background="#07B498"
+        android:layout_alignRight="@+id/tab1_addshare"
+        android:layout_marginRight="10dp"
+        android:background="#F7931E"
+        android:gravity="center"
+        android:text="评论（50）"
         android:textColor="#fff"
-        android:layout_marginRight="11dp" />
+        android:textSize="13sp" />
 
 </RelativeLayout>

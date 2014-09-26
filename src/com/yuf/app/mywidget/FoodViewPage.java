@@ -27,9 +27,40 @@ public class FoodViewPage extends ViewPager {
 	@Override
 	public boolean onTouchEvent(MotionEvent arg0) {
 		// TODO Auto-generated method stub
-		Log.d("foodviewpage", "onTouchevent"); 
+		Log.d("foodviewpage", "onTouchevent");
+		
+		
+		
+		int action = arg0.getAction();
+		switch (action & MotionEvent.ACTION_MASK) {
+		case MotionEvent.ACTION_DOWN:
+			showMsg("ACTION_DOWN" + action);
+			break;
+		case MotionEvent.ACTION_UP:
+			showMsg("ACTION_UP" + action);
+			break;
+		case MotionEvent.ACTION_POINTER_UP:
+			showMsg("ACTION_POINTER_UP" + action);
+			break;
+		case MotionEvent.ACTION_POINTER_DOWN:
+			showMsg("ACTION_POINTER_DOWN" + action);
+			break;
+		case MotionEvent.ACTION_MOVE:
+			showMsg("ACTION_MOVE");
+			break;
+		case MotionEvent.ACTION_CANCEL:
+			showMsg("ACTION_CANCEL");
+			break;
+			
+		}
 		super.onTouchEvent(arg0);
+		
 		return true;
 	}
+	private void showMsg(String string) {
+		// TODO Auto-generated method stub
+		Log.d("foodviewpage",string); 
+	}
+	
 	
 }
