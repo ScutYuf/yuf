@@ -39,17 +39,35 @@
             android:src="@drawable/notify" />
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/editText1"
+ <RadioGroup
+        android:id="@+id/RadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/RelativeLayout01"
+        android:layout_below="@id/RelativeLayout01"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="53dp"
-        android:ems="10" >
+        android:orientation="horizontal" >
 
-        <requestFocus />
-    </EditText>
+        <RadioButton
+            android:id="@+id/Tab2RemindRadioButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:onClick="Tab2RemindRadioButton"
+            android:text="10分钟"/>
+
+        <RadioButton
+            android:id="@+id/Tab2RemindRadioButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:onClick="Tab2RemindRadioButton"
+            android:text="5分钟" />
+
+        <RadioButton
+            android:id="@+id/Tab2RemindRadioButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:onClick="Tab2RemindRadioButton"
+            android:text="3分钟" />
+    </RadioGroup>
 
     <AnalogClock
         android:id="@+id/analogClock1"
@@ -63,9 +81,28 @@
         android:id="@+id/button1"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText1"
+        android:layout_below="@+id/RadioGroup"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp"
+        android:onClick="start"
         android:text="开始计时" />
+
+    <Chronometer
+        android:id="@+id/Chronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button1"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffff0000"
+        android:textSize="12pt" />
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Chronometer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:onClick="stop"
+        android:text="取消计时" />
 
 </RelativeLayout>
