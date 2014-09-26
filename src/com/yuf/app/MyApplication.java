@@ -11,6 +11,7 @@ import com.android.volley.toolbox.Volley;
 import android.R.string;
 import android.app.Application;
 import android.content.Context;
+import android.os.StrictMode;
 
 public  class MyApplication extends Application {
 	
@@ -20,9 +21,20 @@ public  class MyApplication extends Application {
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
+//		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()  
+//	    .detectAll()
+//	    .penaltyLog()  
+//	    .build()); 
+//		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()  
+//        .detectAll()  
+//        .penaltyLog()  
+//        .build()); 
+		
+		
 		super.onCreate();
 		myapplication=this;
 		requestQueue=Volley.newRequestQueue(this); 
+		
 	}
 	
 	public static JSONArray joinJSONArray(JSONArray mData, JSONArray array) {

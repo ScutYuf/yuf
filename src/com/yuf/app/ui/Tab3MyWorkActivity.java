@@ -43,7 +43,7 @@ public class Tab3MyWorkActivity extends Activity {
 	private ImageLoader mImageLoader;
 	private JSONArray mjsonArray;
 	private String TAG="Tab3MyWorkActivity";
-	private MyListAdapter madaAdapter;
+	private  MyListAdapter madaAdapter;
 	private Boolean isEnd=false;
 	private int currentPage=0;
 	private int userId;
@@ -258,5 +258,15 @@ public class Tab3MyWorkActivity extends Activity {
 			
 			
 		}
+
+
+
+
+
+
+
+
+
+
 	
 }

@@ -206,7 +206,7 @@ public class Tab1ShareDetailActivity extends Activity {
 	private void getShareDetail()
 	{
 		JsonObjectRequest request;
-			request = new JsonObjectRequest(Method.GET, String.format("http://110.84.129.130:8080/Yuf/dishcomment/getDishcomment/%d/%d",postId,++currentPage), null,  new Response.Listener<JSONObject>()  
+			request = new JsonObjectRequest(Method.GET, String.format("http://110.84.129.130:8080/Yuf/comment/getComment/%d/%d",postId,++currentPage), null,  new Response.Listener<JSONObject>()  
 			        {  
 
 			            @Override  
@@ -215,9 +215,9 @@ public class Tab1ShareDetailActivity extends Activity {
 			        
 								
 								try {
-									MyApplication.joinJSONArray(dishCommentInfoArray, response.getJSONArray("dishcomment"));
+									MyApplication.joinJSONArray(dishCommentInfoArray, response.getJSONArray("commentData"));
 	
-									if (response.getInt("currentPageNum")<response.getInt("maxpagenum")) {
+									if (response.getInt("currentPage")<response.getInt("commentsMaxPage")) {
 										currentPage++;
 										getShareDetail();
 									}
@@ -258,13 +258,13 @@ public class Tab1ShareDetailActivity extends Activity {
 			TextView contentTextView=(TextView)linearLayout.findViewById(R.id.tab1_share_detail_item_comment_content);
 			try {
 				JSONObject jsonObject=dishCommentInfoArray.getJSONObject(i);
-				nameTextView.setText(jsonObject.getString("username"));
+//				nameTextView.setText(jsonObject.getString("username"));
 				long currentTime;
-				currentTime = jsonObject.getLong("posttime");
+				currentTime = jsonObject.getLong("commenttime");
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				Date date = new Date(currentTime);
 				timeTextView.setText(formatter.format(date));
-				contentTextView.setText(jsonObject.getString("postcontent"));
+				contentTextView.setText(jsonObject.getString("commentcontent"));
 				
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -280,7 +280,7 @@ public class Tab1ShareDetailActivity extends Activity {
 	private void commentDish(String commentContent) {
 		JSONObject jsonObject=new JSONObject();
 		try {
-			jsonObject.put("userId", userid);
+			jsonObject.put("userId", Integer.valueOf(UserInfo.getInstance().userid));
 			jsonObject.put("postId", postId);
 			jsonObject.put("sessionId", UserInfo.getInstance().sessionid);
 			jsonObject.put("commentContent", commentContent);

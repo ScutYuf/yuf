@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.Inflater;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,12 +26,14 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.yuf.app.MyApplication;
 import com.yuf.app.http.extend.BitmapCache;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +42,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -94,33 +100,33 @@ public class Tab1SocietyShareFragment extends Fragment {
 		listView.setMode(Mode.PULL_FROM_START);
 		mAdaAdapter=new MylistAdapter();
 		listView.setAdapter(mAdaAdapter);
-		listView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				Intent intent=new Intent(Tab1SocietyShareFragment.this.getActivity(),
-						Tab1ShareDetailActivity.class);
-				Bundle bundle = new Bundle();                           //创建Bundle对象   
-				try {
-					JSONObject jsonObject=jsonArray.getJSONObject(position-1);
-					bundle.putInt("postid",jsonObject.getInt("postid"));
-					bundle.putInt("userid", jsonObject.getInt("userid"));
-					bundle.putString("posttitle", jsonObject.getString("posttitle"));
-					bundle.putString("postpicurl", jsonObject.getString("postpicurl"));
-					bundle.putString("postcontent",jsonObject.getString("postcontent"));
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}     //装入数据   
-				intent.putExtras(bundle);                                //把Bundle塞入Intent里面  
-				startActivity(intent);
-				// TODO Auto-generated method stub
-	
-				// TODO Auto-generated method stub
-				
-			}
-		});
+//		listView.setOnItemClickListener(new OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> parent, View view,
+//					int position, long id) {
+//				Intent intent=new Intent(Tab1SocietyShareFragment.this.getActivity(),
+//						Tab1ShareDetailActivity.class);
+//				Bundle bundle = new Bundle();                           //创建Bundle对象   
+//				try {
+//					JSONObject jsonObject=jsonArray.getJSONObject(position-1);
+//					bundle.putInt("postid",jsonObject.getInt("postid"));
+//					bundle.putInt("userid", jsonObject.getInt("userid"));
+//					bundle.putString("posttitle", jsonObject.getString("posttitle"));
+//					bundle.putString("postpicurl", jsonObject.getString("postpicurl"));
+//					bundle.putString("postcontent",jsonObject.getString("postcontent"));
+//				} catch (JSONException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}     //装入数据   
+//				intent.putExtras(bundle);                                //把Bundle塞入Intent里面  
+//				startActivity(intent);
+//				// TODO Auto-generated method stub
+//	
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
 		refreshListView();
 		 
 		 //
@@ -223,29 +229,77 @@ private class MylistAdapter extends BaseAdapter
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		Log.d("mywork", "get");
+		
+		ViewHolder holder;
+		final ViewGroup tmpGroup=parent;
 		if (convertView==null) {
 			convertView=getActivity().getLayoutInflater().inflate(R.layout.tab1_share_list_item,null);
 			
+			//
+			holder = new ViewHolder();
+			holder.headimageView=(NetworkImageView)convertView.findViewById(R.id.tab1_share_list_item_headimg);
+			holder.foodImageView=(NetworkImageView)convertView.findViewById(R.id.tab1_share_list_item_foodimage);
+			holder.contentTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_content_textview);
+			holder.timeTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_time_textview);
+			holder.titleTextView=(TextView)convertView.findViewById(R.id.tab1_share_item_titile_textview);
+			holder.usernameTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_name_textview);
+			convertView.setTag(holder);
+			
 		}
+		else
+		{
+			holder=(ViewHolder)convertView.getTag();
+		}
+		
+		ImageView moreImageView=(ImageView)convertView.findViewById(R.id.tab1_share_list_item_more);
+		moreImageView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+				LayoutInflater mLayoutInflater = (LayoutInflater)Tab1SocietyShareFragment.this.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);  
+				ViewGroup viewGroup=(ViewGroup) mLayoutInflater.inflate(R.layout.comment_popupwindow, null);
+				
+				PopupWindow popupWindow=new PopupWindow(viewGroup, 300, 300);
+				 popupWindow.setFocusable(false);  
+			      popupWindow.setOutsideTouchable(true);
+				popupWindow.setAnimationStyle(R.anim.in_from_right);
+			        popupWindow.showAsDropDown(v);
+				
+			}
+		});
+		
 		try {
 			JSONObject jsonObject=jsonArray.getJSONObject(position);
-			NetworkImageView headimageView=(NetworkImageView)convertView.findViewById(R.id.tab1_share_list_item_headimg);
-			headimageView.setDefaultImageResId(R.drawable.no_pic);
-			headimageView.setImageUrl("http://110.84.129.130:8080/Yuf"+jsonObject.getString("useravatarurl"),mImageLoader);
-			NetworkImageView foodImageView=(NetworkImageView)convertView.findViewById(R.id.tab1_share_list_item_foodimage);
-			foodImageView.setDefaultImageResId(R.drawable.no_pic);
-			foodImageView.setImageUrl("http://110.84.129.130:8080/Yuf"+jsonObject.getString("postpicurl"), mImageLoader);		
-			TextView titleTextView=(TextView)convertView.findViewById(R.id.tab1_share_item_titile_textview);
-			titleTextView.setText(jsonObject.getString("posttitle"));
-			TextView usernameTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_name_textview);
-			usernameTextView.setText(jsonObject.getString("username"));
-			TextView timeTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_time_textview);
+//			NetworkImageView headimageView=(NetworkImageView)convertView.findViewById(R.id.tab1_share_list_item_headimg);
+//			headimageView.setDefaultImageResId(R.drawable.no_pic);
+			holder.headimageView.setDefaultImageResId(R.drawable.no_pic);
+			holder.headimageView.setImageUrl("http://110.84.129.130:8080/Yuf"+jsonObject.getString("useravatarurl"),mImageLoader);
+//			headimageView.setImageUrl("http://110.84.129.130:8080/Yuf"+jsonObject.getString("useravatarurl"),mImageLoader);
+//			NetworkImageView foodImageView=(NetworkImageView)convertView.findViewById(R.id.tab1_share_list_item_foodimage);
+//			foodImageView.setDefaultImageResId(R.drawable.no_pic);
+//			foodImageView.setImageUrl("http://110.84.129.130:8080/Yuf"+jsonObject.getString("postpicurl"), mImageLoader);	
+			holder.foodImageView.setDefaultImageResId(R.drawable.no_pic);
+			holder.foodImageView.setImageUrl("http://110.84.129.130:8080/Yuf"+jsonObject.getString("postpicurl"), mImageLoader);	
+			
+//			TextView titleTextView=(TextView)convertView.findViewById(R.id.tab1_share_item_titile_textview);
+//			titleTextView.setText(jsonObject.getString("posttitle"));
+			holder.titleTextView.setText(jsonObject.getString("posttitle"));
+			
+//			TextView usernameTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_name_textview);
+//			usernameTextView.setText(jsonObject.getString("username"));
+			holder.usernameTextView.setText(jsonObject.getString("username"));
+			
+//			TextView timeTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_time_textview);
 			long currentTime =jsonObject.getLong("posttime");
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = new Date(currentTime);
-			timeTextView.setText(formatter.format(date));
-			TextView contentTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_content_textview);
-			contentTextView.setText(jsonObject.getString("postcontent"));
+			holder.timeTextView.setText(formatter.format(date));
+//			timeTextView.setText(formatter.format(date));
+//			TextView contentTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_content_textview);
+//			contentTextView.setText(jsonObject.getString("postcontent"));
+			holder.contentTextView.setText(jsonObject.getString("postcontent"));
 			
 			
 		} catch (JSONException e) {
@@ -257,7 +311,17 @@ private class MylistAdapter extends BaseAdapter
 		// TODO Auto-generated method stub
 		return convertView;
 	}
-	
+	 class ViewHolder {
+		 NetworkImageView headimageView;
+		 NetworkImageView foodImageView;
+		 TextView titleTextView;
+		 TextView usernameTextView;
+		 TextView timeTextView;
+		 TextView contentTextView;
+		 
+		 
+		 
+		}
 	}
 
 

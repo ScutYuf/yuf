@@ -228,6 +228,7 @@ public void onClickLogout(View view) {
 	private void initTab3() {
 	tab3profileImageView=(NetworkImageView)view3.findViewById(R.id.tab3_profile);
 	tab3profileImageView.setDefaultImageResId(R.drawable.no_pic);
+	
 	tab3accountTextView=(TextView)view3.findViewById(R.id.tab3_account);
 	tab3levelnametTextView=(TextView)view3.findViewById(R.id.tab3_levelname);
 	tab3nicknameTextView=(TextView)view3.findViewById(R.id.tab3_nickname);
@@ -566,9 +567,10 @@ private void setTab3UserInfo() {
 	             Log.e("TAG", response.toString()); 
 	             
 	             UserInfo tmpInfo=UserInfo.getInstance();
-	         
+	           
+	             
 	             try {
-						tmpInfo.setLeveldiscout(response.getDouble("useravatarurl"));
+						tmpInfo.setUserpic(response.getString("useravatarurl"));
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

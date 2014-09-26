@@ -302,7 +302,7 @@ private String picName;
 		protected Long doInBackground(File... params) {
 			// TODO Auto-generated method stub
 			compressBmpToFile(photo, params[0]);
-			PostFile.uploadFile(params[0], "http://110.84.129.130:8080/Yuf/user/upload/picture");
+			PostFile.uploadFile(params[0], "http://110.84.129.130:8080/Yuf/user/upload/picture/"+UserInfo.getInstance().sessionid);
 			return null;
 		}
 	 }

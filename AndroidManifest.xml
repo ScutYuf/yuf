@@ -3,7 +3,7 @@
     android:versionCode="1"
     android:versionName="v20140817" >
 
-   <uses-sdk android:minSdkVersion="8" />
+   <uses-sdk android:minSdkVersion="9" />
    
   
    
@@ -53,8 +53,8 @@
         
         <activity
             android:name=".Main"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_main"
+            android:screenOrientation="portrait"
              >
         </activity>
         <activity
@@ -105,8 +105,10 @@
             >
         </activity>
            <activity
+               
             android:name=".Tab3AddWorkActivity"
              android:screenOrientation="portrait"
+           
             >
         </activity>
         

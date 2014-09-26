@@ -10,17 +10,6 @@ import java.text.SimpleDateFormat;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
-import com.android.volley.Request.Method;
-import com.android.volley.Response.Listener;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.yuf.app.MyApplication;
-import com.yuf.app.Entity.UserInfo;
-import com.yuf.app.http.extend.PostFile;
-
-import android.R.integer;
-import android.R.string;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -30,6 +19,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
@@ -38,6 +28,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request.Method;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.yuf.app.MyApplication;
+import com.yuf.app.Entity.UserInfo;
+import com.yuf.app.http.extend.PostFile;
 
 public class Tab3AddWorkActivity extends Activity {
 	private ImageView backImageView;
@@ -160,8 +157,8 @@ MyApplication.requestQueue.start();
 		@Override
 		public void onClick(View v) {
 			onBackPressed();
+//			System.gc();
 			// TODO Auto-generated method stub
-			
 		}
 	});
 }
@@ -186,6 +183,18 @@ MyApplication.requestQueue.start();
 	@Override
 	protected void onDestroy() {
 		destoryImage();
+//		backImageView=null;
+//		publicButton=null;
+//		nameEditText=null;
+//		timeTextView=null;
+//		shareContentEditText=null;
+//		saveDir=null;
+//		file=null;
+//		photo=null;
+//		foodImageView=null;
+//		picName=null;
+		
+	Log.d("addmywork", "onDestroy");
 		super.onDestroy();
 	}
 	
