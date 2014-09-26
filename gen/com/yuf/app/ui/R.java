@@ -16,14 +16,16 @@ public final class R {
         public static final int in_from_right=0x7f040004;
         public static final int out_to_left=0x7f040005;
         public static final int out_to_right=0x7f040006;
-        public static final int slide_in_from_bottom=0x7f040007;
-        public static final int slide_in_from_top=0x7f040008;
-        public static final int slide_out_to_bottom=0x7f040009;
-        public static final int slide_out_to_top=0x7f04000a;
-        public static final int textview_in_from_left=0x7f04000b;
-        public static final int textview_in_from_right=0x7f04000c;
-        public static final int textview_out_to_left=0x7f04000d;
-        public static final int textview_out_to_right=0x7f04000e;
+        public static final int popup_enter=0x7f040007;
+        public static final int popup_exit=0x7f040008;
+        public static final int slide_in_from_bottom=0x7f040009;
+        public static final int slide_in_from_top=0x7f04000a;
+        public static final int slide_out_to_bottom=0x7f04000b;
+        public static final int slide_out_to_top=0x7f04000c;
+        public static final int textview_in_from_left=0x7f04000d;
+        public static final int textview_in_from_right=0x7f04000e;
+        public static final int textview_out_to_left=0x7f04000f;
+        public static final int textview_out_to_right=0x7f040010;
     }
     public static final class attr {
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
@@ -881,6 +883,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int AnimFade=0x7f0b0000;
         public static final int Anim_style=0x7f0b0001;
         public static final int MyDialogStyle=0x7f0b0003;
+        public static final int PopupAnimation=0x7f0b0005;
         public static final int dialogWindowAnim=0x7f0b0004;
         public static final int h_line=0x7f0b0002;
     }

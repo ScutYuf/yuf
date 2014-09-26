@@ -28,6 +28,9 @@ import com.yuf.app.http.extend.BitmapCache;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -243,6 +246,7 @@ private class MylistAdapter extends BaseAdapter
 			holder.timeTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_time_textview);
 			holder.titleTextView=(TextView)convertView.findViewById(R.id.tab1_share_item_titile_textview);
 			holder.usernameTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_name_textview);
+			holder.moreImageView=(ImageView)convertView.findViewById(R.id.tab1_share_list_item_more);
 			convertView.setTag(holder);
 			
 		}
@@ -251,23 +255,23 @@ private class MylistAdapter extends BaseAdapter
 			holder=(ViewHolder)convertView.getTag();
 		}
 		
-		ImageView moreImageView=(ImageView)convertView.findViewById(R.id.tab1_share_list_item_more);
-		moreImageView.setOnClickListener(new OnClickListener() {
+		holder.moreImageView.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
 				LayoutInflater mLayoutInflater = (LayoutInflater)Tab1SocietyShareFragment.this.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);  
 				ViewGroup viewGroup=(ViewGroup) mLayoutInflater.inflate(R.layout.comment_popupwindow, null);
 				
-				PopupWindow popupWindow=new PopupWindow(viewGroup, 300, 300);
-				 popupWindow.setFocusable(false);  
-			      popupWindow.setOutsideTouchable(true);
-				popupWindow.setAnimationStyle(R.anim.in_from_right);
-			        popupWindow.showAsDropDown(v);
-				
-			}
+				PopupWindow popupWindow=new PopupWindow(viewGroup, 300, 40);
+				popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.bk));
+				popupWindow.setFocusable(false);  
+			    popupWindow.setOutsideTouchable(true);
+				popupWindow.setAnimationStyle(R.style.PopupAnimation);
+				int[] location = new int[2];  
+		        v.getLocationOnScreen(location);  
+		        popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0], location[1]); 
+		    }
 		});
 		
 		try {
@@ -318,6 +322,7 @@ private class MylistAdapter extends BaseAdapter
 		 TextView usernameTextView;
 		 TextView timeTextView;
 		 TextView contentTextView;
+		 ImageView moreImageView;
 		 
 		 
 		 
