@@ -92,7 +92,7 @@ public class Tab3AddWorkActivity extends Activity {
 						UploadFilesTask task=new UploadFilesTask();
 						task.execute(file);
 					}
-					else {
+					else { 
 						Toast.makeText(Tab3AddWorkActivity.this, "分享失败",
 								Toast.LENGTH_SHORT).show();
 						
