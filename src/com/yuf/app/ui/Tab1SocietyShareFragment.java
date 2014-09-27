@@ -2,36 +2,12 @@ package com.yuf.app.ui;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.zip.Inflater;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.NetworkImageView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
-import com.yuf.app.MyApplication;
-import com.yuf.app.http.extend.BitmapCache;
-
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
@@ -39,19 +15,28 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.PopupWindow;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request.Method;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.NetworkImageView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnLastItemVisibleListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.yuf.app.MyApplication;
+import com.yuf.app.http.extend.BitmapCache;
 
 
 public class Tab1SocietyShareFragment extends Fragment {
@@ -61,7 +46,7 @@ public class Tab1SocietyShareFragment extends Fragment {
 	private JSONArray jsonArray;
 	private int currentPage;
 	private MylistAdapter mAdaAdapter;
-	private boolean isEnd;
+	private boolean isEnd;	
 	public Tab1SocietyShareFragment(){
 		super();
 		mImageLoader=new ImageLoader(MyApplication.requestQueue, new BitmapCache());
@@ -131,8 +116,6 @@ public class Tab1SocietyShareFragment extends Fragment {
 //			}
 //		});
 		refreshListView();
-		 
-		 //
 		 return  view;
 	}
 		private void refreshListView() {
@@ -209,8 +192,6 @@ private class MylistAdapter extends BaseAdapter
 		return jsonArray.length();
 
 	}
-
-	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
 		try {
@@ -232,8 +213,7 @@ private class MylistAdapter extends BaseAdapter
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		Log.d("mywork", "get");
-		
-		ViewHolder holder;
+	    ViewHolder holder;
 		final ViewGroup tmpGroup=parent;
 		if (convertView==null) {
 			convertView=getActivity().getLayoutInflater().inflate(R.layout.tab1_share_list_item,null);
@@ -254,24 +234,20 @@ private class MylistAdapter extends BaseAdapter
 		{
 			holder=(ViewHolder)convertView.getTag();
 		}
-		
 		holder.moreImageView.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				LayoutInflater mLayoutInflater = (LayoutInflater)Tab1SocietyShareFragment.this.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);  
 				ViewGroup viewGroup=(ViewGroup) mLayoutInflater.inflate(R.layout.comment_popupwindow, null);
-				
-				PopupWindow popupWindow=new PopupWindow(viewGroup, 300, 40);
-				popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.bk));
-				popupWindow.setFocusable(false);  
-			    popupWindow.setOutsideTouchable(true);
-				popupWindow.setAnimationStyle(R.style.PopupAnimation);
+				PopupWindow mPopupWindow=new PopupWindow(viewGroup, 300, 40);
+				mPopupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.bk));
+				mPopupWindow.setFocusable(false);  
+				mPopupWindow.setOutsideTouchable(true);
+				mPopupWindow.setAnimationStyle(R.style.PopupAnimation);
 				int[] location = new int[2];  
-		        v.getLocationOnScreen(location);  
-		        popupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0], location[1]); 
-		    }
+				v.getLocationOnScreen(location);  
+				mPopupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0]-300, location[1]); 
+			}
 		});
 		
 		try {
