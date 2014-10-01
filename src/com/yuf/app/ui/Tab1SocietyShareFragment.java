@@ -7,7 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.color;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
@@ -41,6 +43,7 @@ import com.yuf.app.http.extend.BitmapCache;
 
 public class Tab1SocietyShareFragment extends Fragment {
 	//
+	private PopupWindow mPopupWindow;
 	private PullToRefreshListView listView;
 	private ImageLoader mImageLoader;
 	private JSONArray jsonArray;
@@ -239,46 +242,40 @@ private class MylistAdapter extends BaseAdapter
 			public void onClick(View v) {
 				LayoutInflater mLayoutInflater = (LayoutInflater)Tab1SocietyShareFragment.this.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);  
 				ViewGroup viewGroup=(ViewGroup) mLayoutInflater.inflate(R.layout.comment_popupwindow, null);
-				PopupWindow mPopupWindow=new PopupWindow(viewGroup, 300, 40);
-				mPopupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.bk));
-				mPopupWindow.setFocusable(false);  
-				mPopupWindow.setOutsideTouchable(true);
-				mPopupWindow.setAnimationStyle(R.style.PopupAnimation);
-				int[] location = new int[2];  
-				v.getLocationOnScreen(location);  
-				mPopupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0]-300, location[1]); 
+				if (mPopupWindow==null) {
+					
+					mPopupWindow=new PopupWindow(viewGroup, 300, 40);
+					mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+					mPopupWindow.setFocusable(false);  
+					mPopupWindow.setOutsideTouchable(true);
+					mPopupWindow.setAnimationStyle(R.style.PopupAnimation);
+					int[] location = new int[2];  
+					v.getLocationOnScreen(location);  
+					mPopupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0]-300, location[1]); 
+				}
+				else {
+					mPopupWindow.dismiss();
+					mPopupWindow=null;
+					
+				}
 			}
 		});
 		
 		try {
 			JSONObject jsonObject=jsonArray.getJSONObject(position);
-//			NetworkImageView headimageView=(NetworkImageView)convertView.findViewById(R.id.tab1_share_list_item_headimg);
-//			headimageView.setDefaultImageResId(R.drawable.no_pic);
 			holder.headimageView.setDefaultImageResId(R.drawable.no_pic);
 			holder.headimageView.setImageUrl("http://110.84.129.130:8080/Yuf"+jsonObject.getString("useravatarurl"),mImageLoader);
-//			headimageView.setImageUrl("http://110.84.129.130:8080/Yuf"+jsonObject.getString("useravatarurl"),mImageLoader);
-//			NetworkImageView foodImageView=(NetworkImageView)convertView.findViewById(R.id.tab1_share_list_item_foodimage);
-//			foodImageView.setDefaultImageResId(R.drawable.no_pic);
-//			foodImageView.setImageUrl("http://110.84.129.130:8080/Yuf"+jsonObject.getString("postpicurl"), mImageLoader);	
 			holder.foodImageView.setDefaultImageResId(R.drawable.no_pic);
 			holder.foodImageView.setImageUrl("http://110.84.129.130:8080/Yuf"+jsonObject.getString("postpicurl"), mImageLoader);	
 			
-//			TextView titleTextView=(TextView)convertView.findViewById(R.id.tab1_share_item_titile_textview);
-//			titleTextView.setText(jsonObject.getString("posttitle"));
 			holder.titleTextView.setText(jsonObject.getString("posttitle"));
 			
-//			TextView usernameTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_name_textview);
-//			usernameTextView.setText(jsonObject.getString("username"));
 			holder.usernameTextView.setText(jsonObject.getString("username"));
 			
-//			TextView timeTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_time_textview);
 			long currentTime =jsonObject.getLong("posttime");
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = new Date(currentTime);
 			holder.timeTextView.setText(formatter.format(date));
-//			timeTextView.setText(formatter.format(date));
-//			TextView contentTextView=(TextView)convertView.findViewById(R.id.tab1_share_list_item_content_textview);
-//			contentTextView.setText(jsonObject.getString("postcontent"));
 			holder.contentTextView.setText(jsonObject.getString("postcontent"));
 			
 			

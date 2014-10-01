@@ -71,15 +71,6 @@
         android:layout_below="@+id/tab1_share_list_item_foodimage"
         android:text="2014年05月20日" />
 
-    <ImageView
-        android:id="@+id/tab1_share_list_item_more"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignBottom="@+id/tab1_share_list_item_time_textview"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="27dp"
-        android:src="#000" />
-
     <LinearLayout
         android:id="@+id/tab1_share_list_item_comment_linearlayout"
         android:layout_width="match_parent"
@@ -89,5 +80,13 @@
         android:orientation="vertical" >
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/tab1_share_list_item_more"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignBottom="@+id/tab1_share_list_item_time_textview"
+        android:layout_alignParentRight="true"
+        android:src="#000" />
 
 </RelativeLayout>

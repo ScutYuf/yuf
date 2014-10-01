@@ -679,11 +679,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int tab1_share_detail_title_textview=0x7f05009a;
         public static final int tab1_share_detaile_item_username_textview=0x7f0500a5;
         public static final int tab1_share_item_titile_textview=0x7f05001d;
-        public static final int tab1_share_list_item_comment_linearlayout=0x7f0500ad;
+        public static final int tab1_share_list_item_comment_linearlayout=0x7f0500ac;
         public static final int tab1_share_list_item_content_textview=0x7f0500a9;
         public static final int tab1_share_list_item_foodimage=0x7f0500aa;
         public static final int tab1_share_list_item_headimg=0x7f0500a7;
-        public static final int tab1_share_list_item_more=0x7f0500ac;
+        public static final int tab1_share_list_item_more=0x7f0500ad;
         public static final int tab1_share_list_item_name_textview=0x7f0500a8;
         public static final int tab1_share_list_item_time_textview=0x7f0500ab;
         public static final int tab1_share_listview=0x7f050099;
