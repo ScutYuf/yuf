@@ -21,14 +21,14 @@ public  class MyApplication extends Application {
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
-//		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()  
-//	    .detectAll()
-//	    .penaltyLog()  
-//	    .build()); 
-//		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()  
-//        .detectAll()  
-//        .penaltyLog()  
-//        .build()); 
+		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()  
+	    .detectAll()
+	    .penaltyLog()  
+	    .build()); 
+		StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()  
+        .detectAll()  
+        .penaltyLog()  
+        .build()); 
 		
 		
 		super.onCreate();
