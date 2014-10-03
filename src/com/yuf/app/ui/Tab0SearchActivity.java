@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
@@ -36,6 +37,7 @@ private ImageView backImageView;
 private EditText edt_search;
 private PullToRefreshListView listView;
 private boolean isEnd;
+private int currentPage;
 private JSONArray jsonArray;
 private MyListAdapter adapter;
 private ImageLoader mImageLoader;
@@ -91,13 +93,15 @@ private ImageLoader mImageLoader;
 		isEnd=false;
 		listView.setMode(Mode.PULL_FROM_START);
 		jsonArray=new JSONArray();
+		currentPage=0;
 		getPage();
 	}
     private void getPage() {
+    	currentPage++;
 		JSONObject searchJsonObject=new JSONObject();
 		try{
 		searchJsonObject.put("searchStr", edt_search.getText().toString());
-		searchJsonObject.put("currentIndex",1);
+		searchJsonObject.put("currentIndex",currentPage);
 		}catch (JSONException e) {
 			e.printStackTrace();
 		}
