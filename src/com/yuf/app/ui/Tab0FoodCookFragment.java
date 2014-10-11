@@ -1,5 +1,9 @@
 package com.yuf.app.ui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
@@ -10,6 +14,8 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -28,6 +34,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.sharesdk.framework.ShareSDK;
 
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
@@ -35,6 +42,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
+import com.onekeyshare.OnekeyShare;
 import com.yuf.app.MyApplication;
 import com.yuf.app.Entity.UserInfo;
 import com.yuf.app.db.Order;
@@ -127,7 +135,15 @@ public class Tab0FoodCookFragment extends Fragment{
 			}
 		});
 		collection=(TextView)view.findViewById(R.id.collection_textView);
+//一键分享
 		share=(TextView)view.findViewById(R.id.share_TextView);
+		share.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				showShare();
+			}
+		});
+//加入购物车
 		addcart=(TextView)view.findViewById(R.id.add_cart_textview);
 		addcart.setOnClickListener(new OnClickListener() {
 			
@@ -153,8 +169,68 @@ public class Tab0FoodCookFragment extends Fragment{
 		addSteps();
 		return  view;
 	}
-
-
+//一键分享
+	   private void showShare() {
+	        ShareSDK.initSDK(getActivity());
+	        OnekeyShare oks = new OnekeyShare();
+	        //关闭sso授权
+	        oks.disableSSOWhenAuthorize();
+	        // 分享时Notification的图标和文字
+	        oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
+	        oks.setTitle(getString(R.string.share));// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+	        oks.setTitleUrl("http://sharesdk.cn"); // titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+            // imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+	       
+	       // oks.setImageUrl("http://www.iyi8.com/uploadfile/2014/0506/20140506085929652.jpg");
+	        oks.setUrl("http://sharesdk.cn");// url仅在微信（包括好友和朋友圈）中使用
+	        // comment是我对这条分享的评论，仅在人人网和QQ空间使用
+	        oks.setComment("我是测试评论文本");
+	        oks.setSite(getString(R.string.app_name));// site是分享此内容的网站名称，仅在QQ空间使用
+	        oks.setSiteUrl("http://sharesdk.cn");// siteUrl是分享此内容的网站地址，仅在QQ空间使用
+	        String a ="";
+	        for (int i = 0; i <stepJsonObject.length(); i++) {
+	    		JSONObject mJsonObject;
+	    		try {mJsonObject = stepJsonObject.getJSONObject(i);
+	    			a=a+String.valueOf(mJsonObject.getInt("recipeorder"))+":"+mJsonObject.getString("recipedetail")+";";
+	    		} catch (JSONException e) {e.printStackTrace();}}
+	        try {
+	        	// text是分享文本，所有平台都需要这个字段
+		        oks.setText("#煮乜嘢#"+dishInfoJsonObject.getString("dishname")+a);
+		        BitmapDrawable drawable=(BitmapDrawable)foodImageView.getDrawable();
+				Bitmap bitmap = drawable.getBitmap();
+				try {
+					saveMyBitmap("share",bitmap);
+					 oks.setImagePath("/sdcard/yuf_image/" + "share" + ".PNG");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+		    } catch (JSONException e) {e.printStackTrace();}
+	        // 启动分享GUI
+	        oks.show(getActivity());
+	   }
+	    public void saveMyBitmap(String bitName,Bitmap mBitmap) throws IOException {  
+	        File f = new File("/sdcard/yuf_image/" + bitName + ".PNG");  
+	        f.createNewFile();  
+	        FileOutputStream fOut = null;  
+	        try {  
+	                fOut = new FileOutputStream(f);  
+	        } catch (FileNotFoundException e) {  
+	                e.printStackTrace();  
+	        }  
+	        mBitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);  
+	        try {  
+	                fOut.flush();  
+	        } catch (IOException e) {  
+	                e.printStackTrace();  
+	        }  
+	        try {  
+	                fOut.close();  
+	        } catch (IOException e) {  
+	                e.printStackTrace();  
+	        }  
+	    }  
 protected void addOrder() {
 	try {
 		
@@ -447,7 +523,8 @@ private void initFoodInfo()
 		skillTextView.setText(dishInfoJsonObject.getString("dishcookmethod"));
 		timeTextView.setText(dishInfoJsonObject.getString("dishcooktime"));
 		foodImageView.setImageUrl("http://110.84.129.130:8080/Yuf"+dishInfoJsonObject.getString("dishpicurl"), mImageLoader);
-	} catch (JSONException e) {
+		
+	} catch (JSONException e) {	
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
