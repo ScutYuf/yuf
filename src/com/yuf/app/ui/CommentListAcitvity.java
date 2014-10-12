@@ -36,6 +36,7 @@ import android.widget.Toast;
 public class CommentListAcitvity extends Activity {
 private PullToRefreshListView listView;
 private ImageView backImageView;
+private TextView titleTextView;
 private JSONArray jsonArray;
 private boolean isEnd;
 private int dishid;
@@ -49,6 +50,7 @@ private MylistAdapter listAdapter;
 		dishid=getIntent().getExtras().getInt("dishid");
 		currentpage=0;
 		jsonArray=new JSONArray();
+		titleTextView=(TextView)findViewById(R.id.tab0_comment_title_textview);
 		listView=(PullToRefreshListView)findViewById(R.id.tab0_comment_acitivity_listview);
 		backImageView=(ImageView)findViewById(R.id.tab0_comment_activity_back_imageview);
 		backImageView.setOnClickListener(new OnClickListener() {

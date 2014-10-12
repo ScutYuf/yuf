@@ -263,9 +263,8 @@ private class MylistAdapter extends BaseAdapter
 						public void onClick(View v) {
 							// TODO Auto-generated method stub
 							try {
-								addLikeRelationship(jsonArray.getJSONObject(index).getInt("postid"));
-								jsonArray.getJSONObject(index).getJSONArray("likeUsersList").put(UserInfo.getInstance().username);
-								mAdaAdapter.notifyDataSetChanged();
+								addLikeRelationship(jsonArray.getJSONObject(index).getInt("postid"),index);
+								
 							} catch (JSONException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -362,7 +361,7 @@ private void showLikeList(TextView view,JSONArray array)
 		}
 	}
 }
-private void addLikeRelationship(int postid)
+private void addLikeRelationship(int postid,final int index)
 {
 	JSONObject jsonObject=new JSONObject();
 	try {
@@ -384,6 +383,8 @@ private void addLikeRelationship(int postid)
 			try {
 				if (response.getString("insertLike").equals("success")) {
 					Toast.makeText(getActivity(), "点赞成功", Toast.LENGTH_SHORT).show();
+					jsonArray.getJSONObject(index).getJSONArray("likeUsersList").put(UserInfo.getInstance().username);
+					mAdaAdapter.notifyDataSetChanged();
 				}
 				else {
 					Toast.makeText(getActivity(), "点赞失败", Toast.LENGTH_SHORT).show();
