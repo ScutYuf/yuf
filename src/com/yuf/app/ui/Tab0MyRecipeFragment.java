@@ -43,7 +43,7 @@ import com.android.volley.Response.ErrorListener;
 @SuppressLint("ValidFragment")
 public class Tab0MyRecipeFragment extends Fragment {
 
-
+//
 	private Button detailButton;
 	private Button commentbuttoButton;
 	private Button collectionButton;
