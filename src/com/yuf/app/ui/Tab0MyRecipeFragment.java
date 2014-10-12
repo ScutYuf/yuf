@@ -173,6 +173,11 @@ public class Tab0MyRecipeFragment extends Fragment {
 				// TODO Auto-generated method stub
 				try {
 					if (response.getInt("code")==0) {
+						
+						int currentCollectionnum=mdataArray.getJSONObject(currentPageIndex).getInt("dishcollectionnum");
+						currentCollectionnum++;
+						mdataArray.getJSONObject(currentPageIndex).put("dishcollectionnum",currentCollectionnum );
+						collectionButton.setText(String.format("收藏(%s)",String.valueOf(currentCollectionnum)));
 						Toast toast = Toast.makeText(Tab0MyRecipeFragment.this.getActivity(),
 							     "收藏成功", Toast.LENGTH_SHORT);
 							   toast.setGravity(Gravity.CENTER, 0, 0);
@@ -275,6 +280,11 @@ public class Tab0MyRecipeFragment extends Fragment {
 	            {
 	            	try {
 						if (response.getInt("code")==0) {
+							
+							int currentDishCommentnum=mdataArray.getJSONObject(currentPageIndex).getInt("dishcommentnum");
+							currentDishCommentnum++;
+							mdataArray.getJSONObject(currentPageIndex).put("dishcommentnum",currentDishCommentnum );
+							commentbuttoButton.setText(String.format("评论(%s)",String.valueOf(currentDishCommentnum)));
 							Toast toast=Toast.makeText(getActivity().getApplicationContext(), "评论成功", Toast.LENGTH_SHORT);
 							toast.show();
 							
