@@ -158,28 +158,29 @@
                     android:text="制作步骤"
                     android:textColor="#2f2c2c" />
 
-                <TextView
-                    android:id="@+id/add_cart_textview"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/say2"
-                    android:gravity="center"
-                    android:text="加入\n购物车"
-                    android:textColor="#ffffff"
-                    android:textSize="14sp" />
-
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 
     <TextView
+        android:id="@+id/add_cart_textview"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/say2"
+        android:gravity="center"
+        android:text="加入\n购物车"
+        android:textColor="#ffffff"
+        android:textSize="14sp" />
+
+    <TextView
         android:id="@+id/collection_textView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignBottom="@+id/comment_textView"
         android:layout_alignParentRight="true"
+        android:layout_below="@+id/add_cart_textview"
+        android:layout_marginTop="10dp"
         android:background="@drawable/say"
         android:gravity="center"
         android:text="收藏"
@@ -190,8 +191,9 @@
         android:id="@+id/share_TextView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignTop="@+id/show_comment_textView"
         android:layout_alignParentRight="true"
+        android:layout_below="@+id/collection_textView"
+        android:layout_marginTop="10dp"
         android:background="@drawable/say"
         android:gravity="center"
         android:text="分享"
@@ -202,9 +204,8 @@
         android:id="@+id/comment_textView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_above="@+id/share_TextView"
         android:layout_alignParentLeft="true"
-        android:layout_marginBottom="27dp"
+        android:layout_alignTop="@+id/collection_textView"
         android:background="@drawable/say"
         android:gravity="center"
         android:text="评论"
@@ -215,9 +216,9 @@
         android:id="@+id/show_comment_textView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginBottom="128dp"
+        android:layout_alignTop="@+id/share_TextView"
+        android:layout_marginTop="10dp"
         android:background="@drawable/say"
         android:gravity="center"
         android:text="查看\n评论"

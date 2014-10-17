@@ -241,6 +241,11 @@ private String picName;
             try {
             	photo=MediaStore.Images.Media.getBitmap(resolver, originalUri);
 				profileImageView.setImageBitmap(photo);
+				file = new File(saveDir,picName);
+				UploadFilesTask task=new UploadFilesTask();
+				task.execute(file);
+				
+				
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import android.R.color;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -241,6 +242,42 @@ private class MylistAdapter extends BaseAdapter
 		{
 			holder=(ViewHolder)convertView.getTag();
 		}
+		holder.foodImageView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent=new Intent(Tab1SocietyShareFragment.this.getActivity(), ImageShowActivity.class);
+				try {
+					intent.putExtra("imageurl", "http://110.84.129.130:8080/Yuf"+jsonArray.getJSONObject(index).getString("postpicurl"));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				startActivity(intent);
+				Tab1SocietyShareFragment.this.getActivity().overridePendingTransition(R.anim.image_zoom_in,R.anim.image_zoom_out);
+			}
+		});
+		
+		holder.headimageView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+				Intent intent=new Intent(getActivity(),
+						Tab3MyWorkActivity.class);
+				Bundle bundle = new Bundle();   
+				try {
+					bundle.putInt("userId", jsonArray.getJSONObject(index).getInt("userid"));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				intent.putExtras(bundle);
+				startActivity(intent);
+				// TODO Auto-generated method stub
+			}
+		});
 		holder.moreImageView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

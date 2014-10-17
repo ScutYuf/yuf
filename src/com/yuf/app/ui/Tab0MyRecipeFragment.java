@@ -185,7 +185,7 @@ public class Tab0MyRecipeFragment extends Fragment {
 					}
 					else {
 						Toast toast = Toast.makeText(Tab0MyRecipeFragment.this.getActivity(),
-							     response.getString("msg"), Toast.LENGTH_SHORT);
+							     "已收藏", Toast.LENGTH_SHORT);
 							   toast.setGravity(Gravity.CENTER, 0, 0);
 							   toast.show();
 					}
