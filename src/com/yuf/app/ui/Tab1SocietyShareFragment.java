@@ -293,6 +293,7 @@ private class MylistAdapter extends BaseAdapter
 					int[] location = new int[2];  
 					v.getLocationOnScreen(location);  
 					mPopupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0]-300, location[1]); 
+//点赞					
 					TextView likeTextView=(TextView) viewGroup.findViewById(R.id.comment_popupwindow_like);
 					likeTextView.setOnClickListener(new OnClickListener() {
 						
@@ -308,7 +309,14 @@ private class MylistAdapter extends BaseAdapter
 							}
 						}
 					});
-				
+//评论
+					TextView commentTextView=(TextView) viewGroup.findViewById(R.id.comment_popupwindow_comment);
+					commentTextView.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							
+						}
+					});
 				}
 				else {
 					mPopupWindow.dismiss();
@@ -375,8 +383,6 @@ private void showCommentItemList(LinearLayout content,JSONArray array)
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 		content.addView(itemView);
 	}
 }
