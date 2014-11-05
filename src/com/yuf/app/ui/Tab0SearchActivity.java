@@ -5,18 +5,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
@@ -75,6 +77,35 @@ private ImageLoader mImageLoader;
 			        	getPage();
 					}
 			}	});
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				
+
+				
+				Intent intent=new Intent(Tab0SearchActivity.this,
+						Tab0FoodActivity.class);
+				Bundle bundle = new Bundle();                           //创建Bundle对象   
+				try {
+					JSONObject jsonObject=jsonArray.getJSONObject(position-1);
+					bundle.putString("dishid",jsonObject.getString("dishid") );
+					bundle.putString("dishname",jsonObject.getString("dishname") );
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}     //装入数据   
+				intent.putExtras(bundle);                                //把Bundle塞入Intent里面  
+				startActivity(intent);
+				finish();
+				// TODO Auto-generated method stub
+				
+			
+				
+			}
+		});
 
 		backImageView=(ImageView)findViewById(R.id.tab0_search_back_imageView);
 		backImageView.setOnClickListener(new OnClickListener() {
@@ -166,7 +197,6 @@ private class MyListAdapter extends BaseAdapter{
 		NetworkImageView dishpicurl = (NetworkImageView)convertView.findViewById(R.id.tab0_search_item_img);
 		dishpicurl.setDefaultImageResId(R.drawable.no_pic);
 		TextView dishname=(TextView)convertView.findViewById(R.id.tab0_search_item_name);
-		TextView dishid=(TextView)convertView.findViewById(R.id.tab0_search_item_id);
 		TextView dishprice=(TextView)convertView.findViewById(R.id.tab0_search_item_price);
 		TextView dishrecommended=(TextView)convertView.findViewById(R.id.tab0_search_item_re);
 		
@@ -174,9 +204,8 @@ private class MyListAdapter extends BaseAdapter{
 			JSONObject jsonObject = jsonArray.getJSONObject(position);
 			dishpicurl.setImageUrl("http://110.84.129.130:8080/Yuf"+jsonObject.getString("dishpicurl"), mImageLoader);
 			dishname.setText(jsonObject.getString("dishname"));
-			dishid.setText(jsonObject.getString("dishid"));
-			dishprice.setText(jsonObject.getString("dishprice"));
-			dishrecommended.setText(jsonObject.getString("dishrecommended"));
+			dishprice.setText("价格："+jsonObject.getString("dishprice"));
+			dishrecommended.setText("推荐数："+jsonObject.getString("dishrecommended"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
