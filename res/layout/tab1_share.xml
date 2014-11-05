@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
+  <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/tab1_share_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,5 +12,22 @@
         android:fadingEdgeLength="0dp" >
 
     </com.handmark.pulltorefresh.library.PullToRefreshListView>
-
+    <LinearLayout 
+        android:id="@+id/tab1_share_comment"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:visibility="gone">
+        <EditText 
+            android:id="@+id/tab1_share_commentText"
+            android:layout_width="100dp"
+            android:layout_height="fill_parent"
+            android:inputType="text"/>
+        <Button 
+            android:id="@+id/tab1_share_commentButton"
+            android:layout_width="30dp"
+            android:layout_height="fill_parent"
+            android:text="确定"/>
+    </LinearLayout>
+    
 </LinearLayout>

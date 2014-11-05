@@ -1,15 +1,15 @@
 package com.yuf.app.ui;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import org.apache.http.protocol.ResponseConnControl;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.R.color;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -137,8 +138,6 @@ public class Tab1SocietyShareFragment extends Fragment {
 	
 		private void loadingNextPage() {
 			getSharePage(++currentPage);
-			// TODO Auto-generated method stub
-			
 		}
 
 	
@@ -246,12 +245,10 @@ private class MylistAdapter extends BaseAdapter
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				Intent intent=new Intent(Tab1SocietyShareFragment.this.getActivity(), ImageShowActivity.class);
 				try {
 					intent.putExtra("imageurl", "http://110.84.129.130:8080/Yuf"+jsonArray.getJSONObject(index).getString("postpicurl"));
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				startActivity(intent);
@@ -285,7 +282,7 @@ private class MylistAdapter extends BaseAdapter
 				ViewGroup viewGroup=(ViewGroup) mLayoutInflater.inflate(R.layout.comment_popupwindow, null);
 				if (mPopupWindow==null) {
 					
-					mPopupWindow=new PopupWindow(viewGroup, 300, 40);
+					mPopupWindow=new PopupWindow(viewGroup, 300, 60);
 					mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
 					mPopupWindow.setFocusable(false);  
 					mPopupWindow.setOutsideTouchable(true);
@@ -293,6 +290,7 @@ private class MylistAdapter extends BaseAdapter
 					int[] location = new int[2];  
 					v.getLocationOnScreen(location);  
 					mPopupWindow.showAtLocation(v, Gravity.NO_GRAVITY, location[0]-300, location[1]); 
+//点赞					
 					TextView likeTextView=(TextView) viewGroup.findViewById(R.id.comment_popupwindow_like);
 					likeTextView.setOnClickListener(new OnClickListener() {
 						
@@ -308,7 +306,31 @@ private class MylistAdapter extends BaseAdapter
 							}
 						}
 					});
-				
+//评论
+					TextView commentTextView=(TextView) viewGroup.findViewById(R.id.comment_popupwindow_comment);
+					commentTextView.setOnClickListener(new OnClickListener() {
+				        @Override
+						public void onClick(View view) {
+				        	final EditText editText = new EditText(getActivity());
+				        	AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+				        	alert.setTitle("评论");
+							alert.setIcon(android.R.drawable.ic_dialog_info);
+							alert.setView(editText);
+							alert.setPositiveButton("确定",new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int arg1) {
+									try{
+										addCommentRelationship(jsonArray.getJSONObject(index).getInt("postid"),editText.getText().toString(),index);
+									}catch(JSONException e){
+										e.printStackTrace();
+									}
+									dialog.dismiss();
+								}
+							});
+							alert.setNegativeButton("取消", null);
+							alert.show();
+						}
+					});
 				}
 				else {
 					mPopupWindow.dismiss();
@@ -339,14 +361,12 @@ private class MylistAdapter extends BaseAdapter
 			showLikeList(holder.likeTextView, jsonObject.getJSONArray("likeUsersList"));
 			
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		
-		// TODO Auto-generated method stub
 		return convertView;
 	}
+	
 	 class ViewHolder {
 		 NetworkImageView headimageView;
 		 NetworkImageView foodImageView;
@@ -356,9 +376,7 @@ private class MylistAdapter extends BaseAdapter
 		 TextView contentTextView;
 		 ImageView moreImageView;
 		 TextView likeTextView;
-		 LinearLayout commentContent;
-		 
-		 
+		 LinearLayout commentContent; 
 		}
 	}
 private void showCommentItemList(LinearLayout content,JSONArray array)
@@ -372,11 +390,8 @@ private void showCommentItemList(LinearLayout content,JSONArray array)
 			usernameTextView.setText(array.getJSONObject(i).getString("username")+":");
 			contentTextView.setText(array.getJSONObject(i).getString("commentcontent"));
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 		content.addView(itemView);
 	}
 }
@@ -393,10 +408,52 @@ private void showLikeList(TextView view,JSONArray array)
 			else 
 				view.setText(view.getText()+","+array.getString(i));
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+}
+private void addCommentRelationship(int postId,final String dishComment,final int index){
+	JSONObject jsonObject = new JSONObject();
+	final JSONObject js = new JSONObject();
+	try{
+		jsonObject.put("userId", Integer.valueOf( UserInfo.getInstance().userid));
+		jsonObject.put("postId", postId);
+		jsonObject.put("sessionId",UserInfo.getInstance().sessionid);
+		jsonObject.put("commentContent", dishComment);
+		js.put("username", UserInfo.getInstance().username);
+		js.put("commentcontent", dishComment);
+	}catch(NumberFormatException e){
+		e.printStackTrace();
+	}catch(JSONException e){
+		e.printStackTrace();
+	}
+	
+	JsonObjectRequest request = new JsonObjectRequest(Method.POST, "http://110.84.129.130:8080/Yuf/comment/newComment", jsonObject, new Response.Listener<JSONObject>(){
+
+		@Override
+		public void onResponse(JSONObject response) {
+			try {
+				if (response.getInt("code")==0) {
+					Toast.makeText(getActivity(), "评论成功", Toast.LENGTH_SHORT).show();
+					jsonArray.getJSONObject(index).getJSONArray("CommentList").put(js);
+					mAdaAdapter.notifyDataSetChanged();
+				}
+				else {
+					Toast.makeText(getActivity(), "评论失败", Toast.LENGTH_SHORT).show();
+                }
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+		}
+	},new Response.ErrorListener() {
+
+		@Override
+		public void onErrorResponse(VolleyError error) {
+			// TODO Auto-generated method stub	
+		}
+	});
+	MyApplication.requestQueue.add(request);
+	MyApplication.requestQueue.start();	
 }
 private void addLikeRelationship(int postid,final int index)
 {
@@ -437,13 +494,10 @@ private void addLikeRelationship(int postid,final int index)
 
 		@Override
 		public void onErrorResponse(VolleyError error) {
-			// TODO Auto-generated method stub
-			
+			// TODO Auto-generated method stub			
 		}
 	});
 	MyApplication.requestQueue.add(request);
 	MyApplication.requestQueue.start();
 }
-
-
 }

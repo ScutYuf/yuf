@@ -42,7 +42,7 @@ public class LoginActivity extends Activity {
 	private Button testBtn;
 	private CheckBox rememberCheckBox;
 	private SharedPreferences sharepPreferences;
-
+//
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
