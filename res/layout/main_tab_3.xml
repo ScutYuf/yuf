@@ -51,7 +51,7 @@
                 
                 >
 
-                <com.android.volley.toolbox.NetworkImageView
+                <com.yuf.app.mywidget.CircularNetWorkImageView 
                     android:id="@+id/tab3_profile"
                     android:layout_width="91dp"
                     android:layout_height="91dp"
@@ -92,6 +92,7 @@
                     android:layout_alignBottom="@+id/tab3_profile"
                     android:layout_alignLeft="@+id/tab3_nickname"
                     android:text="账号：123456" />
+
 
             </RelativeLayout>
 

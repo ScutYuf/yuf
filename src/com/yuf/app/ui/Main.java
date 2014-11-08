@@ -48,6 +48,7 @@ import com.yuf.app.Entity.UserInfo;
 import com.yuf.app.adapter.MiddlePageAdapter;
 import com.yuf.app.adapter.OutsidePagerAdapter;
 import com.yuf.app.http.extend.BitmapCache;
+import com.yuf.app.mywidget.CircularNetWorkImageView;
 import com.yuf.app.ui.indicator.TitlePageIndicator;
 
 public class Main extends FragmentActivity {
@@ -86,7 +87,7 @@ public class Main extends FragmentActivity {
 
 
 	//tab3
-	private NetworkImageView tab3profileImageView;
+	private CircularNetWorkImageView tab3profileImageView;
 	private TextView tab3nicknameTextView;
 	private TextView tab3accountTextView;
 	private TextView tab3levelnametTextView;
@@ -226,7 +227,7 @@ public void onClickLogout(View view) {
 }
 	
 	private void initTab3() {
-	tab3profileImageView=(NetworkImageView)view3.findViewById(R.id.tab3_profile);
+	tab3profileImageView=(CircularNetWorkImageView)view3.findViewById(R.id.tab3_profile);
 	tab3profileImageView.setDefaultImageResId(R.drawable.no_pic);
 	
 	tab3accountTextView=(TextView)view3.findViewById(R.id.tab3_account);
