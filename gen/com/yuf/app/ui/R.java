@@ -2133,12 +2133,12 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int tab0_share_detail_share_TextView=0x7f0500e9;
         public static final int tab0_share_detail_sharecontent_textview=0x7f0500e8;
         public static final int tab1_addshare=0x7f050052;
+        public static final int tab1_comment_button1=0x7f0500df;
+        public static final int tab1_comment_editText1=0x7f0500de;
+        public static final int tab1_comment_viewgroup=0x7f0500dd;
         public static final int tab1_indicator=0x7f050074;
         public static final int tab1_myfocus_listview=0x7f0500d7;
         public static final int tab1_pager=0x7f050075;
-        public static final int tab1_share_comment=0x7f0500dd;
-        public static final int tab1_share_commentButton=0x7f0500df;
-        public static final int tab1_share_commentText=0x7f0500de;
         public static final int tab1_share_detail_addfocus_imageView=0x7f0500e2;
         public static final int tab1_share_detail_back_imageView=0x7f0500e1;
         public static final int tab1_share_detail_item_comment_content=0x7f0500ec;

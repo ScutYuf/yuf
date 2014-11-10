@@ -16,12 +16,12 @@ public class OutsideViewPager extends ViewPager {
 		super(context, attrs);
 	}
 
-	@Override
-	public boolean onTouchEvent(MotionEvent arg0) {
-		
-		Log.d("liow", "onTouchEven");
-		 return false;
-	}
+//	@Override
+//	public boolean onTouchEvent(MotionEvent arg0) {
+//		
+//		Log.d("liow", "onTouchEven");
+//		 return true;
+//	}
 	 @Override
 	    public boolean onInterceptTouchEvent(MotionEvent arg0) {
 	        // TODO Auto-generated method stub

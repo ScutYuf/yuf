@@ -7,9 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -22,6 +20,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -55,6 +54,10 @@ public class Tab1SocietyShareFragment extends Fragment {
 	private int currentPage;
 	private MylistAdapter mAdaAdapter;
 	private boolean isEnd;	
+//评论
+	private LinearLayout tab1_comment_viewgroup;
+	private EditText tab1_comment_editText1;
+	private Button tab1_comment_button1;
 	public Tab1SocietyShareFragment(){
 		super();
 		mImageLoader=new ImageLoader(MyApplication.requestQueue, new BitmapCache());
@@ -92,7 +95,11 @@ public class Tab1SocietyShareFragment extends Fragment {
 					}
 					
 			}	});
-
+		
+		tab1_comment_viewgroup = (LinearLayout)view.findViewById(R.id.tab1_comment_viewgroup);
+		tab1_comment_editText1 = (EditText)view.findViewById(R.id.tab1_comment_editText1);
+		tab1_comment_button1 = (Button)view.findViewById(R.id.tab1_comment_button1);
+		
 		listView.setMode(Mode.PULL_FROM_START);
 		mAdaAdapter=new MylistAdapter();
 		listView.setAdapter(mAdaAdapter);
@@ -307,28 +314,31 @@ private class MylistAdapter extends BaseAdapter
 						}
 					});
 //评论
+					
 					TextView commentTextView=(TextView) viewGroup.findViewById(R.id.comment_popupwindow_comment);
 					commentTextView.setOnClickListener(new OnClickListener() {
 				        @Override
 						public void onClick(View view) {
-				        	final EditText editText = new EditText(getActivity());
-				        	AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-				        	alert.setTitle("评论");
-							alert.setIcon(android.R.drawable.ic_dialog_info);
-							alert.setView(editText);
-							alert.setPositiveButton("确定",new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog, int arg1) {
-									try{
-										addCommentRelationship(jsonArray.getJSONObject(index).getInt("postid"),editText.getText().toString(),index);
-									}catch(JSONException e){
-										e.printStackTrace();
-									}
-									dialog.dismiss();
-								}
-							});
-							alert.setNegativeButton("取消", null);
-							alert.show();
+				        	tab1_comment_viewgroup.setVisibility(View.VISIBLE);
+//				        	tab1_comment_editText1.setf;
+//				        	final EditText editText = new EditText(getActivity());
+//				        	AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+//				        	alert.setTitle("评论");
+//							alert.setIcon(android.R.drawable.ic_dialog_info);
+//							alert.setView(editText);
+//							alert.setPositiveButton("确定",new DialogInterface.OnClickListener() {
+//								@Override
+//								public void onClick(DialogInterface dialog, int arg1) {
+//									try{
+//										addCommentRelationship(jsonArray.getJSONObject(index).getInt("postid"),editText.getText().toString(),index);
+//									}catch(JSONException e){
+//										e.printStackTrace();
+//									}
+//									dialog.dismiss();
+//								}
+//							});
+//							alert.setNegativeButton("取消", null);
+//							alert.show();
 						}
 					});
 				}

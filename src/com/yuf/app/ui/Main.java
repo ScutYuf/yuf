@@ -218,7 +218,7 @@ public void onClickAboutus(View view){
 }
 public void onClickMyfocus(View view){
 	
-	mTabPager.setCurrentItem(1);
+	//mTabPager.setCurrentItem(1);
 	tab1Viewpage.setCurrentItem(1);
 }	
 	
@@ -451,8 +451,8 @@ public void onClickLogout(View view) {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 		
+			finish();
 				if (System.currentTimeMillis() - frist_back_time < 1500) {
-					finish();
 				
 				}
 				frist_back_time=System.currentTimeMillis();
