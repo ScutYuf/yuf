@@ -44,7 +44,7 @@ private int currentpage;
 private MylistAdapter listAdapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		//// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tab0_comment_acitivity);
 		dishid=getIntent().getExtras().getInt("dishid");
