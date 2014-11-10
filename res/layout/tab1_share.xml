@@ -1,33 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    >
   <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/tab1_share_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+         android:layout_alignParentTop="true"
         android:divider="#ccc"
         android:dividerHeight="0.8dp"
         android:fadingEdgeLength="0dp" >
 
     </com.handmark.pulltorefresh.library.PullToRefreshListView>
-    <LinearLayout 
-        android:id="@+id/tab1_share_comment"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:visibility="gone">
-        <EditText 
-            android:id="@+id/tab1_share_commentText"
-            android:layout_width="100dp"
-            android:layout_height="fill_parent"
-            android:inputType="text"/>
-        <Button 
-            android:id="@+id/tab1_share_commentButton"
-            android:layout_width="30dp"
-            android:layout_height="fill_parent"
-            android:text="确定"/>
+
+    
+    <LinearLayout
+        android:id="@+id/tab1_comment_viewgroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+         >
+
+        <EditText
+            android:id="@+id/tab1_comment_editText1"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <requestFocus />
+        </EditText>
+
+        <Button
+            android:id="@+id/tab1_comment_button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Button" />
+
     </LinearLayout>
     
-</LinearLayout>
+    
+</RelativeLayout>
