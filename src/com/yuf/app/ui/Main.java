@@ -275,11 +275,8 @@ public void onClickLogout(View view) {
 			@Override
 			public void onClick(View v) {
 				
-				Intent intent=new Intent(Main.mainActivity,
-						Tab0SearchActivity.class);
+				Intent intent=new Intent(Main.mainActivity,Tab0SearchActivity.class);
 				startActivity(intent);
-				
-				// TODO Auto-generated method stub
 				
 			}
 		});
@@ -347,11 +344,7 @@ public void onClickLogout(View view) {
 	protected void onStop() {
 		super.onStop();
 	}
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-	
-	}
+
 
 	public class MyOnClickListener implements View.OnClickListener {
 		private int index = 0;
@@ -364,14 +357,14 @@ public void onClickLogout(View view) {
 			mTabPager.setCurrentItem(index);
 		}
 	};
-
+	
+//选择某个tab时相应的图标颜色变化
 	public class MyOnPageChangeListener implements OnPageChangeListener {
 		@Override
 		public void onPageSelected(int arg0) {
 			switch (arg0) {
 			case 0:
-				mTab0.setImageDrawable(getResources().getDrawable(
-						R.drawable.tab_0_pressed));
+				mTab0.setImageDrawable(getResources().getDrawable(R.drawable.tab_0_pressed));
 				if (currIndex == 1) {
 					mTab1.setImageDrawable(getResources().getDrawable(
 							R.drawable.tab_1_normal));

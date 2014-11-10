@@ -2088,14 +2088,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int singleChoice=0x7f05002d;
         public static final int software=0x7f050014;
         public static final int status=0x7f050117;
-        public static final int tab0_collection_button=0x7f05004e;
+        public static final int tab0_collection_text=0x7f05004e;
         public static final int tab0_comment_acitivity_listview=0x7f0500a8;
         public static final int tab0_comment_activity_back_imageview=0x7f0500a7;
-        public static final int tab0_comment_button=0x7f05004d;
         public static final int tab0_comment_item_content_textview=0x7f0500ac;
         public static final int tab0_comment_item_image=0x7f0500a9;
         public static final int tab0_comment_item_name_textview=0x7f0500aa;
         public static final int tab0_comment_item_time_textview=0x7f0500ab;
+        public static final int tab0_comment_text=0x7f05004d;
         public static final int tab0_comment_title_textview=0x7f0500a6;
         public static final int tab0_cookfood__dishdifficulty_textview=0x7f0500b3;
         public static final int tab0_cookfood_dose_textview=0x7f0500b4;
