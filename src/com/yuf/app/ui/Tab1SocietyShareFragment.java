@@ -18,6 +18,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -58,6 +59,7 @@ public class Tab1SocietyShareFragment extends Fragment {
 	private LinearLayout tab1_comment_viewgroup;
 	private EditText tab1_comment_editText1;
 	private Button tab1_comment_button1;
+	private InputMethodManager inputMethodManager;
 	public Tab1SocietyShareFragment(){
 		super();
 		mImageLoader=new ImageLoader(MyApplication.requestQueue, new BitmapCache());
@@ -99,37 +101,12 @@ public class Tab1SocietyShareFragment extends Fragment {
 		tab1_comment_viewgroup = (LinearLayout)view.findViewById(R.id.tab1_comment_viewgroup);
 		tab1_comment_editText1 = (EditText)view.findViewById(R.id.tab1_comment_editText1);
 		tab1_comment_button1 = (Button)view.findViewById(R.id.tab1_comment_button1);
+		inputMethodManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 		
 		listView.setMode(Mode.PULL_FROM_START);
 		mAdaAdapter=new MylistAdapter();
 		listView.setAdapter(mAdaAdapter);
-//		listView.setOnItemClickListener(new OnItemClickListener() {
-//
-//			@Override
-//			public void onItemClick(AdapterView<?> parent, View view,
-//					int position, long id) {
-//				Intent intent=new Intent(Tab1SocietyShareFragment.this.getActivity(),
-//						Tab1ShareDetailActivity.class);
-//				Bundle bundle = new Bundle();                           //创建Bundle对象   
-//				try {
-//					JSONObject jsonObject=jsonArray.getJSONObject(position-1);
-//					bundle.putInt("postid",jsonObject.getInt("postid"));
-//					bundle.putInt("userid", jsonObject.getInt("userid"));
-//					bundle.putString("posttitle", jsonObject.getString("posttitle"));
-//					bundle.putString("postpicurl", jsonObject.getString("postpicurl"));
-//					bundle.putString("postcontent",jsonObject.getString("postcontent"));
-//				} catch (JSONException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}     //装入数据   
-//				intent.putExtras(bundle);                                //把Bundle塞入Intent里面  
-//				startActivity(intent);
-//				// TODO Auto-generated method stub
-//	
-//				// TODO Auto-generated method stub
-//				
-//			}
-//		});
+
 		refreshListView();
 		 return  view;
 	}
@@ -320,25 +297,24 @@ private class MylistAdapter extends BaseAdapter
 				        @Override
 						public void onClick(View view) {
 				        	tab1_comment_viewgroup.setVisibility(View.VISIBLE);
-//				        	tab1_comment_editText1.setf;
-//				        	final EditText editText = new EditText(getActivity());
-//				        	AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-//				        	alert.setTitle("评论");
-//							alert.setIcon(android.R.drawable.ic_dialog_info);
-//							alert.setView(editText);
-//							alert.setPositiveButton("确定",new DialogInterface.OnClickListener() {
-//								@Override
-//								public void onClick(DialogInterface dialog, int arg1) {
-//									try{
-//										addCommentRelationship(jsonArray.getJSONObject(index).getInt("postid"),editText.getText().toString(),index);
-//									}catch(JSONException e){
-//										e.printStackTrace();
-//									}
-//									dialog.dismiss();
-//								}
-//							});
-//							alert.setNegativeButton("取消", null);
-//							alert.show();
+				        	tab1_comment_editText1.requestFocus();
+                            inputMethodManager.toggleSoftInput(0,  InputMethodManager.HIDE_NOT_ALWAYS);
+                            
+				        	tab1_comment_button1 .setOnClickListener(new OnClickListener() {
+								
+								@Override
+								public void onClick(View view) {
+									try {
+										addCommentRelationship(jsonArray.getJSONObject(index).getInt("postid"),tab1_comment_editText1.getText().toString(),index);
+									} catch (JSONException e) {
+										e.printStackTrace();
+									}
+									tab1_comment_viewgroup.setVisibility(View.GONE);
+		                            inputMethodManager.toggleSoftInput(0,  InputMethodManager.HIDE_NOT_ALWAYS);
+
+								}
+							});
+				        
 						}
 					});
 				}
