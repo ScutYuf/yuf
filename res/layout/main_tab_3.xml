@@ -241,7 +241,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/rightrow" />
-                <TextView
+
+                <TextView
                     android:id="@+id/tab3_myfocus_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
