@@ -72,7 +72,6 @@ public class Main extends FragmentActivity {
 	private ArrayList<CategorysEntity> tab0categorysEntities;
 	private TitlePageIndicator tab0Indicator;
 	private ViewPager tab0Viewpage;
-	private ImageView tab0SearchImageView;
 	private JSONObject recomnddish;
 	//tab1的变量
 	private ListView tab1ShareListView;
@@ -269,17 +268,6 @@ public void onClickLogout(View view) {
 
 	private void initTab0() {
 		// TODO Auto-generated method stub
-		tab0SearchImageView=(ImageView)view0.findViewById(R.id.search_imageView);
-		 tab0SearchImageView.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				
-				Intent intent=new Intent(Main.mainActivity,Tab0SearchActivity.class);
-				startActivity(intent);
-				
-			}
-		});
 			addTab0ViewpageFragment();
 	}
 
