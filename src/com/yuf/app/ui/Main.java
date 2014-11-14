@@ -709,7 +709,7 @@ private void setTab3UserInfo() {
 			 	MyApplication.requestQueue.start();
 	 }
 	 private void getRecommendedDishSet() {
-		 JsonObjectRequest request=new JsonObjectRequest(Method.GET, "http://110.84.129.130:8080/Yuf/dishset/getRecommendedDishset", null,  
+		 JsonObjectRequest request=new JsonObjectRequest(Method.GET, "https://110.84.129.130:8443/Yuf/dishset/getRecommendedDishset", null,  
 				 new Response.Listener<JSONObject>()  
 			     {  
 
