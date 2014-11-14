@@ -134,10 +134,10 @@ if (isSeeJust) {
 		 fragments=new ArrayList<Fragment>();
 		fooddetailcategorysEntities=new ArrayList<CategorysEntity>();
 		fooddetailcategorysEntities.add(new CategorysEntity("烹饪方法"));
-		fooddetailcategorysEntities.add(new CategorysEntity("食材"));		
+		fooddetailcategorysEntities.add(new CategorysEntity("食材"));	
 		try {
 			
-			fragments.add(new Tab0FoodCookFragment(jsonObject.getJSONArray("Recipe"),jsonObject.getJSONObject("Dish")));
+			fragments.add(new Tab0FoodCookFragment(jsonObject.getJSONArray("Recipe"),jsonObject.getJSONObject("Dish"),getIntent().getExtras().getString("dishid")));
 			fragments.add(new Tab0FoodMaterialFragment(jsonObject.getJSONArray("RelatedFood")));
 			
 			

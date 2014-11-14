@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
+import javax.security.auth.PrivateCredentialPermission;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,7 +60,6 @@ public class Tab0FoodCookFragment extends Fragment{
 	 private TextView share;
 	 private TextView addcart;
 	private ScrollView mScrollView; 
-	private LinearLayout mLinearLayout;
 	private float start_y=0;
 	private boolean isDisappear=false;
 	private JSONArray stepJsonObject;
@@ -85,9 +86,12 @@ public class Tab0FoodCookFragment extends Fragment{
 	private TextView timeTextView;
 	private NetworkImageView foodImageView;
 	
-	public Tab0FoodCookFragment(JSONArray _mStepJsonObject,JSONObject _dishInfoJsonObject) {
+    private String dishId;
+	
+	public Tab0FoodCookFragment(JSONArray _mStepJsonObject,JSONObject _dishInfoJsonObject,String dishId) {
 		stepJsonObject=_mStepJsonObject;
 		dishInfoJsonObject=_dishInfoJsonObject;
+		this.dishId = dishId;
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -100,6 +104,17 @@ public class Tab0FoodCookFragment extends Fragment{
 		
 		View view=inflater.inflate(R.layout.tab0_food_cook,container,false);
 		
+		TextView stepNumberTextView = (TextView)view.findViewById(R.id.tab0_food_cook_step_steporder_textview);
+		stepNumberTextView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(getActivity(),Tab0CookStepActivity.class);
+				intent.putExtra("DishId", dishId);
+				startActivity(intent);
+				
+			}
+		});
 		foodImageView=(NetworkImageView)view.findViewById(R.id.tab0_cookfood_foodimage);
 		
 		hardLevelTextview=(TextView)view.findViewById(R.id.tab0_cookfood__dishdifficulty_textview);
@@ -170,7 +185,7 @@ public class Tab0FoodCookFragment extends Fragment{
 			}
 		});
 		
-		mLinearLayout=(LinearLayout)view.findViewById(R.id.scrolllinelayout);
+	
 		mScrollView=(ScrollView)view.findViewById(R.id.cook_scrollView);
 		mScrollView.setOnTouchListener(new OnTouchListener() {
 			
@@ -180,7 +195,6 @@ public class Tab0FoodCookFragment extends Fragment{
 			}
 		});
 		initFoodInfo();
-		addSteps();
 		return  view;
 	}
 //一键分享
@@ -543,34 +557,6 @@ private void initFoodInfo()
 		e.printStackTrace();
 	}
 }
-private void addSteps(){
-	for (int i = 0; i <stepJsonObject.length(); i++) {
-		
-		LayoutInflater inflater=LayoutInflater.from(getActivity());
-		LinearLayout linearLayout=(LinearLayout)inflater.inflate(R.layout.tab0_fook_cook_step, null);
-		linearLayout.setOrientation(LinearLayout.VERTICAL);
-		TextView stepOrderTextView=(TextView)linearLayout.findViewById(R.id.tab0_food_cook_step_steporder_textview);
-		NetworkImageView imageView=(NetworkImageView)linearLayout.findViewById(R.id.tab0_food_cook_step_image_imageview);
-		TextView introduceTextView=(TextView)linearLayout.findViewById(R.id.tab0_food_cook_step_introuduce_textview);
-		JSONObject mJsonObject;
-		try {
-			mJsonObject = stepJsonObject.getJSONObject(i);
-			stepOrderTextView.setText(String.valueOf(mJsonObject.getInt("recipeorder")));
-//			imageView.setImageUrl("http://110.84.129.130:8080/Yuf"+mJsonObject.getString("recipepicurl"), mImageLoader);
-//			imageView.setImageUrl("http://110.84.129.130:8080//Yuf/images/dish/8.jpg", mImageLoader);
-			introduceTextView.setText(mJsonObject.getString("recipedetail"));
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		mLinearLayout.addView(linearLayout);
-	}
-
-}
-
 
    
 private boolean changeTextViewHideOrAppear(MotionEvent event) {
