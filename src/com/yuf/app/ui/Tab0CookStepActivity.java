@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -20,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -45,6 +47,7 @@ public class Tab0CookStepActivity extends Activity{
 	private TextView titleTextView;
 	private List<View> titles;
 	private ImageView back_imageView;
+	private Button buyFood;
 	private int screenH;//屏幕高度
 	
 	private JSONArray stepJsonObject;
@@ -59,21 +62,30 @@ public class Tab0CookStepActivity extends Activity{
 		
 		initView();//初始化	
 		getDishDetail();//获取网络数据
-		
-		back_imageView.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-			
-				Tab0CookStepActivity.this.finish();
-			}
-		});
+
 	}
 	
 	private void initView() {
 		viewPager = (ViewPager)findViewById(R.id.tab0_cook_step_vPager);
 		views = new ArrayList<View>();
 		titles = new ArrayList<View>();
+//返回		
 		back_imageView = (ImageView)findViewById(R.id.back_imageView);
+		back_imageView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+			  onBackPressed();
+			}
+		});
+//购买食材
+		buyFood = (Button)findViewById(R.id.buyFood);
+		buyFood.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Intent intent=new Intent(Tab0CookStepActivity.this, Tab2WaitForPayActivity.class);
+				startActivity(intent);
+			}
+		});
 		
 		DisplayMetrics dm = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(dm);

@@ -1,15 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:orientation="vertical"
+    android:orientation="vertical" 
      >
      <RelativeLayout
-        android:id="@+id/tab"
+        android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="45dp"
-        android:gravity="center_vertical" >
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/title_bar"
+        android:gravity="center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,23 +29,27 @@
             android:src="@drawable/button_details_gohome" />
 
         <Button
+            android:id="@+id/buyFood"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="购买食材" />
-
-
+            android:text="购买食材"
+            android:textSize="20sp"
+            android:background="#DC143C"/>
     </RelativeLayout>
+    
     <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_below="@id/title"
     android:orientation="horizontal"
          >
         <ScrollView 
 	    android:layout_width="50dp"
 	    android:layout_height="match_parent"
 	    android:scrollbarStyle="outsideOverlay"
+	    android:background="#ccccff"
 	    >
         <LinearLayout 
             android:id="@+id/tab0_cook_step_layout"
@@ -64,4 +70,4 @@
     </LinearLayout>
     
 	
-</LinearLayout>
+</RelativeLayout>
