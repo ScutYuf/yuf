@@ -14,14 +14,12 @@
 
     </com.handmark.pulltorefresh.library.PullToRefreshListView>
 
-    
     <LinearLayout
         android:id="@+id/tab1_comment_viewgroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:visibility="gone"
-         >
+        android:visibility="gone" >
 
         <EditText
             android:id="@+id/tab1_comment_editText1"
