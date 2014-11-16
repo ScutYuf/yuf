@@ -68,6 +68,12 @@
             >
             
         </activity>
+         <activity
+            android:name=".Tab0CookStepActivity"
+            android:screenOrientation="portrait"
+            >
+            
+        </activity>
         <activity
             android:name=".Tab0SearchActivity"
             android:screenOrientation="portrait"
