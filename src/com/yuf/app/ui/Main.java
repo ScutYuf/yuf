@@ -117,8 +117,8 @@ public class Main extends FragmentActivity {
 		mainActivity=this;
 		
 		setContentView(R.layout.main);
-		getWindow().setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+//		getWindow().setSoftInputMode(
+//				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 	
 		//图片加载器
 		mImageLoader=new ImageLoader(MyApplication.requestQueue,new BitmapCache());
@@ -692,7 +692,7 @@ private void setTab3UserInfo() {
 			             
 			             
 			             
-			             
+			            
 			             
 			         }  
 			     }, new Response.ErrorListener()  
