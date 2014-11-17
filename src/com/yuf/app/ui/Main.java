@@ -1,14 +1,11 @@
 package com.yuf.app.ui;
 
 import java.util.ArrayList;
-import java.util.Timer;
 
-import org.apache.http.client.UserTokenHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.R.bool;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,24 +21,17 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
-import android.view.WindowManager.LayoutParams;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
+import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.NetworkImageView;
-import com.android.volley.toolbox.Volley;
 import com.yuf.app.MyApplication;
 import com.yuf.app.Entity.CategorysEntity;
 import com.yuf.app.Entity.UserInfo;
@@ -50,13 +40,13 @@ import com.yuf.app.adapter.OutsidePagerAdapter;
 import com.yuf.app.http.extend.BitmapCache;
 import com.yuf.app.mywidget.CircularNetWorkImageView;
 import com.yuf.app.ui.indicator.TitlePageIndicator;
-
+//搜索是Tab4 ，0-4-1-2-3
+//搜索未实现
 public class Main extends FragmentActivity {
 
 	//全局变量
-	
 	private ViewPager mTabPager;
-	private ImageView mTab0, mTab1, mTab2, mTab3;
+	private ImageView mTab0, mTab1, mTab2, mTab3,mTab4;
 	private int currIndex = 0;
 	private ImageLoader mImageLoader;
 	
@@ -65,8 +55,7 @@ public class Main extends FragmentActivity {
 	View view1;
 	View view2;
 	View view3;
-	
-	
+	View view4;
 	//tab0的变量
 	private ArrayList<Fragment> tab0fragments;
 	private ArrayList<CategorysEntity> tab0categorysEntities;
@@ -81,18 +70,18 @@ public class Main extends FragmentActivity {
 	private ArrayList<Fragment> tab1fragments;
 	private ArrayList<CategorysEntity> tab1categorysEntities;
 	private ImageView addImageView;
-	
-	//tab2
-
-
-	//tab3
+	//tab4
+	private EditText edt_search;
+	private ImageView searchImage;
+    private Fragment searchFragment;
+    private JSONArray jsonArray;
+    //tab3
 	private CircularNetWorkImageView tab3profileImageView;
 	private TextView tab3nicknameTextView;
 	private TextView tab3accountTextView;
 	private TextView tab3levelnametTextView;
 	private TextView tab3userfollowsTextView;
 	private TextView tab3usercollectionTextView;
-	
 	
 	public static FragmentActivity mainActivity;
 	
@@ -103,73 +92,55 @@ public class Main extends FragmentActivity {
 		getUserInfo();
 		setTab3UserInfo();
 	}
-
-
-
-
-
-	@Override
+ @Override
 	public void onCreate(Bundle savedInstanceState) {
-		
 		super.onCreate(savedInstanceState);
-		
-		
 		mainActivity=this;
-		
 		setContentView(R.layout.main);
 //		getWindow().setSoftInputMode(
 //				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-	
-		//图片加载器
+//图片加载器
 		mImageLoader=new ImageLoader(MyApplication.requestQueue,new BitmapCache());
-		
 		
 		mTabPager = (ViewPager) findViewById(R.id.tabpager);
 		mTabPager.setOnPageChangeListener(new MyOnPageChangeListener());
-		mTabPager.setOffscreenPageLimit(4);
-		
+		mTabPager.setOffscreenPageLimit(5);
 		
 		mTab0 = (ImageView) findViewById(R.id.img_0);
 		mTab1 = (ImageView) findViewById(R.id.img_1);
 		mTab2 = (ImageView) findViewById(R.id.img_2);
 		mTab3 = (ImageView) findViewById(R.id.img_3);
-
-		mTab0.setOnClickListener(new MyOnClickListener(0));
+		mTab4 = (ImageView) findViewById(R.id.img_4);
+        mTab0.setOnClickListener(new MyOnClickListener(0));
 		mTab1.setOnClickListener(new MyOnClickListener(1));
 		mTab2.setOnClickListener(new MyOnClickListener(2));
 		mTab3.setOnClickListener(new MyOnClickListener(3));
-
+		mTab4.setOnClickListener(new MyOnClickListener(4));
+		
 		LayoutInflater mLi = LayoutInflater.from(this);
 		 
-		 
 		 //导航界面布局初始化
-		 view0=mLi.inflate(R.layout.main_tab_0, null);
+		 view0 = mLi.inflate(R.layout.main_tab_0, null);
 		 view1 = mLi.inflate(R.layout.main_tab_1, null);
 		 view2 = mLi.inflate(R.layout.main_tab_2, null);
 		 view3 = mLi.inflate(R.layout.main_tab_3, null);	
+		 view4 = mLi.inflate(R.layout.main_tab_4, null);	
 		 
 		final ArrayList<View> views = new ArrayList<View>();
 		views.add(view0);
 		views.add(view1);
 		views.add(view2);
 		views.add(view3);
+		views.add(view4);
 		mTabPager.setAdapter(new OutsidePagerAdapter(views));
 	
-		
-		
 		//四模块初始化
-		
 		initTab0();
 		initTab1();
 		initTab2();
 		initTab3();
-		
-		
+		initTab4();
 	}// end the onCreate method
-
-		 
-	
-	
 
 //tab2 onclick 函数的关联在xml文件中
 	
@@ -188,36 +159,35 @@ public class Main extends FragmentActivity {
 	}
 	
 	
-	
-
-	//tab3 onclick 函数的关联在xml文件中
+//tab3 onclick 函数的关联在xml文件中
 	public void onClickSettingInfo(View view){
-		Intent	intent=new Intent(mainActivity,Tab3SetUserInfoActivity.class);
+			Intent	intent=new Intent(mainActivity,Tab3SetUserInfoActivity.class);
+			startActivity(intent);
+		}
+	public  void onClickMycollection(View view) {
+		
+		Intent	intent=new Intent(mainActivity,Tab3MyCollectionActivity.class);
 		startActivity(intent);
 	}
-public  void onClickMycollection(View view) {
-	
-	Intent	intent=new Intent(mainActivity,Tab3MyCollectionActivity.class);
-	startActivity(intent);
-}
-public void onClickMywork(View view) {
-	
-	Intent	intent=new Intent(mainActivity,Tab3MyWorkActivity.class);
-	startActivity(intent);
-}
-public void onClickMyInfo(View view){
-	
-	Intent	intent=new Intent(mainActivity,Tab3DegreeActivity.class);
-	startActivity(intent);
-}
-public void onClickAboutus(View view){
-	
-	Intent	intent=new Intent(mainActivity,Tab3AboutUsActivity.class);
-	startActivity(intent);
-}
+	public void onClickMywork(View view) {
+		
+		Intent	intent=new Intent(mainActivity,Tab3MyWorkActivity.class);
+		startActivity(intent);
+	}
+	public void onClickMyInfo(View view){
+		
+		Intent	intent=new Intent(mainActivity,Tab3DegreeActivity.class);
+		startActivity(intent);
+	}
+	public void onClickAboutus(View view){
+		
+		Intent	intent=new Intent(mainActivity,Tab3AboutUsActivity.class);
+		startActivity(intent);
+	}
+//我的关注
 public void onClickMyfocus(View view){
 	
-	//mTabPager.setCurrentItem(1);
+	mTabPager.setCurrentItem(1);
 	tab1Viewpage.setCurrentItem(1);
 }	
 	
@@ -234,22 +204,52 @@ public void onClickLogout(View view) {
 	tab3nicknameTextView=(TextView)view3.findViewById(R.id.tab3_nickname);
 	tab3userfollowsTextView=(TextView)view3.findViewById(R.id.tab3_myfocus_textview);
 	tab3usercollectionTextView=(TextView)view3.findViewById(R.id.tab3_mycollection_textview);
-	// TODO Auto-generated method stub
-	
 }
 
 
+	private void initTab4() {
+		edt_search = (EditText)view4.findViewById(R.id.edt_search);
+		searchImage = (ImageView)view4.findViewById(R.id.searchImage);
+		searchImage.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				JSONObject searchJsonObject=new JSONObject();
+				try{
+				searchJsonObject.put("searchStr", edt_search.getText().toString());
+				searchJsonObject.put("currentIndex",0);
+				}catch (JSONException e) {
+					e.printStackTrace();
+				}
+				JsonObjectRequest request=new JsonObjectRequest(Method.POST, "http://110.84.129.130:8080/Yuf/dish/searchDish", searchJsonObject,  new Response.Listener<JSONObject>()  {  @Override  
+		            public void onResponse(JSONObject response)  
+		            {  
+		            	try {
+		            		jsonArray=MyApplication.joinJSONArray(jsonArray, response.getJSONArray("dishes"));
+		            	    searchFragment = new Tab0MyRecipeFragment(jsonArray);
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+		            }  
+			    }, new Response.ErrorListener()  
+			    {  @Override  
+			        public void onErrorResponse(VolleyError error)  
+			        {  
+			            Log.e("Main-initTab4()", error.getMessage(), error);  
+			        }  
+			    });
+				MyApplication.requestQueue.add(request);
+			 	Log.d("Main-initTab4()","request start");
+			 	MyApplication.requestQueue.start();
+			}
+		});
+	}
 
 	private void initTab2() {
-		// TODO Auto-generated method stub
-				// TODO Auto-generated method stub
-			
-		
+	
 	}
 
 
-
-	private void initTab1() {
+    private void initTab1() {
 		// TODO Auto-generated method stub
 		addImageView=(ImageView) view1.findViewById(R.id.tab1_addshare);
 		addImageView.setOnClickListener(new OnClickListener() {
@@ -274,10 +274,7 @@ public void onClickLogout(View view) {
 
 
 	private void addTab0ViewpageFragment(){
-		
-		
 		getRecommendedDishSet();
-		
 		
 	}
 
@@ -307,7 +304,6 @@ public void onClickLogout(View view) {
 
 	@Override
 	public void onAttachFragment(Fragment fragment) {
-		// TODO Auto-generated method stub
 		super.onAttachFragment(fragment);
 	}
 
@@ -315,7 +311,6 @@ public void onClickLogout(View view) {
 
 	@Override
 	protected void onStart() {
-		// TODO Auto-generated method stub
 		super.onStart();
 	}
 
@@ -354,58 +349,52 @@ public void onClickLogout(View view) {
 			case 0:
 				mTab0.setImageDrawable(getResources().getDrawable(R.drawable.tab_0_pressed));
 				if (currIndex == 1) {
-					mTab1.setImageDrawable(getResources().getDrawable(
-							R.drawable.tab_1_normal));
+					mTab1.setImageDrawable(getResources().getDrawable(R.drawable.tab_1_normal));
 				} else if (currIndex == 2) {
-					mTab2.setImageDrawable(getResources().getDrawable(
-							R.drawable.tab_2_normal));
+					mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab_2_normal));
 				}else if (currIndex == 3) {
-					mTab3.setImageDrawable(getResources().getDrawable(
-							R.drawable.tab_3_normal));
+					mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab_3_normal));
 				}
 				
 				break;
 			case 1:
-				mTab1.setImageDrawable(getResources().getDrawable(
-						R.drawable.tab_1_pressed));
+				mTab1.setImageDrawable(getResources().getDrawable(R.drawable.tab_1_pressed));
 				if (currIndex == 0) {
-					mTab0.setImageDrawable(getResources().getDrawable(
-							R.drawable.tab_0_normal));
+					mTab0.setImageDrawable(getResources().getDrawable(R.drawable.tab_0_normal));
 				} else if (currIndex == 2) {
-					mTab2.setImageDrawable(getResources().getDrawable(
-							R.drawable.tab_2_normal));
+					mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab_2_normal));
 				}else if (currIndex == 3) {
-					mTab3.setImageDrawable(getResources().getDrawable(
-							R.drawable.tab_3_normal));
+					mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab_3_normal));
 				}
 				break;
 			case 2:
-				mTab2.setImageDrawable(getResources().getDrawable(
-						R.drawable.tab_2_pressed));
+				mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab_2_pressed));
 				if (currIndex == 0) {
-					mTab0.setImageDrawable(getResources().getDrawable(
-							R.drawable.tab_0_normal));
+					mTab0.setImageDrawable(getResources().getDrawable(R.drawable.tab_0_normal));
 				} else if (currIndex == 1) {
-					mTab1.setImageDrawable(getResources().getDrawable(
-							R.drawable.tab_1_normal));
+					mTab1.setImageDrawable(getResources().getDrawable(R.drawable.tab_1_normal));
 				}else if (currIndex == 3) {
-					mTab3.setImageDrawable(getResources().getDrawable(
-							R.drawable.tab_3_normal));
+					mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab_3_normal));
 				}
 				break;
 			case 3:
-				mTab3.setImageDrawable(getResources().getDrawable(
-						R.drawable.tab_3_pressed));
-
-				if (currIndex == 0) {
-					mTab0.setImageDrawable(getResources().getDrawable(
-							R.drawable.tab_0_normal));
+				mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab_3_pressed));
+                if (currIndex == 0) {
+					mTab0.setImageDrawable(getResources().getDrawable(R.drawable.tab_0_normal));
 				} else if (currIndex == 1) {
-					mTab1.setImageDrawable(getResources().getDrawable(
-							R.drawable.tab_1_normal));
+					mTab1.setImageDrawable(getResources().getDrawable(R.drawable.tab_1_normal));
 				}else if (currIndex == 2) {
-					mTab2.setImageDrawable(getResources().getDrawable(
-							R.drawable.tab_2_normal));
+					mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab_2_normal));
+				}
+			case 4:
+				if (currIndex == 0) {
+					mTab0.setImageDrawable(getResources().getDrawable(R.drawable.tab_0_normal));
+				} else if (currIndex == 1) {
+					mTab1.setImageDrawable(getResources().getDrawable(R.drawable.tab_1_normal));
+				}else if (currIndex == 2) {
+					mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab_2_normal));
+				}else if (currIndex == 3) {
+					mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab_3_normal));
 				}
 				break;
 			default:
@@ -423,10 +412,7 @@ public void onClickLogout(View view) {
 	
 	
 	private long frist_back_time=0;
-	
-	
-	 
-	 //双返回键退出
+//双返回键退出
 	// 此部分为了实现按两下返回退出
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -441,26 +427,6 @@ public void onClickLogout(View view) {
 		return true;
 	}
 	
-	//预留接口
-	 class MyPageChangeListener implements OnPageChangeListener {
-	        @Override
-	        public void onPageScrollStateChanged(int arg0) {
-	            // TODO Auto-generated method stub
-	        }
-
-	        @Override
-	        public void onPageScrolled(int arg0, float arg1, int arg2) {
-	            // TODO Auto-generated method stub
-	        }
-
-	        @Override
-	        public void onPageSelected(int arg0) {
-	            // TODO Auto-generated method stub
-	           
-	        }
-	    }
-	 
-	 
 
 private void logout() {
 
@@ -469,7 +435,6 @@ private void logout() {
 	logJsonObject.put("userId",UserInfo.getInstance().getUserid());
 	logJsonObject.put("sessionId",UserInfo.getInstance().getSessionid());
 	}catch (JSONException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}	
 	JsonObjectRequest request=new JsonObjectRequest(Method.POST, "http://110.84.129.130:8080/Yuf/user/logout", logJsonObject,  new Response.Listener<JSONObject>()  
@@ -493,13 +458,11 @@ private void logout() {
 					
 				}
 				else {
-					Toast toast = Toast.makeText(getApplicationContext(),
-						    "登出失败", Toast.LENGTH_SHORT);
+					Toast toast = Toast.makeText(getApplicationContext(),"登出失败", Toast.LENGTH_SHORT);
 						   toast.setGravity(Gravity.CENTER, 0, 0);
 						   toast.show();
 				}
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         	
@@ -511,13 +474,13 @@ private void logout() {
         @Override  
         public void onErrorResponse(VolleyError error)  
         {  
-            Log.e("TAG", error.getMessage(), error);  
+            Log.e("Main-logout()", error.getMessage(), error);  
         }  
     });
 
 	//将JsonObjectRequest 加入RequestQuene
 MyApplication.requestQueue.add(request);
-Log.d("liow","request start");
+Log.d("Main-logout()","request start");
 MyApplication.requestQueue.start();
 	
 
@@ -598,32 +561,26 @@ private void setTab3UserInfo() {
 					try {
 						tmpInfo.setLevelname(response.getString("levelname"));
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					try {
 						tmpInfo.setLevelpoints(response.getInt("levelpoints"));
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					setTab3UserInfo();
-	             
-	             
-	             
-	             
-	         }  
+	          }  
 	     }, new Response.ErrorListener()  
 	     {  
 
 	         @Override  
 	         public void onErrorResponse(VolleyError error)  
 	         {  
-	             Log.e("TAG", error.getMessage(), error);  
+	             Log.e("Main-getUserInfo()", error.getMessage(), error);  
 	         }  
 	     });
 	 	MyApplication.requestQueue.add(request);
-	 	Log.d("liow","request start");
+	 	Log.d("Main-getUserInfo()","request start");
 	 	MyApplication.requestQueue.start();
 	 }
 	 private void getShareInfo()
@@ -758,4 +715,26 @@ private void setTab3UserInfo() {
 			 	Log.d("liow","request start");
 			 	MyApplication.requestQueue.start();
 	}
+//预留接口	 
+	 class MyPageChangeListener implements OnPageChangeListener{
+
+		@Override
+		public void onPageScrollStateChanged(int arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onPageScrolled(int arg0, float arg1, int arg2) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onPageSelected(int arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		 
+	 }
 }// end this Main class
