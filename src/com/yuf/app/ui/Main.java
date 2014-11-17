@@ -31,6 +31,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ShareActionProvider;
+import android.widget.TabHost;
+import android.widget.TabWidget;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,11 +89,12 @@ public class Main extends FragmentActivity {
 
 	//tab3
 	private CircularNetWorkImageView tab3profileImageView;
-	private TextView tab3nicknameTextView;
-	private TextView tab3accountTextView;
-	private TextView tab3levelnametTextView;
-	private TextView tab3userfollowsTextView;
-	private TextView tab3usercollectionTextView;
+//	private TextView tab3nicknameTextView;
+//	private TextView tab3accountTextView;
+//	private TextView tab3levelnametTextView;
+//	private TextView tab3userfollowsTextView;
+//	private TextView tab3usercollectionTextView;
+	private TabHost tabHost;
 	
 	
 	public static FragmentActivity mainActivity;
@@ -144,9 +147,9 @@ public class Main extends FragmentActivity {
 		 
 		 //导航界面布局初始化
 		 view0=mLi.inflate(R.layout.main_tab_0, null);
-		 view1 = mLi.inflate(R.layout.main_tab_1, null);
-		 view2 = mLi.inflate(R.layout.main_tab_2, null);
-		 view3 = mLi.inflate(R.layout.main_tab_3, null);	
+		 view1 = mLi.inflate(R.layout.main_tab_1_v, null);
+		 view2 = mLi.inflate(R.layout.main_tab_2_v, null);
+		 view3 = mLi.inflate(R.layout.main_tab_3_v, null);	
 		 
 		final ArrayList<View> views = new ArrayList<View>();
 		views.add(view0);
@@ -224,16 +227,26 @@ public void onClickMyfocus(View view){
 public void onClickLogout(View view) {
 	logout();
 }
-	
+public void goFanFocusActivity(View view)
+{
+	Intent intent=new Intent(this,Tab3FanFocusActivity.class);
+	startActivity(intent);
+	}
 	private void initTab3() {
 	tab3profileImageView=(CircularNetWorkImageView)view3.findViewById(R.id.tab3_profile);
 	tab3profileImageView.setDefaultImageResId(R.drawable.no_pic);
+	tabHost=(TabHost)view3.findViewById(R.id.tabhost);
+	tabHost.setup();
+	TabWidget tabWidget=tabHost.getTabWidget();
+	tabHost.addTab(tabHost.newTabSpec("tab1").setIndicator("tab1").setContent(R.id.tab1));
+	tabHost.addTab(tabHost.newTabSpec("tab2").setIndicator("tab2").setContent(R.id.tab2));
+	tabHost.addTab(tabHost.newTabSpec("tab3").setIndicator("tab3").setContent(R.id.tab3));
 	
-	tab3accountTextView=(TextView)view3.findViewById(R.id.tab3_account);
-	tab3levelnametTextView=(TextView)view3.findViewById(R.id.tab3_levelname);
-	tab3nicknameTextView=(TextView)view3.findViewById(R.id.tab3_nickname);
-	tab3userfollowsTextView=(TextView)view3.findViewById(R.id.tab3_myfocus_textview);
-	tab3usercollectionTextView=(TextView)view3.findViewById(R.id.tab3_mycollection_textview);
+//	tab3accountTextView=(TextView)view3.findViewById(R.id.tab3_account);
+//	tab3levelnametTextView=(TextView)view3.findViewById(R.id.tab3_levelname);
+//	tab3nicknameTextView=(TextView)view3.findViewById(R.id.tab3_nickname);
+//	tab3userfollowsTextView=(TextView)view3.findViewById(R.id.tab3_myfocus_textview);
+//	tab3usercollectionTextView=(TextView)view3.findViewById(R.id.tab3_mycollection_textview);
 	// TODO Auto-generated method stub
 	
 }
@@ -242,7 +255,7 @@ public void onClickLogout(View view) {
 
 	private void initTab2() {
 		// TODO Auto-generated method stub
-				// TODO Auto-generated method stub
+				
 			
 		
 	}
@@ -251,17 +264,19 @@ public void onClickLogout(View view) {
 
 	private void initTab1() {
 		// TODO Auto-generated method stub
-		addImageView=(ImageView) view1.findViewById(R.id.tab1_addshare);
-		addImageView.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent=new Intent(Main.this,Tab3AddWorkActivity.class);
-				startActivity(intent);	
-			}
-		});
-		addTab1ViewpageFragment();
+//		addImageView=(ImageView) view1.findViewById(R.id.tab1_addshare);
+//		addImageView.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				Intent intent=new Intent(Main.this,Tab3AddWorkActivity.class);
+//				startActivity(intent);	
+//			}
+//		});
+//		addTab1ViewpageFragment();
+	
+	
 	}
 
 
@@ -525,13 +540,13 @@ MyApplication.requestQueue.start();
 }
 private void setTab3UserInfo() {
 	
-	tab3accountTextView.setText(UserInfo.getInstance().getUseraccount());
-	tab3levelnametTextView.setText(UserInfo.getInstance().getLevelname());
-	tab3nicknameTextView.setText(UserInfo.getInstance().getUsername());
-	tab3userfollowsTextView.setText("我的关注："+String.valueOf(UserInfo.getInstance().userfollows));
+//	tab3accountTextView.setText(UserInfo.getInstance().getUseraccount());
+//	tab3levelnametTextView.setText(UserInfo.getInstance().getLevelname());
+//	tab3nicknameTextView.setText(UserInfo.getInstance().getUsername());
+//	tab3userfollowsTextView.setText("我的关注："+String.valueOf(UserInfo.getInstance().userfollows));
 	tab3profileImageView.setDefaultImageResId(R.drawable.no_pic);
 	tab3profileImageView.setImageUrl("http://110.84.129.130:8080/Yuf"+UserInfo.getInstance().userpic, mImageLoader);
-	tab3usercollectionTextView.setText("我的收藏："+String.valueOf(UserInfo.getInstance().userfollows));
+//	tab3usercollectionTextView.setText("我的收藏："+String.valueOf(UserInfo.getInstance().userfollows));
 	
 }
 
