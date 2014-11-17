@@ -109,7 +109,7 @@
                 android:onClick="onClickMyInfo" >
 
                 <ImageView
-                    android:id="@+id/tab1_addshare"
+                    android:id="@+id/tab3_addshare"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
