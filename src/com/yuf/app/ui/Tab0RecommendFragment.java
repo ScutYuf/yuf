@@ -30,7 +30,7 @@ import com.huewu.pla.lib.internal.PLA_AdapterView;
 import com.huewu.pla.lib.internal.PLA_AdapterView.OnItemClickListener;
 
 @SuppressLint("ValidFragment")
-public class Tab0MyRecipeFragment extends Fragment  implements IXListViewListener{
+public class Tab0RecommendFragment extends Fragment  implements IXListViewListener{
 	//
 	private JSONArray mdataArray;//JSONArrray数据
 //瀑布流
@@ -38,7 +38,7 @@ public class Tab0MyRecipeFragment extends Fragment  implements IXListViewListene
 	private XListView mAdapterView = null;
 	private StaggeredAdapter mAdapter = null;
 	
-	public Tab0MyRecipeFragment(JSONArray _dataArray) {
+	public Tab0RecommendFragment(JSONArray _dataArray) {
 		mdataArray=_dataArray;
 	}
 	@Override
@@ -54,7 +54,7 @@ public class Tab0MyRecipeFragment extends Fragment  implements IXListViewListene
 	    	
 	    	@Override
 	    	public void onItemClick(PLA_AdapterView<?> parent, View view,int position, long id) {
-	    		Intent intent=new Intent(Main.mainActivity,Tab0FoodActivity.class);
+	    		Intent intent=new Intent(getActivity(),Tab0FoodActivity.class);
 	    		Bundle bundle = new Bundle();                           //创建Bundle对象   
 	    		try {
 	    			bundle.putString("dishid",mdataArray.getJSONObject(position-1).getString("dishid") );

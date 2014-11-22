@@ -31,7 +31,7 @@ public class Address {
 	public int _id;
 	
 	public void writeToDb() {
-		ContentResolver contentResolver = MyApplication.myapplication.getContentResolver();  
+		ContentResolver contentResolver = MyApplication.myApplication.getContentResolver();  
         Uri url = Uri.parse("content://com.yuf.app.myprovider/address");  
         ContentValues values = new ContentValues();  
         values.put(Address.NAMESTRING, nameString);  
@@ -47,7 +47,7 @@ public class Address {
 	public static ArrayList<Address> readFromDb() {
 		ArrayList<Address> list = new ArrayList<Address>();
 		Uri url = Uri.parse("content://com.yuf.app.myprovider/addresses");  
-        Cursor cursor = MyApplication.myapplication.getContentResolver().query(url,  
+        Cursor cursor = MyApplication.myApplication.getContentResolver().query(url,  
                   new String[] { "_id", "nameString", "phoneString","zoneString","detailString","isDefault"}, null, null, "_id");  
         
       if(cursor!=null){
@@ -77,7 +77,7 @@ public class Address {
 	//未使用
 	public static void setDefaultAddress(int i) {
 		
-		ContentResolver contentResolver1= MyApplication.myapplication.getContentResolver();  
+		ContentResolver contentResolver1= MyApplication.myApplication.getContentResolver();  
 		Uri url1 = Uri.parse("content://com.yuf.app.myprovider/address/"+defaultId);  
 		ContentValues values1 = new ContentValues();
 		values1.put(Address.ISDEFAULT, 0);
@@ -87,7 +87,7 @@ public class Address {
 	    }  
 		
 		
-		ContentResolver contentResolver = MyApplication.myapplication.getContentResolver();  
+		ContentResolver contentResolver = MyApplication.myApplication.getContentResolver();  
 		Uri url = Uri.parse("content://com.yuf.app.myprovider/address/"+String.valueOf(i));  
 		ContentValues values = new ContentValues();
 		values.put(Address.ISDEFAULT, 1);
@@ -104,13 +104,13 @@ public class Address {
 	//地址栏的信息数目
 	public static int numberOfAddress(){
 		Uri url = Uri.parse("content://com.yuf.app.myprovider/addresses");  
-        Cursor cursor = MyApplication.myapplication.getContentResolver().query(url,  
+        Cursor cursor = MyApplication.myApplication.getContentResolver().query(url,  
                   new String[] {"_id", "nameString", "phoneString","zoneString","detailString","isDefault"}, null, null, "_id");  
         return cursor.getCount();	
 	}
 	public static void deleteFromDb(int i)
 	{
-		ContentResolver contentResolver = MyApplication.myapplication.getContentResolver();  
+		ContentResolver contentResolver = MyApplication.myApplication.getContentResolver();  
 	    Uri url = Uri.parse("content://com.yuf.app.myprovider/address/"+String.valueOf(i));  
 	    
 	  

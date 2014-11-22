@@ -174,7 +174,7 @@ public class Tab2AddressActivity extends Activity {
 			Order.deleteFromDb(orders.get(i)._id);
 		JSONObject jsonObject=new JSONObject();
 		try {
-			jsonObject.put("userId", Integer.valueOf(UserInfo.getInstance().userid));
+			jsonObject.put("userId", UserInfo.getInstance().userid);
 			jsonObject.put("orderPaymethod", "货到付款");
 			jsonObject.put("orderAmount", orders.get(i).orderAmount);
 			jsonObject.put("dishId", orders.get(i).dishId);

@@ -271,7 +271,7 @@ public class Tab2WaitForPayActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					Intent intent=new Intent(Main.mainActivity,
+					Intent intent=new Intent(Tab2WaitForPayActivity.this,
 							Tab0FoodActivity.class);
 					Bundle bundle = new Bundle();                           //创建Bundle对象   
 						bundle.putString("dishid",String.valueOf( orderList.get(index).dishId));

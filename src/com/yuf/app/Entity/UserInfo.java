@@ -16,7 +16,7 @@ public class UserInfo {
 		
 			
 		if (instance==null) {
-			sharedPreferences=MyApplication.myapplication.getSharedPreferences("login", Context.MODE_PRIVATE);
+			sharedPreferences=MyApplication.myApplication.getSharedPreferences("login", Context.MODE_PRIVATE);
 			editor=sharedPreferences.edit();//获取编辑器
 			instance=new UserInfo();
 			initUserInfoWithSharePerfernces();
@@ -38,7 +38,7 @@ public class UserInfo {
 	public String useraccount;
 	public String levelname;
 	public  String sessionid;
-	public  String userid;
+	public  int userid;
 	public String userpic;
 	
 public String getUserpic() {
@@ -59,7 +59,7 @@ private static void initUserInfoWithSharePerfernces()
 		instance.useraccount=sharedPreferences.getString("useraccount", "");
 		instance.levelname=sharedPreferences.getString("levelname", "");
 		instance.sessionid=sharedPreferences.getString("sessionid", "");
-		instance.userid=sharedPreferences.getString("userid", "");
+		instance.userid=sharedPreferences.getInt("userid", 0);
 		instance.userpic=sharedPreferences.getString("userpic", "");
 	}
 }
@@ -71,12 +71,12 @@ private static void initUserInfoWithSharePerfernces()
 		editor.commit();
 		this.sessionid = sessionid;
 	}
-	public String getUserid() {
+	public int getUserid() {
 
 		return userid;
 	}
-	public void setUserid(String userid) {
-		editor.putString("userid", userid);
+	public void setUserid(int userid) {
+		editor.putInt("userid", userid);
 		editor.commit();
 		this.userid = userid;
 	}

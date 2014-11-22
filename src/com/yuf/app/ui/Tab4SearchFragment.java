@@ -6,7 +6,7 @@ import me.maxwin.view.XListView.IXListViewListener;
 import org.json.JSONArray;
 
 import com.example.android.bitmapfun.util.ImageFetcher;
-import com.yuf.app.ui.Tab0MyRecipeFragment.StaggeredAdapter;
+import com.yuf.app.ui.Tab0RecommendFragment.StaggeredAdapter;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

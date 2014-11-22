@@ -11,9 +11,8 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/main_bottom" >
-
     </com.yuf.app.mywidget.OutsideViewPager>
-    
+
     <LinearLayout
         android:id="@+id/main_bottom"
         android:layout_width="fill_parent"
@@ -23,92 +22,56 @@
         android:baselineAligned="false"
         android:paddingBottom="2dp" >
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:gravity="center|center_horizontal|center_vertical"
-                android:orientation="vertical" >
+        <ImageView
+            android:id="@+id/img_0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:contentDescription="@string/description"
+            android:scaleType="matrix"
+            android:src="@drawable/tab_0_pressed" />
 
-                <ImageView
-                    android:contentDescription="@string/description"
-                    android:id="@+id/img_0"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:scaleType="matrix"
-                    android:src="@drawable/tab_0_pressed" />
-            </LinearLayout>
+        <ImageView
+            android:id="@+id/img_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:contentDescription="@string/description"
+            android:scaleType="matrix"
+            android:src="@drawable/tab_1_normal" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:gravity="center|center_horizontal|center_vertical"
-                android:orientation="vertical" >
+        <ImageView
+            android:id="@+id/img_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:contentDescription="@string/description"
+            android:scaleType="matrix"
+            android:src="@drawable/tab_2_normal" />
 
-                <ImageView
-                    android:contentDescription="@string/description"
-                    android:id="@+id/img_4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:scaleType="matrix"
-                    android:src="@drawable/button_title_query_black"  />
+        <ImageView
+            android:id="@+id/img_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:contentDescription="@string/description"
+            android:scaleType="matrix"
+            android:src="@drawable/tab_3_normal" />
 
-            </LinearLayout>
-            
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:gravity="center|center_horizontal|center_vertical"
-                android:orientation="vertical" >
+        <ImageView
+            android:id="@+id/img_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:contentDescription="@string/description"
+            android:scaleType="matrix"
+            android:src="@drawable/tab_3_normal" />
 
-                <ImageView
-                    android:contentDescription="@string/description"
-                    android:id="@+id/img_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:scaleType="matrix"
-                    android:src="@drawable/tab_1_normal"  />
+    </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:gravity="center|center_horizontal|center_vertical"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:contentDescription="@string/description"
-                    android:id="@+id/img_2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:scaleType="matrix"
-                    android:src="@drawable/tab_2_normal" />
-            </LinearLayout>     
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:gravity="center|center_horizontal|center_vertical"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:contentDescription="@string/description"
-                    android:id="@+id/img_3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:scaleType="matrix"
-                    android:src="@drawable/tab_3_normal" />
-            </LinearLayout>     
-        </LinearLayout>
-
-    </RelativeLayout>
-	
+</RelativeLayout>

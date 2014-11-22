@@ -163,7 +163,7 @@ public class Tab1ShareDetailActivity extends Activity {
 	protected void addFocuseRelationShip() {
 		JSONObject jsonObject=new JSONObject();
 		try {
-			jsonObject.put("userId", Integer.valueOf(UserInfo.getInstance().userid));
+			jsonObject.put("userId", UserInfo.getInstance().userid);
 			jsonObject.put("sessionId", UserInfo.getInstance().sessionid);
 			jsonObject.put("friendId", userid);
 		} catch (NumberFormatException e) {
@@ -280,7 +280,7 @@ public class Tab1ShareDetailActivity extends Activity {
 	private void commentDish(String commentContent) {
 		JSONObject jsonObject=new JSONObject();
 		try {
-			jsonObject.put("userId", Integer.valueOf(UserInfo.getInstance().userid));
+			jsonObject.put("userId", UserInfo.getInstance().userid);
 			jsonObject.put("postId", postId);
 			jsonObject.put("sessionId", UserInfo.getInstance().sessionid);
 			jsonObject.put("commentContent", commentContent);

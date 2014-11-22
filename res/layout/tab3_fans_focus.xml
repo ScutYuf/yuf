@@ -55,7 +55,7 @@
                     android:orientation="vertical" >
 
                     <GridView
-                        android:id="@+id/gridView1"
+                        android:id="@+id/fans_gridview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:numColumns="3" >
@@ -70,7 +70,7 @@
                     android:orientation="vertical" >
 
                     <GridView
-                        android:id="@+id/gridView2"
+                        android:id="@+id/concerns_gridview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:numColumns="3" >

@@ -98,7 +98,7 @@ public class Tab3MyCollectionActivity extends Activity {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			
-			Intent intent=new Intent(Main.mainActivity,
+			Intent intent=new Intent(Tab3MyCollectionActivity.this,
 					Tab0FoodActivity.class);
 			Bundle bundle = new Bundle();                           //创建Bundle对象   
 			try {
@@ -132,7 +132,7 @@ public class Tab3MyCollectionActivity extends Activity {
 		{
 		
 	
-			JsonObjectRequest request=new JsonObjectRequest(Method.GET, String.format("http://110.84.129.130:8080/Yuf/collection/getCollection/%s/%s/%d", String.valueOf(UserInfo.getInstance().userid),UserInfo.getInstance().sessionid,++currentPage), null,  new Response.Listener<JSONObject>()  
+			JsonObjectRequest request=new JsonObjectRequest(Method.GET, String.format("http://110.84.129.130:8080/Yuf/collection/getCollection/%d/%s/%d", UserInfo.getInstance().userid,UserInfo.getInstance().sessionid,++currentPage), null,  new Response.Listener<JSONObject>()  
 	        {  
 	
 	            @Override  

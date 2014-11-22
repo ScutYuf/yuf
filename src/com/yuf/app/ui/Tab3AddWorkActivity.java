@@ -79,7 +79,7 @@ public class Tab3AddWorkActivity extends Activity {
 			// TODO Auto-generated method stub
 			JSONObject json=new JSONObject();
 			try {
-				json.put("userId",Integer.valueOf(UserInfo.getInstance().getUserid()));
+				json.put("userId",UserInfo.getInstance().userid);
 				json.put("postTitle", nameEditText.getText().toString());
 				json.put("postTime",timeTextView.getText().toString());
 				json.put("postContent", shareContentEditText.getText().toString());
@@ -196,8 +196,6 @@ MyApplication.requestQueue.start();
             	photo=MediaStore.Images.Media.getBitmap(resolver, originalUri);
             	foodImageView.setImageBitmap(photo);
 				file = new File(saveDir,picName);
-				UploadFilesTask task=new UploadFilesTask();
-				task.execute(file);
 				
 				
 			} catch (FileNotFoundException e) {

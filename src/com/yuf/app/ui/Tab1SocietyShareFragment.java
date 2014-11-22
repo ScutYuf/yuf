@@ -402,7 +402,7 @@ private void addCommentRelationship(int postId,final String dishComment,final in
 	JSONObject jsonObject = new JSONObject();
 	final JSONObject js = new JSONObject();
 	try{
-		jsonObject.put("userId", Integer.valueOf( UserInfo.getInstance().userid));
+		jsonObject.put("userId",UserInfo.getInstance().userid);
 		jsonObject.put("postId", postId);
 		jsonObject.put("sessionId",UserInfo.getInstance().sessionid);
 		jsonObject.put("commentContent", dishComment);
@@ -445,7 +445,7 @@ private void addLikeRelationship(int postid,final int index)
 {
 	JSONObject jsonObject=new JSONObject();
 	try {
-		jsonObject.put("userId",Integer.valueOf( UserInfo.getInstance().userid));
+		jsonObject.put("userId",UserInfo.getInstance().userid);
 		jsonObject.put("postId", postid);
 	} catch (NumberFormatException e) {
 		// TODO Auto-generated catch block

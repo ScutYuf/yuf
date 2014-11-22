@@ -104,7 +104,7 @@ protected void addOrder() {
 			order.orderPaymethod="货到付款";
 			order.orderPrice=dishInfoJsonObject.getDouble("dishprice");
 			order.orderTime=timeString();
-			order.userId=Integer.valueOf(UserInfo.getInstance().userid);
+			order.userId=UserInfo.getInstance().userid;
 			order.writeToDb();
 			Toast.makeText(getActivity(), "加入购物车成功", Toast.LENGTH_SHORT).show();
         

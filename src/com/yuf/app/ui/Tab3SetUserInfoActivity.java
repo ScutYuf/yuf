@@ -155,7 +155,7 @@ private String picName;
 		JSONObject jsonObject=new JSONObject();
 		try {
 			jsonObject.put("sessionId", UserInfo.getInstance().sessionid);
-			jsonObject.put("userId",Integer.valueOf(UserInfo.getInstance().userid));
+			jsonObject.put("userId",UserInfo.getInstance().userid);
 			jsonObject.put("nickName", newName);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

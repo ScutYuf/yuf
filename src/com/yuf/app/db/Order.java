@@ -57,7 +57,7 @@ public class Order {
 	}
 	public void writeToDb() {
 		Uri url1 = Uri.parse("content://com.yuf.app.myprovider/orderToBeAdded");  
-		Cursor cursor = MyApplication.myapplication.getContentResolver().query(url1,  
+		Cursor cursor = MyApplication.myApplication.getContentResolver().query(url1,  
                  new String[] { "_id", "userId", "orderPrice","orderTime","orderPaymethod","orderAmount","isSelect","dishId","orderImage","orderName" }, " userId=? and dishId=?", new String[]{userId+"",dishId+""}, "_id");  
 		//相同的用户ID，相同的菜
 		int count = cursor.getCount();
@@ -67,7 +67,7 @@ public class Order {
 		else {
 			
 		
-		   ContentResolver contentResolver = MyApplication.myapplication.getContentResolver();  
+		   ContentResolver contentResolver = MyApplication.myApplication.getContentResolver();  
            Uri url = Uri.parse("content://com.yuf.app.myprovider/order");  
            ContentValues values = new ContentValues();  
            values.put(Order.USERID, userId);  
@@ -87,9 +87,9 @@ public class Order {
 	}
 	public  void addOrder(){
 		Uri url = Uri.parse("content://com.yuf.app.myprovider/orderToBeAdded");  
-		Cursor cursor = MyApplication.myapplication.getContentResolver().query(url,  
+		Cursor cursor = MyApplication.myApplication.getContentResolver().query(url,  
                  new String[] { "_id", "userId", "orderPrice","orderTime","orderPaymethod","orderAmount","isSelect","dishId","orderImage","orderName" }, " userId=? and dishId=?", new String[]{userId+"",dishId+""}, "_id");  
-		ContentResolver contentResolver= MyApplication.myapplication.getContentResolver();  
+		ContentResolver contentResolver= MyApplication.myApplication.getContentResolver();  
 		ContentValues values = new ContentValues();
 		cursor.moveToNext();
 		int number = cursor.getInt(cursor.getColumnIndex("orderAmount"));
@@ -100,7 +100,7 @@ public class Order {
 	}
 	//modify-isSelect
 	public void modifyIsSelected(int a) {
-		ContentResolver contentResolver= MyApplication.myapplication.getContentResolver();  
+		ContentResolver contentResolver= MyApplication.myApplication.getContentResolver();  
 		Uri url1 = Uri.parse("content://com.yuf.app.myprovider/order/"+_id);  
 		ContentValues values = new ContentValues();
 		values.put(Order.ISSELECT,a);
@@ -111,7 +111,7 @@ public class Order {
 	}
 	//返回时将所有修改为未选中状态
 	public static void modifyAllIsSelected(){
-		ContentResolver contentResolver= MyApplication.myapplication.getContentResolver();  
+		ContentResolver contentResolver= MyApplication.myApplication.getContentResolver();  
 		Uri url1 = Uri.parse("content://com.yuf.app.myprovider/orders");  
 		ContentValues values = new ContentValues();
 		values.put(Order.ISSELECT,0);
@@ -122,10 +122,10 @@ public class Order {
    }
 	//a是0则减一；a是1则加一。
 	public void modifyAmount(int a){
-		ContentResolver contentResolver= MyApplication.myapplication.getContentResolver();  
+		ContentResolver contentResolver= MyApplication.myApplication.getContentResolver();  
 		Uri url = Uri.parse("content://com.yuf.app.myprovider/order/"+_id);  
 		ContentValues values = new ContentValues();
-		Cursor cursor = MyApplication.myapplication.getContentResolver().query(url,  
+		Cursor cursor = MyApplication.myApplication.getContentResolver().query(url,  
                 new String[] { "_id", "userId", "orderPrice","orderTime","orderPaymethod","orderAmount","isSelect","dishId","orderImage","orderName" }, null, null, "_id");  
 		cursor.moveToNext();
 		int number = cursor.getInt(cursor.getColumnIndex("orderAmount"));
@@ -139,7 +139,7 @@ public class Order {
 	
 public static void deleteFromDb(int i)
 {
-	ContentResolver contentResolver = MyApplication.myapplication.getContentResolver();  
+	ContentResolver contentResolver = MyApplication.myApplication.getContentResolver();  
     Uri url = Uri.parse("content://com.yuf.app.myprovider/order/"+String.valueOf(i));  
     
   
@@ -152,7 +152,7 @@ public static void deleteFromDb(int i)
 	public static ArrayList<Order> readFromDb() {
 		ArrayList<Order> list = new ArrayList<Order>();
 		Uri url = Uri.parse("content://com.yuf.app.myprovider/orders");  
-        Cursor cursor = MyApplication.myapplication.getContentResolver().query(url,  
+        Cursor cursor = MyApplication.myApplication.getContentResolver().query(url,  
                   new String[] { "_id", "userId", "orderPrice","orderTime","orderPaymethod","orderAmount","isSelect","dishId","orderImage","orderName" }, null, null, "_id");  
         
       if(cursor!=null){
@@ -182,7 +182,7 @@ public static void deleteFromDb(int i)
 	public static ArrayList<Order> readAllSelectOrderFromDb() {
 		ArrayList<Order> list = new ArrayList<Order>();
 		Uri url = Uri.parse("content://com.yuf.app.myprovider/isselected_order");  
-        Cursor cursor = MyApplication.myapplication.getContentResolver().query(url,  
+        Cursor cursor = MyApplication.myApplication.getContentResolver().query(url,  
                   new String[] { "_id", "userId", "orderPrice","orderTime","orderPaymethod","orderAmount","isSelect","dishId","orderImage","orderName" }, null, null, "_id");  
         
       if(cursor!=null){
@@ -206,7 +206,7 @@ public static void deleteFromDb(int i)
 	}
 	public static int numberOfOrders(){
 		Uri url = Uri.parse("content://com.yuf.app.myprovider/orders");  
-        Cursor cursor = MyApplication.myapplication.getContentResolver().query(url,  
+        Cursor cursor = MyApplication.myApplication.getContentResolver().query(url,  
                   new String[] { "_id", "userId", "orderPrice","orderTime","orderPaymethod","orderAmount","isSelect","dishId","orderImage","orderName" }, null, null, "_id");  
         return cursor.getCount();	
 	}

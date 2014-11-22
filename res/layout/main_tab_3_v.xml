@@ -42,8 +42,8 @@
         android:layout_height="200dp"
         android:background="@drawable/user_background" >
 
-        <!-- <ImageView -->
 
+<!--         <ImageView -->
         <com.yuf.app.mywidget.CircularNetWorkImageView
             android:id="@+id/tab3_profile"
             android:layout_width="wrap_content"
@@ -53,27 +53,26 @@
             android:src="@drawable/add" />
 
         <LinearLayout
+          	android:id="@+id/goFanFocusLinerLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tab3_profile"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal" 
             android:clickable="true"
-            android:onClick="goFanFocusActivity"
-            
             >
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="0粉丝" />
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="0关注" />
 
             <ImageView
                 android:id="@+id/imageView1"
@@ -110,11 +109,15 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical" >
 
-                    <TextView
-                        android:id="@+id/textView1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TextView" />
+                    <com.handmark.pulltorefresh.library.PullToRefreshListView
+				        android:id="@+id/orders_listview"
+				        android:layout_width="match_parent"
+				        android:layout_height="match_parent"
+				        android:divider="#ccc"
+				        android:dividerHeight="0.8dp"
+				        android:fadingEdgeLength="0dp" >
+
+    				</com.handmark.pulltorefresh.library.PullToRefreshListView>
                 </LinearLayout>
 
                 <LinearLayout
@@ -123,11 +126,14 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical" >
 
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TextView" />
+                    <com.handmark.pulltorefresh.library.PullToRefreshListView
+					        android:id="@+id/works_listview"
+					        android:layout_width="match_parent"
+					        android:layout_height="match_parent"
+					        android:fadingEdgeLength="0dp"
+					        android:divider="#ccc"
+					        android:dividerHeight="0.8dp"
+					        android:background="#f6f4f1" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -135,12 +141,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical" >
-
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TextView" />
+					<com.handmark.pulltorefresh.library.PullToRefreshListView
+					        android:id="@+id/collections_listview"
+					        android:layout_width="match_parent"
+					        android:layout_height="match_parent"
+					        android:fadingEdgeLength="0dp"
+					        android:divider="#ccc"
+					        android:dividerHeight="0.8dp"
+					        android:background="#f6f4f1" />
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>

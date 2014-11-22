@@ -67,7 +67,7 @@ public class Tab3MyWorkActivity extends Activity {
 	});
 	
 	Intent intent=getIntent();
-	userId=Integer.valueOf(UserInfo.getInstance().userid);
+	userId=UserInfo.getInstance().userid;
 	if (intent.getExtras()!=null) {
 		userId=intent.getExtras().getInt("userId");
 		addImageView.setVisibility(View.GONE);

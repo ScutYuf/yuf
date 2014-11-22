@@ -6,7 +6,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
+import com.yuf.app.http.extend.BitmapCache;
 
 import android.R.string;
 import android.app.Application;
@@ -16,11 +18,13 @@ import android.os.StrictMode;
 public  class MyApplication extends Application {
 	
 	public static RequestQueue requestQueue;
-	public static MyApplication myapplication;
-//
+	public static MyApplication myApplication;
+	public static ImageLoader mImageLoader;
+	
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
+		//严格模式
 		StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()  
 	    .detectAll()
 	    .penaltyLog()  
@@ -30,10 +34,12 @@ public  class MyApplication extends Application {
         .penaltyLog()  
         .build()); 
 		
+		myApplication=this;
+		requestQueue=Volley.newRequestQueue(getApplicationContext()); 
+		mImageLoader=new ImageLoader(requestQueue, new BitmapCache());
 		
 		super.onCreate();
-		myapplication=this;
-		requestQueue=Volley.newRequestQueue(this); 
+		
 		
 	}
 	

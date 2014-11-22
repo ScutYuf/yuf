@@ -10,10 +10,10 @@ import android.util.Log;
 
 import com.yuf.app.Entity.CategorysEntity;
 
-public class MiddlePageAdapter extends FragmentStatePagerAdapter {
+public class InsiderPageAdapter extends FragmentStatePagerAdapter {
 
 
-	public MiddlePageAdapter(FragmentManager fm) {
+	public InsiderPageAdapter(FragmentManager fm) {
 		super(fm);
 		// TODO Auto-generated constructor stub
 	}

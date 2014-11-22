@@ -253,7 +253,7 @@ public class Tab0FoodActivity extends Activity{
     protected void addCollectionRelationShip() {
 			JSONObject jsonObject=new JSONObject();
 			try {
-				jsonObject.put("userId",Long.valueOf( UserInfo.getInstance().userid));
+				jsonObject.put("userId",UserInfo.getInstance().userid);
 				jsonObject.put("sessionId", UserInfo.getInstance().sessionid);
 				jsonObject.put("dishId", dishInfoJsonObject.getInt("dishid"));
 				

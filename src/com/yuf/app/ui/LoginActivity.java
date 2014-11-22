@@ -141,7 +141,7 @@ private void login()
 					if(response.getInt("code")==0)
 					{
 						UserInfo.getInstance().setSessionid(response.getString("sessionid"));
-						UserInfo.getInstance().setUserid(response.getString("userid"));
+						UserInfo.getInstance().setUserid(response.getInt("userid"));
 						Editor editor = sharepPreferences.edit();//获取编辑器
 						editor.putBoolean("isLogined", true);
 						editor.commit();
