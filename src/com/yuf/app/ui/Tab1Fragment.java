@@ -1,8 +1,5 @@
 package com.yuf.app.ui;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,6 +17,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,7 +32,6 @@ import android.widget.Toast;
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -43,7 +41,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.yuf.app.MyApplication;
 import com.yuf.app.Entity.UserInfo;
-import com.yuf.app.http.extend.BitmapCache;
 import com.yuf.app.util.TimeHelper;
 
 public class Tab1Fragment extends Fragment {
@@ -63,7 +60,6 @@ public class Tab1Fragment extends Fragment {
 	private EditText commentEditText;
 	private Button commentButton;
 	private InputMethodManager inputMethodManager;
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -176,86 +172,61 @@ public class Tab1Fragment extends Fragment {
 			holder.moreImageView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					LayoutInflater mLayoutInflater = (LayoutInflater) getActivity()
-							.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-					ViewGroup viewGroup = (ViewGroup) mLayoutInflater.inflate(
-							R.layout.comment_popupwindow, null);
+					LayoutInflater mLayoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+					ViewGroup viewGroup = (ViewGroup) mLayoutInflater.inflate(R.layout.comment_popupwindow, null);
 					if (mPopupWindow == null) {
 	
 						mPopupWindow = new PopupWindow(viewGroup, 300, 60);
-						mPopupWindow
-								.setBackgroundDrawable(new BitmapDrawable());
+						mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
 						mPopupWindow.setFocusable(false);
 						mPopupWindow.setOutsideTouchable(true);
 						mPopupWindow.setAnimationStyle(R.style.PopupAnimation);
 						int[] location = new int[2];
 						v.getLocationOnScreen(location);
-						mPopupWindow.showAtLocation(v, Gravity.NO_GRAVITY,
-								location[0] - 300, location[1]);
-						// 点赞
-						TextView likeTextView = (TextView) viewGroup
-								.findViewById(R.id.comment_popupwindow_like);
+						mPopupWindow.showAtLocation(v, Gravity.NO_GRAVITY,location[0] - 300, location[1]);
+// 点赞
+						TextView likeTextView = (TextView) viewGroup.findViewById(R.id.comment_popupwindow_like);
 						likeTextView.setOnClickListener(new OnClickListener() {
 	
 							@Override
 							public void onClick(View v) {
 								// TODO Auto-generated method stub
 								try {
-									like(jsonArray.getJSONObject(index).getInt(
-											"postid"), index);
+									like(jsonArray.getJSONObject(index).getInt("postid"), index);
 	
 								} catch (JSONException e) {
-									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
 							}
 						});
-						// 评论
+// 评论
 	
-						TextView commentTextView = (TextView) viewGroup
-								.findViewById(R.id.comment_popupwindow_comment);
-						commentTextView
-								.setOnClickListener(new OnClickListener() {
+						TextView commentTextView = (TextView) viewGroup.findViewById(R.id.comment_popupwindow_comment);
+						commentTextView.setOnClickListener(new OnClickListener() {
 									@Override
 									public void onClick(View view) {
-										commentViewGroup
-												.setVisibility(View.VISIBLE);
+										mPopupWindow.dismiss();
+										mPopupWindow = null;
+										
+										commentViewGroup.setVisibility(View.VISIBLE);
 										commentEditText.requestFocus();
-										inputMethodManager
-												.toggleSoftInput(
-														0,
-														InputMethodManager.HIDE_NOT_ALWAYS);
-	
-										commentButton
-												.setOnClickListener(new OnClickListener() {
-	
-													@Override
-													public void onClick(
-															View view) {
+										inputMethodManager.toggleSoftInput(0,InputMethodManager.HIDE_NOT_ALWAYS);
+										
+										commentButton.setOnClickListener(new OnClickListener() {
+	                                                @Override
+													public void onClick(View view) {
 														try {
-															comment(jsonArray
-																	.getJSONObject(
-																			index)
-																	.getInt("postid"),
-																	commentEditText
-																			.getText()
-																			.toString(),
-																	index);
+															comment(jsonArray.getJSONObject(index).getInt("postid"),
+																	commentEditText.getText().toString(),index);
 														} catch (JSONException e) {
 															e.printStackTrace();
 														}
-														commentViewGroup
-																.setVisibility(View.GONE);
-														inputMethodManager
-																.toggleSoftInput(
-																		0,
-																		InputMethodManager.HIDE_NOT_ALWAYS);
-	
-													}
+														commentViewGroup.setVisibility(View.GONE);
+														commentEditText.setText("");
+														inputMethodManager.hideSoftInputFromWindow(getActivity().getWindow().peekDecorView().getWindowToken(),0);
+										         }
 												});
-	
-									}
-								});
+	                                  }});
 					} else {
 						mPopupWindow.dismiss();
 						mPopupWindow = null;
@@ -314,10 +285,12 @@ public class Tab1Fragment extends Fragment {
 
 	private void initMember(View view) {
 
-		
-		
-		
 		jsonArray = new JSONArray();
+		
+		inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+		commentViewGroup =(LinearLayout)view.findViewById(R.id.comment_viewgroup);
+		commentEditText = (EditText)view.findViewById(R.id.comment_editText1);
+		commentButton = (Button)view.findViewById(R.id.comment_button1);
 		
 		shareButton=(Button)view.findViewById(R.id.tab1_title_shareBtn);
 		shareButton.setOnClickListener(new OnClickListener() {
@@ -332,8 +305,7 @@ public class Tab1Fragment extends Fragment {
 		});
 		
 		
-		listView = (PullToRefreshListView) view
-				.findViewById(R.id.tab1_share_listview);
+		listView = (PullToRefreshListView) view.findViewById(R.id.tab1_share_listview);
 		// 下拉刷新
 		listView.setOnRefreshListener(new OnRefreshListener<ListView>() {
 			@Override
@@ -346,7 +318,13 @@ public class Tab1Fragment extends Fragment {
 				refreshView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
 				// Do work to refresh the list here.
 				refreshListView();
-
+          //隐藏虚拟键盘  
+				View windowView = getActivity().getWindow().peekDecorView();
+				if (windowView != null) {
+                    inputMethodManager.hideSoftInputFromWindow(windowView.getWindowToken(),0);
+                    commentViewGroup.setVisibility(View.GONE);
+                    commentEditText.setText("");
+				}
 			}
 
 		});
@@ -361,18 +339,26 @@ public class Tab1Fragment extends Fragment {
 
 			}
 		});
+		
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				 //隐藏虚拟键盘  
+				View windowView = getActivity().getWindow().peekDecorView();
+				if (windowView != null) {
+                    inputMethodManager.hideSoftInputFromWindow(windowView.getWindowToken(),0);
+                    commentViewGroup.setVisibility(View.GONE);
+                    commentEditText.setText("");
+				}
+			}
+		});
+		
 		mAdaAdapter = new MylistAdapter();
 		listView.setAdapter(mAdaAdapter);
 		listView.setMode(Mode.PULL_FROM_START);
-
-		commentViewGroup = (LinearLayout) view
-				.findViewById(R.id.tab1_comment_viewgroup);
-		commentEditText = (EditText) view
-				.findViewById(R.id.tab1_comment_editText1);
-		commentButton = (Button) view.findViewById(R.id.tab1_comment_button1);
-		inputMethodManager = (InputMethodManager) getActivity()
-				.getSystemService(Context.INPUT_METHOD_SERVICE);
-
+	
 		refreshListView();
 
 	}

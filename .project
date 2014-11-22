@@ -3,6 +3,7 @@
 	<name>yuf</name>
 	<comment></comment>
 	<projects>
+		<project>PLASample</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

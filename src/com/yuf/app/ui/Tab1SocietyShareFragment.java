@@ -18,8 +18,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,9 +56,7 @@ public class Tab1SocietyShareFragment extends Fragment {
 	private MylistAdapter mAdaAdapter;
 	private boolean isEnd;	
 //评论
-	private LinearLayout tab1_comment_viewgroup;
-	private EditText tab1_comment_editText1;
-	private Button tab1_comment_button1;
+	private PopupWindow commentWindow;
 	private InputMethodManager inputMethodManager;
 	public Tab1SocietyShareFragment(){
 		super();
@@ -71,6 +69,7 @@ public class Tab1SocietyShareFragment extends Fragment {
 		// TODO Auto-generated method stub
 		View view=inflater.inflate(R.layout.tab1_share,container,false);
 		listView=(PullToRefreshListView)view.findViewById(R.id.tab1_share_listview);
+		
 		listView.setOnRefreshListener(new OnRefreshListener<ListView>() {
 			@Override
 			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -81,7 +80,6 @@ public class Tab1SocietyShareFragment extends Fragment {
 
 				// Do work to refresh the list here.
 				refreshListView();
-			
 			}
 
 			
@@ -98,17 +96,12 @@ public class Tab1SocietyShareFragment extends Fragment {
 					
 			}	});
 		
-		tab1_comment_viewgroup = (LinearLayout)view.findViewById(R.id.tab1_comment_viewgroup);
-		tab1_comment_editText1 = (EditText)view.findViewById(R.id.tab1_comment_editText1);
-		tab1_comment_button1 = (Button)view.findViewById(R.id.tab1_comment_button1);
-		inputMethodManager = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-		
 		listView.setMode(Mode.PULL_FROM_START);
 		mAdaAdapter=new MylistAdapter();
 		listView.setAdapter(mAdaAdapter);
 
 		refreshListView();
-		 return  view;
+		return  view;
 	}
 		private void refreshListView() {
 			// TODO Auto-generated method stub
@@ -177,17 +170,14 @@ private class MylistAdapter extends BaseAdapter
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		Log.d("tab1share", String.valueOf(jsonArray.length()));
 		return jsonArray.length();
 
 	}
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
 		try {
 			return jsonArray.getJSONObject(position);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -195,13 +185,11 @@ private class MylistAdapter extends BaseAdapter
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
 		return position;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
 		Log.d("mywork", "get");
 	    ViewHolder holder;
 	    final int index=position;
@@ -280,43 +268,23 @@ private class MylistAdapter extends BaseAdapter
 						
 						@Override
 						public void onClick(View v) {
-							// TODO Auto-generated method stub
 							try {
 								addLikeRelationship(jsonArray.getJSONObject(index).getInt("postid"),index);
 								
 							} catch (JSONException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
 					});
 //评论
+			TextView commentTextView=(TextView) viewGroup.findViewById(R.id.comment_popupwindow_comment);
+			commentTextView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View view) {
 					
-					TextView commentTextView=(TextView) viewGroup.findViewById(R.id.comment_popupwindow_comment);
-					commentTextView.setOnClickListener(new OnClickListener() {
-				        @Override
-						public void onClick(View view) {
-				        	tab1_comment_viewgroup.setVisibility(View.VISIBLE);
-				        	tab1_comment_editText1.requestFocus();
-                            inputMethodManager.toggleSoftInput(0,  InputMethodManager.HIDE_NOT_ALWAYS);
-                            
-				        	tab1_comment_button1 .setOnClickListener(new OnClickListener() {
-								
-								@Override
-								public void onClick(View view) {
-									try {
-										addCommentRelationship(jsonArray.getJSONObject(index).getInt("postid"),tab1_comment_editText1.getText().toString(),index);
-									} catch (JSONException e) {
-										e.printStackTrace();
-									}
-									tab1_comment_viewgroup.setVisibility(View.GONE);
-		                            inputMethodManager.toggleSoftInput(0,  InputMethodManager.HIDE_NOT_ALWAYS);
-
-								}
-							});
-				        
-						}
-					});
+				}
+			});
+			
 				}
 				else {
 					mPopupWindow.dismiss();
