@@ -64,7 +64,7 @@ public class Tab1Fragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		View view = inflater.inflate(R.layout.tab1_share, container, false);
+		View view = inflater.inflate(R.layout.main_tab_1, container, false);
 
 		initMember(view);
 

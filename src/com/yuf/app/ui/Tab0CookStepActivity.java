@@ -82,8 +82,9 @@ public class Tab0CookStepActivity extends Activity{
 		buyFood.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				Intent intent=new Intent(Tab0CookStepActivity.this, Tab2WaitForPayActivity.class);
-				startActivity(intent);
+				//跳到购物车页面
+//				Intent intent=new Intent(Tab0CookStepActivity.this, Tab2WaitForPayActivity.class);
+//				startActivity(intent);
 			}
 		});
 		

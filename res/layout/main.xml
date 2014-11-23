@@ -70,7 +70,7 @@
             android:clickable="true"
             android:contentDescription="@string/description"
             android:scaleType="matrix"
-            android:src="@drawable/tab_3_normal" />
+            android:src="@drawable/tab_4_normal" />
 
     </LinearLayout>
 

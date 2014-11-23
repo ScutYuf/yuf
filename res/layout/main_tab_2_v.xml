@@ -21,7 +21,7 @@
             android:layout_alignBaseline="@+id/button1"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="TextView" />
+            android:text="订单总计：" />
 
         <Button
             android:id="@+id/button1"
@@ -29,7 +29,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:text="Button" />
+            android:background="@drawable/shape2"
+            android:text="提交订单" />
+
     </RelativeLayout>
 
     <ScrollView
@@ -57,7 +59,7 @@
                     android:text="已定食谱" />
 
                 <com.yuf.app.mywidget.NoScrollListview
-                    android:id="@+id/listView1"
+                    android:id="@+id/cart_listview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" >
                 </com.yuf.app.mywidget.NoScrollListview>
@@ -78,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
-                    android:text="收货人" />
+                    android:text="收货人：" />
 
                 <Button
                     android:id="@+id/button2"
@@ -86,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:text="Button" />
+                    android:text="修改" />
 
                 <ImageView
                     android:id="@+id/imageView2"
@@ -102,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@+id/imageView2"
-                    android:text="TextView" />
+                    android:text="电话：" />
 
                 <Button
                     android:id="@+id/button3"
@@ -110,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/button2"
-                    android:text="Button" />
+                    android:text="修改" />
 
                 <ImageView
                     android:id="@+id/ImageView01"
@@ -126,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_below="@+id/ImageView01"
-                    android:text="TextView" />
+                    android:text="地址：" />
 
                 <Button
                     android:id="@+id/button4"
@@ -134,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_alignTop="@+id/ImageView01"
-                    android:text="Button" />
+                    android:text="修改" />
 
             </RelativeLayout>
 
@@ -167,6 +169,7 @@
 	                    android:id="@+id/radioButton1"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
+	                    android:checked="true"
 	                    android:text="货到付款"
 	                    android:textColor="#000" />
 	
@@ -182,6 +185,7 @@
 	                    android:layout_height="wrap_content"
 	                    android:text="在线支付"
 	                    android:textColor="#000" />
+
 				</RadioGroup>
             </LinearLayout>
         </LinearLayout>

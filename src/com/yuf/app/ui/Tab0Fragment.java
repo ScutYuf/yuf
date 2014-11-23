@@ -26,7 +26,6 @@ import com.yuf.app.ui.indicator.TitlePageIndicator;
 
 public class Tab0Fragment extends Fragment {
 
-	private ArrayList<CategorysEntity> tab0categorysEntities;
 	private TitlePageIndicator tab0Indicator;
 	private ViewPager tab0Viewpage;
 	private MyFragmentPagerAdapter fragmentPagerAdapter;
@@ -46,7 +45,7 @@ public class Tab0Fragment extends Fragment {
 
 	private void initMember(View view) {
 		// TODO Auto-generated method stub
-		tab0categorysEntities = new ArrayList<CategorysEntity>();
+		
 		tab0Viewpage = (ViewPager) view.findViewById(R.id.tab0_pager);
 		tab0Indicator = (TitlePageIndicator) view
 				.findViewById(R.id.tab0_indicator);
@@ -65,23 +64,21 @@ public class Tab0Fragment extends Fragment {
 						JSONArray dishsetsArray;
 						try {
 							dishsetsArray = response.getJSONArray("dishsets");
-							tab0categorysEntities.add(new CategorysEntity(
-									"家庭套餐"));
+							fragmentPagerAdapter.addTitle("家庭套餐");
 							fragmentPagerAdapter.addFragment(new Tab0RecommendFragment(
 									dishsetsArray.getJSONObject(0)
 											.getJSONArray("dishsetdetail")));
-							tab0categorysEntities.add(new CategorysEntity(
-									"情侣套餐"));
+							fragmentPagerAdapter.addTitle("情侣套餐");
 							fragmentPagerAdapter.addFragment(new Tab0RecommendFragment(
 									dishsetsArray.getJSONObject(1)
 											.getJSONArray("dishsetdetail")));
-							tab0categorysEntities.add(new CategorysEntity(
-									"食客分享"));
 							fragmentPagerAdapter.addFragment(new Tab0RecommendFragment(
 									dishsetsArray.getJSONObject(2)
 											.getJSONArray("dishsetdetail")));
+							fragmentPagerAdapter.addTitle("单身套餐");
 							tab0Viewpage.setAdapter(fragmentPagerAdapter);
 							tab0Viewpage.setOffscreenPageLimit(3);
+							
 							tab0Indicator.setViewPager(tab0Viewpage);
 							tab0Viewpage.setCurrentItem(1);
 							Log.e("TAG", response.toString());

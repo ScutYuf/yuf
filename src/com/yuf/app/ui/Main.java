@@ -142,7 +142,7 @@ public class Main extends FragmentActivity {
 					mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab_3_normal));
 				}
 				else if (currIndex==4) {
-					mTab4.setImageDrawable(getResources().getDrawable(R.drawable.tab_3_normal));
+					mTab4.setImageDrawable(getResources().getDrawable(R.drawable.tab_4_normal));
 				}
 				
 				break;
@@ -155,7 +155,7 @@ public class Main extends FragmentActivity {
 				}else if (currIndex == 3) {
 					mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab_3_normal));
 				}else if (currIndex==4) {
-					mTab4.setImageDrawable(getResources().getDrawable(R.drawable.tab_3_normal));
+					mTab4.setImageDrawable(getResources().getDrawable(R.drawable.tab_4_normal));
 				}
 				break;
 			case 2:
@@ -167,7 +167,7 @@ public class Main extends FragmentActivity {
 				}else if (currIndex == 3) {
 					mTab3.setImageDrawable(getResources().getDrawable(R.drawable.tab_3_normal));
 				}else if (currIndex==4) {
-					mTab4.setImageDrawable(getResources().getDrawable(R.drawable.tab_3_normal));
+					mTab4.setImageDrawable(getResources().getDrawable(R.drawable.tab_4_normal));
 				}
 				break;
 			case 3:
@@ -179,12 +179,12 @@ public class Main extends FragmentActivity {
 				}else if (currIndex == 2) {
 					mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab_2_normal));
 				}else if (currIndex==4) {
-					mTab4.setImageDrawable(getResources().getDrawable(R.drawable.tab_3_normal));
+					mTab4.setImageDrawable(getResources().getDrawable(R.drawable.tab_4_normal));
 				}
                 break;
 			case 4:
 				
-					mTab4.setImageDrawable(getResources().getDrawable(R.drawable.tab_3_pressed));
+					mTab4.setImageDrawable(getResources().getDrawable(R.drawable.tab_4_pressed));
 				
 				if (currIndex == 0) {
 					mTab0.setImageDrawable(getResources().getDrawable(R.drawable.tab_0_normal));
