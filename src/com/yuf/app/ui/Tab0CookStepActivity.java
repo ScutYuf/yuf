@@ -1,12 +1,15 @@
 package com.yuf.app.ui;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -25,6 +28,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
@@ -33,6 +37,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.yuf.app.MyApplication;
+import com.yuf.app.Entity.UserInfo;
+import com.yuf.app.db.Order;
 import com.yuf.app.http.extend.BitmapCache;
 
 public class Tab0CookStepActivity extends Activity{
@@ -52,6 +58,7 @@ public class Tab0CookStepActivity extends Activity{
 	
 	private JSONArray stepJsonObject;
 	private JSONObject jsonObject;
+	private JSONObject dishInfoJsonObject;
 	private ImageLoader mImageLoader;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +89,8 @@ public class Tab0CookStepActivity extends Activity{
 		buyFood.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				//跳到购物车页面
-//				Intent intent=new Intent(Tab0CookStepActivity.this, Tab2WaitForPayActivity.class);
-//				startActivity(intent);
+				addOrder();
+				onBackPressed();
 			}
 		});
 		
@@ -140,6 +146,33 @@ public class Tab0CookStepActivity extends Activity{
 			}
 		});
 }
+	
+//加入购物车	
+	private void addOrder() {
+		try {
+			Order order=new Order();
+			order.dishId=dishInfoJsonObject.getInt("dishid");
+			order.orderAmount=1;
+			order.orderImage=dishInfoJsonObject.getString("dishpicurl");
+			order.orderName=dishInfoJsonObject.getString("dishname");
+			order.orderPaymethod="货到付款";
+			order.orderPrice=dishInfoJsonObject.getDouble("dishprice");
+			order.orderTime=timeString();
+			order.userId=Integer.valueOf(UserInfo.getInstance().userid);
+			order.writeToDb();
+			Toast.makeText(Tab0CookStepActivity.this, "加入购物车成功", Toast.LENGTH_SHORT).show();
+			} catch (JSONException e) {
+			e.printStackTrace();
+			}		
+	}
+	@SuppressLint("SimpleDateFormat")
+	private String timeString() {
+		long currentTime = System.currentTimeMillis();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = new Date(currentTime);
+		return formatter.format(date);
+		}
+	
 //获取网络数据	
 	private void getDishDetail() {
 		
@@ -151,6 +184,7 @@ public class Tab0CookStepActivity extends Activity{
             	try {
 					jsonObject=response.getJSONObject("dishDetail");
 					stepJsonObject = jsonObject.getJSONArray("Recipe");
+					dishInfoJsonObject=jsonObject.getJSONObject("Dish");
 					inintViewPager();
 				} catch (JSONException e) {
 					e.printStackTrace();

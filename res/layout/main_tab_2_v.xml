@@ -99,6 +99,7 @@
                     android:src="#000" />
                
                 <TextView
+                    android:id="@+id/person"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="收货人：" />
@@ -109,6 +110,7 @@
                     android:src="#000" />
 
                 <TextView
+                    android:id="@+id/phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="电话：" />
@@ -119,6 +121,7 @@
                     android:src="#000" />
 
                 <TextView
+                    android:id="@+id/address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="地址：" />

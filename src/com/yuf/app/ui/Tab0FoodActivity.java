@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -48,6 +50,7 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.onekeyshare.OnekeyShare;
 import com.yuf.app.MyApplication;
 import com.yuf.app.Entity.UserInfo;
+import com.yuf.app.db.Order;
 import com.yuf.app.http.extend.BitmapCache;
 
 //缺分享图片；    翻页动画；  评论还不行
@@ -110,9 +113,13 @@ public class Tab0FoodActivity extends Activity{
 		buyFood.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				//跳到购物车页面
+				addOrder();
+				onBackPressed();
+				Main.mTabPager.setCurrentItem(2);
 			}
+
 		});
+		
 //评论		
 		comment = (EditText)findViewById(R.id.text3);
 		comment.setOnEditorActionListener(new OnEditorActionListener() {
@@ -168,6 +175,33 @@ public class Tab0FoodActivity extends Activity{
 			}
 		});
 	}
+	
+
+	private void addOrder() {
+		try {
+			Order order=new Order();
+			order.dishId=dishInfoJsonObject.getInt("dishid");
+			order.orderAmount=1;
+			order.orderImage=dishInfoJsonObject.getString("dishpicurl");
+			order.orderName=dishInfoJsonObject.getString("dishname");
+			order.orderPaymethod="货到付款";
+			order.orderPrice=dishInfoJsonObject.getDouble("dishprice");
+			order.orderTime=timeString();
+			order.userId=Integer.valueOf(UserInfo.getInstance().userid);
+			order.writeToDb();
+			Toast.makeText(Tab0FoodActivity.this, "加入购物车成功", Toast.LENGTH_SHORT).show();
+			} catch (JSONException e) {
+			e.printStackTrace();
+			}
+		
+	}
+	private String timeString() {
+		long currentTime = System.currentTimeMillis();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = new Date(currentTime);
+		return formatter.format(date);
+		}
+	
 	
     public void OnClick(View view){
     	switch (view.getId()) {

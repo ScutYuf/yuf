@@ -2,7 +2,10 @@ package com.yuf.app.adapter;
 
 import java.util.ArrayList;
 
+import com.yuf.app.ui.Tab2Fragment;
+
 import android.R.array;
+import android.R.integer;
 import android.R.string;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -33,6 +36,9 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter{
 		// TODO Auto-generated method stub
 		return fragments.size();
 	}
+	public Fragment getFragment(int i){
+		return fragments.get(i);
+	}
 	public boolean addFragment(Fragment fragment)
 	{
 		return fragments.add(fragment);
@@ -47,6 +53,8 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter{
 		// TODO Auto-generated method stub
 		return titles.get(position);
 	}
+
+	
 	
 
 }

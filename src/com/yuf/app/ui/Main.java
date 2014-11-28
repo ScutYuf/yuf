@@ -1,5 +1,6 @@
 package com.yuf.app.ui;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -48,9 +49,10 @@ import com.yuf.app.ui.indicator.TitlePageIndicator;
 public class Main extends FragmentActivity {
 
 	//全局变量
-	private ViewPager mTabPager;
+	public static ViewPager mTabPager;
 	private ImageView mTab0, mTab1, mTab2, mTab3,mTab4;
 	private int currIndex = 0;
+	private MyFragmentPagerAdapter outsidePagerAdapter;
 	
  @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,7 @@ public class Main extends FragmentActivity {
 		mTab3.setOnClickListener(new MyOnClickListener(3));
 		mTab4.setOnClickListener(new MyOnClickListener(4));
 		
-		MyFragmentPagerAdapter outsidePagerAdapter=new MyFragmentPagerAdapter(getSupportFragmentManager());
+		outsidePagerAdapter=new MyFragmentPagerAdapter(getSupportFragmentManager());
 		 //导航界面布局初始化
 		outsidePagerAdapter.addFragment(new Tab0Fragment());
 		outsidePagerAdapter.addFragment(new Tab1Fragment());
@@ -160,6 +162,27 @@ public class Main extends FragmentActivity {
 				break;
 			case 2:
 				mTab2.setImageDrawable(getResources().getDrawable(R.drawable.tab_2_pressed));
+				Class<?>tab2=null;
+				try {
+					tab2=Class.forName("com.yuf.app.ui.Tab2Fragment");
+					java.lang.reflect.Method method=tab2.getMethod("refresh");
+					method.invoke(outsidePagerAdapter.getFragment(2));
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NoSuchMethodException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				if (currIndex == 0) {
 					mTab0.setImageDrawable(getResources().getDrawable(R.drawable.tab_0_normal));
 				} else if (currIndex == 1) {

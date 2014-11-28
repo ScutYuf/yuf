@@ -58,7 +58,6 @@ public class Tab2AddressActivity extends Activity {
 	private TextView recevierTextView;
 	private TextView phoneTextView;
 	private SharedPreferences sharepPreferences;
-	private Button okButton;
 	
 	@Override
 	protected void onResume() {
@@ -79,16 +78,6 @@ public class Tab2AddressActivity extends Activity {
 		sharepPreferences=getSharedPreferences("address", Context.MODE_PRIVATE);
 		setContentView(R.layout.tab2_address_list);
 		
-		
-		okButton=(Button)findViewById(R.id.tab2_address_list_ok_button);
-		okButton.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				payOrders();
-			}
-		});
 		
 		zoneTextView=(TextView)findViewById(R.id.tab2_address_list_zone_textview);
 		detailTextView=(TextView)findViewById(R.id.tab2_address_list_detail_textview);

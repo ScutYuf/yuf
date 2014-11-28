@@ -25,7 +25,6 @@ public class Order {
 	public static final String ORDERIMAGE = "orderImage";
 	public static final String ORDERNAME = "orderName";
 	public static final String ISSELECT = "isSelect";
-	public  static  int positionOfStart =-1;//确定每一次数据库读取的起始位置
 	public int _id;
 	public int userId;
 	public int dishId;
@@ -156,10 +155,7 @@ public static void deleteFromDb(int i)
                   new String[] { "_id", "userId", "orderPrice","orderTime","orderPaymethod","orderAmount","isSelect","dishId","orderImage","orderName" }, null, null, "_id");  
         
       if(cursor!=null){
-    	cursor.moveToPosition(positionOfStart);
-    	int number =0;
-	    while (cursor.moveToNext()&&number<5) {  
-		number++;
+	    while (cursor.moveToNext()) {  
        	Order order = new Order();
        	order._id= cursor.getInt(cursor.getColumnIndex("_id"));
        	order.userId = cursor.getInt(cursor.getColumnIndex("userId"));  
@@ -172,7 +168,6 @@ public static void deleteFromDb(int i)
        	order.orderImage = cursor.getString(cursor.getColumnIndex("orderImage"));  
        	order.orderName = cursor.getString(cursor.getColumnIndex("orderName"));  
        	list.add(order); 
-       	positionOfStart++;
        }  
        }
         cursor.close();  

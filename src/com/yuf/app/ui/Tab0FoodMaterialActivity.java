@@ -1,5 +1,8 @@
 package com.yuf.app.ui;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,13 +15,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.yuf.app.MyApplication;
+import com.yuf.app.Entity.UserInfo;
 import com.yuf.app.adapter.FoodMaterialGVAdapter;
+import com.yuf.app.db.Order;
 import com.yuf.app.mywidget.MyGridView;
 
 public class Tab0FoodMaterialActivity extends Activity{
@@ -34,6 +40,7 @@ public class Tab0FoodMaterialActivity extends Activity{
 	private MyGridView gridView3;
 	private JSONArray jsonArray;
 	private JSONObject jsonObject;
+	private JSONObject dishInfoJsonObject;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +69,11 @@ public class Tab0FoodMaterialActivity extends Activity{
 		buyFood.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				//跳到购物车页面
+				addOrder();
+				Intent intent = new Intent(Tab0FoodMaterialActivity.this, Main.class);
+				startActivity(intent);
+				Tab0FoodMaterialActivity.this.finish();
+				Main.mTabPager.setCurrentItem(2);
 			}
 		});
 		
@@ -100,6 +111,31 @@ public class Tab0FoodMaterialActivity extends Activity{
 		}
 	}
 
+	//加入购物车	
+		private void addOrder() {
+			try {
+				Order order=new Order();
+				order.dishId=dishInfoJsonObject.getInt("dishid");
+				order.orderAmount=1;
+				order.orderImage=dishInfoJsonObject.getString("dishpicurl");
+				order.orderName=dishInfoJsonObject.getString("dishname");
+				order.orderPaymethod="货到付款";
+				order.orderPrice=dishInfoJsonObject.getDouble("dishprice");
+				order.orderTime=timeString();
+				order.userId=Integer.valueOf(UserInfo.getInstance().userid);
+				order.writeToDb();
+				Toast.makeText(Tab0FoodMaterialActivity.this, "加入购物车成功", Toast.LENGTH_SHORT).show();
+				} catch (JSONException e) {
+				e.printStackTrace();
+				}		
+		}
+		private String timeString() {
+			long currentTime = System.currentTimeMillis();
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date date = new Date(currentTime);
+			return formatter.format(date);
+			}
+		
 //获取网络数据
 	private void getDishDetail() {
 			
@@ -111,6 +147,7 @@ public class Tab0FoodMaterialActivity extends Activity{
 	        {  
 	        	try {
 					jsonObject=response.getJSONObject("dishDetail");
+					dishInfoJsonObject=jsonObject.getJSONObject("Dish");
 					jsonArray =jsonObject.getJSONArray("RelatedFood");
 					Log.d("Tab0FoodMaterialActivity", jsonArray.toString());
 					sortMaterial(jsonArray);

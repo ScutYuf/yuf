@@ -85,15 +85,6 @@
             android:text="电话："
             android:textColor="#000" />
 
-        <Button
-            android:id="@+id/tab2_address_list_ok_button"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="确定"
-            android:background="#07B498"
-            android:textColor="#fff" />
 
     </RelativeLayout>
 
