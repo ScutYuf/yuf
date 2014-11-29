@@ -2,17 +2,24 @@ package com.yuf.app.ui;
 
 import java.util.ArrayList;
 
+import android.R.integer;
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnDragListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yuf.app.db.Address;
@@ -44,11 +51,8 @@ public class Tab2Fragment extends Fragment{
 	}
 
 	private void initMember(View view) {
-
-		
 		totalPrice = (TextView)view.findViewById(R.id.textView1);
 		
-		addressList = Address.readFromDb();
 		person = (TextView)view.findViewById(R.id.person);
 		phone = (TextView)view.findViewById(R.id.phone);
 		address = (TextView)view.findViewById(R.id.address);
@@ -69,7 +73,6 @@ public class Tab2Fragment extends Fragment{
 	
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		showAddress();
 	}
@@ -104,8 +107,8 @@ public class Tab2Fragment extends Fragment{
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup viewGroup) {
-			
-			Order order = orderList.get(position);
+			final int pos = position;
+			final Order order = orderList.get(position);
 			if(convertView==null){
 				convertView = Tab2Fragment.this.getActivity().getLayoutInflater().inflate(R.layout.tab2_listview_item, null);
 			}
@@ -119,7 +122,57 @@ public class Tab2Fragment extends Fragment{
 			changeDish.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
+					final MyDialog myDialog = new MyDialog(getActivity(),R.style.OrderAmountDialog);
+					myDialog.show();
 					
+					TextView nameTextView = (TextView)myDialog.getWindow().findViewById(R.id.name);					
+					final TextView amount     = (TextView)myDialog.getWindow().findViewById(R.id.amount);
+					Button okButton = (Button)myDialog.getWindow().findViewById(R.id.ok);
+					ImageView small = (ImageView) myDialog.getWindow().findViewById(R.id.small); 
+					ImageView bigButton    = (ImageView)myDialog.getWindow().findViewById(R.id.big);
+					Button delete       = (Button)myDialog.getWindow().findViewById(R.id.delete);
+					
+					nameTextView.setText(order.orderName);
+					amount.setText(order.orderAmount+"");
+				//减少order	
+					small.setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                            	if(order.orderAmount>0){
+                            		v.setClickable(true);
+                            		order.orderAmount--;
+                            		order.modifyAmount(0);
+                            		mAdapter.notifyDataSetChanged();
+                            		amount.setText(order.orderAmount+"");
+                            		}else{v.setClickable(false);}
+                            }
+                    });
+				//增加order
+					bigButton.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							order.orderAmount++;
+							order.modifyAmount(1);
+							mAdapter.notifyDataSetChanged();
+							amount.setText(order.orderAmount+"");
+						}
+					});
+				//删除order
+					delete.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View arg0) {
+							Order.deleteFromDb(orderList.get(pos)._id);
+							orderList.remove(pos);
+							mAdapter.notifyDataSetChanged();
+							myDialog.dismiss();
+						}
+					});
+					okButton.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View arg0) {
+							myDialog.dismiss();
+						}
+					});
 				}
 			});
 			return convertView;
@@ -127,6 +180,20 @@ public class Tab2Fragment extends Fragment{
 		
 	}
 	
+	private class MyDialog extends Dialog{
+
+		public MyDialog(Context context, int theme) {
+			super(context,theme);
+			
+		}
+		
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			setContentView(R.layout.tab2_order_amount_change);
+		}
+		
+	}
 	public void refresh(){
 		
 		orderList=Order.readFromDb(); 
