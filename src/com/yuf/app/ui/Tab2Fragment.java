@@ -2,27 +2,22 @@ package com.yuf.app.ui;
 
 import java.util.ArrayList;
 
-import android.R.integer;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnDragListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.yuf.app.db.Address;
 import com.yuf.app.db.Order;
 import com.yuf.app.mywidget.NoScrollListview;
 
@@ -35,11 +30,10 @@ public class Tab2Fragment extends Fragment{
 	private TextView totalPrice;
 	private double price = 0;
 	private TextView person,phone,address;
+	private Button button1;
 //修改收货地址	
 	private Button changeButton;
-	private ArrayList<Address> addressList;
 	
-	private String TAG="Tab2Fragment";
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -52,6 +46,7 @@ public class Tab2Fragment extends Fragment{
 
 	private void initMember(View view) {
 		totalPrice = (TextView)view.findViewById(R.id.textView1);
+		button1 = (Button)view.findViewById(R.id.button1);
 		
 		person = (TextView)view.findViewById(R.id.person);
 		phone = (TextView)view.findViewById(R.id.phone);
@@ -65,6 +60,13 @@ public class Tab2Fragment extends Fragment{
 			public void onClick(View arg0) {
 				Intent intent = new Intent(getActivity(), Tab2AddressActivity.class);
 				startActivityForResult(intent,1);
+			}
+		});
+	//提交订单
+		button1.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				//
 			}
 		});
 	}
